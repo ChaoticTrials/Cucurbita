@@ -1,0 +1,31 @@
+modLoader="javafml"
+loaderVersion="[34,)"
+license="MIT License"
+issueTrackerURL="http://www.github.com/MelanX/spookyjam2020/issues/"
+
+[[mods]]
+modId="spookyjam2020"
+version="${file.jarVersion}"
+displayName="Spooky Jam 2020"
+updateJSONURL="https://raw.githubusercontent.com/MelanX/mod-updatechecker-files/master/spookyjam2020.json"
+displayURL="www.curseforge.com/members/melanx/"
+#logoFile="spookyjam2020.png"
+credits=""
+authors="MelanX"
+description='''
+
+'''
+
+[[dependencies.spookyjam2020]]
+    modId="forge"
+    mandatory=true
+    versionRange="[34.1,)"
+    ordering="NONE"
+    side="BOTH"
+
+[[dependencies.spookyjam2020]]
+    modId="minecraft"
+    mandatory=true
+    versionRange="[1.16.3, 1.17)"
+    ordering="NONE"
+    side="BOTH"
