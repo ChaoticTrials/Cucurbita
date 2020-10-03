@@ -17,6 +17,7 @@ public class DataCreator {
 
         if (event.includeServer()) {
             generator.addProvider(new ModTags.FluidModTags(generator));
+            generator.addProvider(new HeatSourceProvider(generator));
         }
         if (event.includeClient()) {
             generator.addProvider(new BlockStates(generator, helper));

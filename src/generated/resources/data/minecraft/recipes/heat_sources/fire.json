@@ -1,0 +1,16 @@
+{
+  "type": "spookyjam2020:heat_sources",
+  "group": "heat_sources",
+  "heat": 2000,
+  "source": {
+    "name": "minecraft:fire",
+    "properties": {
+      "east": "false",
+      "south": "false",
+      "north": "false",
+      "west": "false",
+      "up": "false",
+      "age": "0"
+    }
+  }
+}
