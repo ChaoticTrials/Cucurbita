@@ -2,8 +2,11 @@ package de.melanx.spookyjam2020;
 
 import de.melanx.spookyjam2020.core.CreativeTab;
 import de.melanx.spookyjam2020.core.Registration;
-import net.minecraftforge.common.MinecraftForge;
+import net.minecraft.client.renderer.RenderType;
+import net.minecraft.client.renderer.RenderTypeLookup;
 import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
+import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -19,6 +22,10 @@ public class SpookyJam2020 {
         instance = this;
 
         Registration.init();
-        MinecraftForge.EVENT_BUS.register(this);
+        FMLJavaModLoadingContext.get().getModEventBus().addListener(this::onClientSetup);
+    }
+
+    private void onClientSetup(final FMLClientSetupEvent event) {
+        RenderTypeLookup.setRenderLayer(Registration.BLOCK_HOLLOWED_PUMPKIN.get(), RenderType.getCutout());
     }
 }

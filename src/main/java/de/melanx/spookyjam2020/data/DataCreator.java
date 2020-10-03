@@ -16,9 +16,11 @@ public class DataCreator {
         ExistingFileHelper helper = event.getExistingFileHelper();
 
         if (event.includeServer()) {
-
+            generator.addProvider(new ModTags.FluidModTags(generator));
         }
         if (event.includeClient()) {
+            generator.addProvider(new BlockStates(generator, helper));
+            generator.addProvider(new ItemModels(generator, helper));
             generator.addProvider(new LanguageProvider(generator));
         }
     }

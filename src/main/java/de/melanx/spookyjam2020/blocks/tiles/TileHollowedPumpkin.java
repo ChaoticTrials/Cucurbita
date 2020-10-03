@@ -60,6 +60,7 @@ public class TileHollowedPumpkin extends TileEntity implements ITickableTileEnti
 
     @Override
     public void tick() {
+//        System.out.println("Penis hihi");
     }
 
     @Override
@@ -81,12 +82,6 @@ public class TileHollowedPumpkin extends TileEntity implements ITickableTileEnti
     private static class ModdedFluidTank extends FluidTank {
         public ModdedFluidTank(int capacity, Predicate<FluidStack> validator) {
             super(capacity, validator);
-        }
-
-        @Override
-        protected void onContentsChanged() {
-//            TileMechanicalApothecary.this.sendPacket = true;
-//            TileMechanicalApothecary.this.update = true;
         }
 
         @Nonnull
