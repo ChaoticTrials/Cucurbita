@@ -9,8 +9,7 @@ import net.minecraft.block.BlockState;
 import net.minecraft.fluid.Fluids;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.tileentity.ITickableTileEntity;
-import net.minecraft.tileentity.TileEntity;
+import net.minecraft.particles.ParticleTypes;
 import net.minecraft.util.Direction;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.LazyOptional;
@@ -24,6 +23,7 @@ import net.minecraftforge.items.IItemHandlerModifiable;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.Arrays;
+import java.util.Random;
 import java.util.function.Predicate;
 import java.util.function.Supplier;
 import java.util.stream.IntStream;
@@ -36,6 +36,8 @@ public class TileHollowedPumpkin extends ModTile {
     private final BaseItemStackHandler inventory = new BaseItemStackHandler(16, null, this::isValidStack);
     private final ModdedFluidTank fluidInventory = new ModdedFluidTank(FLUID_CAPACITY, fluidStack -> fluidStack.getFluid().isEquivalentTo(Fluids.WATER));
     private final LazyOptional<IFluidHandler> fluidHandler = LazyOptional.of(() -> this.fluidInventory);
+
+    private int heat;
 
     public TileHollowedPumpkin() {
         super(Registration.TILE_HOLLOWED_PUMPKIN.get());
@@ -64,17 +66,35 @@ public class TileHollowedPumpkin extends ModTile {
         return Arrays.stream(this.inventory.getInputSlots()).noneMatch(x -> x == slot);
     }
 
+    public boolean hasHeat() {
+        return this.heat > 0;
+    }
+
+    public int getHeat() {
+        return this.heat;
+    }
+
     @Override
     public void tick() {
         super.tick();
-        if (this.world != null && !this.world.isRemote) {
+        if (world != null) {
             BlockState state = this.world.getBlockState(this.pos.down());
-            int heatValue = HeatSourcesRecipe.getHeatValue(state);
-            if (heatValue > 0) {
+            this.heat = HeatSourcesRecipe.getHeatValue(state);
+            if (!this.world.isRemote) {
+                this.getFluidInventory().setFluid(new FluidStack(Registration.FLUID_PLANT_OIL.get(), 1000));
+                this.markDirty();
+                this.markDispatchable();
+            } else {
+                if (this.fluidInventory.getFluidAmount() > 0 && this.hasHeat()) {
+                    Random rand = this.world.rand;
+                    if (rand.nextDouble() < 0.1D) {
+                        double x = this.pos.getX() + 2 / 16D + rand.nextDouble() * 12 / 16D;
+                        double y = this.pos.getY() + 1 / 16D + (double) this.fluidInventory.getFluidAmount() / TileHollowedPumpkin.FLUID_CAPACITY + rand.nextDouble() * 0.3D;
+                        double z = this.pos.getZ() + 2 / 16D + rand.nextDouble() * 12 / 16D;
+                        this.world.addParticle(ParticleTypes.AMBIENT_ENTITY_EFFECT, x, y, z, 0.0F, 0.0F, 0.0F);
+                    }
+                }
             }
-            this.getFluidInventory().setFluid(new FluidStack(Registration.FLUID_PLANT_OIL.get(), 1000));
-            this.markDirty();
-            this.markDispatchable();
         }
     }
 
