@@ -23,7 +23,6 @@ public class DataCreator {
         if (event.includeClient()) {
             generator.addProvider(new BlockStates(generator, helper));
             generator.addProvider(new ItemModels(generator, helper));
-            generator.addProvider(new LanguageProvider(generator));
         }
     }
 }
