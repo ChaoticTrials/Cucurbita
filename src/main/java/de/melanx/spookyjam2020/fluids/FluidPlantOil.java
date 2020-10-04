@@ -26,7 +26,7 @@ public class FluidPlantOil extends Fluid {
     @Nonnull
     @Override
     protected FluidAttributes createAttributes() {
-        return FluidAttributes.builder(OIL_SOURCE, null).build(this);
+        return FluidAttributes.builder(OIL_SOURCE, null).color(0xFFFFFF).build(this);
     }
 
     @Nonnull

@@ -1,5 +1,7 @@
 package de.melanx.spookyjam2020.blocks.tiles;
 
+import de.melanx.spookyjam2020.api.recipe.HeatSourcesRecipe;
+import de.melanx.spookyjam2020.blocks.base.ModTile;
 import de.melanx.spookyjam2020.core.Registration;
 import de.melanx.spookyjam2020.util.inventory.BaseItemStackHandler;
 import de.melanx.spookyjam2020.util.inventory.ItemStackHandlerWrapper;
@@ -26,7 +28,7 @@ import java.util.function.Predicate;
 import java.util.function.Supplier;
 import java.util.stream.IntStream;
 
-public class TileHollowedPumpkin extends TileEntity implements ITickableTileEntity {
+public class TileHollowedPumpkin extends ModTile {
 
     public static final int FLUID_CAPACITY = 2000;
 
@@ -54,18 +56,40 @@ public class TileHollowedPumpkin extends TileEntity implements ITickableTileEnti
         return this.inventory;
     }
 
+    public FluidTank getFluidInventory() {
+        return this.fluidInventory;
+    }
+
     public boolean isValidStack(int slot, ItemStack stack) {
         return Arrays.stream(this.inventory.getInputSlots()).noneMatch(x -> x == slot);
     }
 
     @Override
     public void tick() {
-//        System.out.println("Penis hihi");
+        super.tick();
+        if (this.world != null && !this.world.isRemote) {
+            BlockState state = this.world.getBlockState(this.pos.down());
+            int heatValue = HeatSourcesRecipe.getHeatValue(state);
+            if (heatValue > 0) {
+            }
+            this.getFluidInventory().setFluid(new FluidStack(Registration.FLUID_PLANT_OIL.get(), 1000));
+            this.markDirty();
+            this.markDispatchable();
+        }
     }
 
     @Override
-    public void read(BlockState state, CompoundNBT nbt) {
-        super.read(state, nbt);
+    public void readPacketNBT(CompoundNBT cmp) {
+        this.getInventory().deserializeNBT(cmp.getCompound("inventory"));
+        this.getFluidInventory().setFluid(FluidStack.loadFluidStackFromNBT(cmp.getCompound("fluid")));
+    }
+
+    @Override
+    public void writePacketNBT(CompoundNBT cmp) {
+        cmp.put("inventory", this.getInventory().serializeNBT());
+        final CompoundNBT tankTag = new CompoundNBT();
+        this.getFluidInventory().getFluid().writeToNBT(tankTag);
+        cmp.put("fluid", tankTag);
     }
 
     @Nonnull

@@ -3,7 +3,6 @@ package de.melanx.spookyjam2020.api.recipe;
 import com.google.gson.JsonObject;
 import com.mojang.serialization.Dynamic;
 import com.mojang.serialization.JsonOps;
-import de.melanx.spookyjam2020.SpookyJam2020;
 import de.melanx.spookyjam2020.api.util.ItemNBTHelper;
 import de.melanx.spookyjam2020.api.ModRecipeTypes;
 import net.minecraft.block.Block;
@@ -21,9 +20,13 @@ import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.ForgeRegistryEntry;
 
 import javax.annotation.Nullable;
+import java.util.Collections;
+import java.util.Map;
 import java.util.Optional;
 
 public class HeatSourcesRecipe implements IHeatSources {
+
+    public static Map<ResourceLocation, IHeatSources> HEAT_SOURCES = Collections.emptyMap();
 
     private final ResourceLocation id;
     private final BlockState heatState;
@@ -56,6 +59,19 @@ public class HeatSourcesRecipe implements IHeatSources {
     @Override
     public IRecipeType<?> getType() {
         return ModRecipeTypes.HEAT_SOURCES_TYPE;
+    }
+
+    public static boolean isHeatSource(BlockState state) {
+        return getHeatValue(state) >= 0;
+    }
+
+    public static int getHeatValue(BlockState state) {
+        for (IHeatSources e : HEAT_SOURCES.values()) {
+            if (e.getHeatState() == state) {
+                return e.getHeatValue();
+            }
+        }
+        return -1;
     }
 
     public static class Serializer extends ForgeRegistryEntry<IRecipeSerializer<?>> implements IRecipeSerializer<IHeatSources> {
