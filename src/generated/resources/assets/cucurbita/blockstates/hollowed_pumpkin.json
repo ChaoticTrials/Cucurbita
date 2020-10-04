@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=north": {
+      "model": "cucurbita:block/hollowed_pumpkin"
+    },
+    "facing=south": {
+      "model": "cucurbita:block/hollowed_pumpkin",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "cucurbita:block/hollowed_pumpkin",
+      "y": 270
+    },
+    "facing=east": {
+      "model": "cucurbita:block/hollowed_pumpkin",
+      "y": 90
+    }
+  }
+}
