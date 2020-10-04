@@ -18,7 +18,7 @@ public class ItemModels extends ItemModelProvider {
     @Override
     protected void registerModels() {
         for (RegistryObject<Item> item : Registration.ITEMS.getEntries()) {
-            if (item.get() instanceof BlockItem)
+            if (item.get() instanceof BlockItem && item.get() != Registration.ITEM_PUMPKIN_STEM.get())
                 this.generateBlockItem(item.get());
             else
                 this.generateItem(item.get());

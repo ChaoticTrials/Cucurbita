@@ -98,6 +98,10 @@ public class TileHollowedPumpkin extends ModTile {
         }
     }
 
+    public void onWanded() {
+        System.out.println("It's done!");
+    }
+
     @Override
     public void readPacketNBT(CompoundNBT cmp) {
         this.getInventory().deserializeNBT(cmp.getCompound("inventory"));

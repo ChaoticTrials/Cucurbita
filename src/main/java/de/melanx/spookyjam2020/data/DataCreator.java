@@ -16,6 +16,7 @@ public class DataCreator {
         ExistingFileHelper helper = event.getExistingFileHelper();
 
         if (event.includeServer()) {
+            generator.addProvider(new LootModifierProvider(generator));
             generator.addProvider(new ModTags.FluidModTags(generator));
             generator.addProvider(new HeatSourceProvider(generator));
         }

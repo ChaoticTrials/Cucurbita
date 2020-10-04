@@ -14,5 +14,7 @@ public class LanguageProvider extends net.minecraftforge.common.data.LanguagePro
         add("itemGroup." + SpookyJam2020.MODID, "Spooky Jam 2020");
         add(Registration.ITEM_HOLLOWED_PUMPKIN.get(), "Hollowed Pumpkin");
         add(Registration.ITEM_PLANT_OIL_BUCKET.get(), "Plant Oil Bucket");
+        add(Registration.ITEM_PUMPKIN_STEM.get(), "Pumpkin Stem");
+        add(Registration.ITEM_PUMPKIN_WAND.get(), "Pumpkin Wand");
     }
 }

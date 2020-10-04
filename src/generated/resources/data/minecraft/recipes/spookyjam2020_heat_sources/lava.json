@@ -1,0 +1,11 @@
+{
+  "type": "spookyjam2020:heat_sources",
+  "group": "heat_sources",
+  "heat": 2500,
+  "source": {
+    "name": "minecraft:lava",
+    "properties": {
+      "level": "0"
+    }
+  }
+}
