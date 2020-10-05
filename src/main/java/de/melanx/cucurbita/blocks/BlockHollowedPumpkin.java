@@ -8,6 +8,8 @@ import de.melanx.cucurbita.util.VanillaPacketDispatcher;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.material.Material;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.inventory.IInventory;
+import net.minecraft.inventory.InventoryHelper;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Hand;
@@ -54,6 +56,20 @@ public class BlockHollowedPumpkin extends BlockBase {
             }
         }
         return super.onBlockActivated(state, world, pos, player, hand, hit);
+    }
+
+    @SuppressWarnings("deprecation")
+    @Override
+    public void onReplaced(@Nonnull BlockState state, @Nonnull World world, @Nonnull BlockPos pos, @Nonnull BlockState newState, boolean isMoving) {
+        if (!state.isIn(newState.getBlock())) {
+            TileEntity tile = world.getTileEntity(pos);
+            if (tile instanceof TileHollowedPumpkin) {
+                InventoryHelper.dropInventoryItems(world, pos, ((TileHollowedPumpkin) tile).getInventory().toIInventory());
+                world.updateComparatorOutputLevel(pos, this);
+            }
+
+            super.onReplaced(state, world, pos, newState, isMoving);
+        }
     }
 
     @Nullable
