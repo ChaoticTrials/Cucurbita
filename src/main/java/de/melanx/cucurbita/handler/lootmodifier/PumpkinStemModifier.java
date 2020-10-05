@@ -21,7 +21,7 @@ public class PumpkinStemModifier extends LootModifier {
     @Nonnull
     @Override
     protected List<ItemStack> doApply(List<ItemStack> generatedLoot, LootContext context) {
-        return Collections.singletonList(new ItemStack(Registration.ITEM_PUMPKIN_STEM.get()));
+        return generatedLoot.size() != 0 ? Collections.singletonList(new ItemStack(Registration.ITEM_PUMPKIN_STEM.get())) : generatedLoot;
     }
 
     public static class Serializer extends GlobalLootModifierSerializer<PumpkinStemModifier> {

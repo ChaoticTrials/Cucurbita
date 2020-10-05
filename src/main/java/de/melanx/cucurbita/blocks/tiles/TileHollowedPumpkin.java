@@ -1,13 +1,16 @@
 package de.melanx.cucurbita.blocks.tiles;
 
 import de.melanx.cucurbita.api.recipe.HeatSourcesRecipe;
+import de.melanx.cucurbita.api.recipe.HollowedPumpkinRecipe;
 import de.melanx.cucurbita.blocks.base.ModTile;
 import de.melanx.cucurbita.core.Registration;
 import de.melanx.cucurbita.util.inventory.BaseItemStackHandler;
 import de.melanx.cucurbita.util.inventory.ItemStackHandlerWrapper;
 import net.minecraft.block.BlockState;
+import net.minecraft.entity.item.ItemEntity;
 import net.minecraft.fluid.Fluids;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.particles.ParticleTypes;
 import net.minecraft.util.Direction;
@@ -19,6 +22,7 @@ import net.minecraftforge.fluids.capability.IFluidHandler;
 import net.minecraftforge.fluids.capability.templates.FluidTank;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandlerModifiable;
+import org.apache.commons.lang3.tuple.Pair;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -37,10 +41,13 @@ public class TileHollowedPumpkin extends ModTile {
     private final ModdedFluidTank fluidInventory = new ModdedFluidTank(FLUID_CAPACITY, fluidStack -> fluidStack.getFluid().isEquivalentTo(Fluids.WATER));
     private final LazyOptional<IFluidHandler> fluidHandler = LazyOptional.of(() -> this.fluidInventory);
 
+    private int progress;
     private int heat;
+    private HollowedPumpkinRecipe recipe;
 
     public TileHollowedPumpkin() {
         super(Registration.TILE_HOLLOWED_PUMPKIN.get());
+        this.inventory.setDefaultSlotLimit(1);
         this.inventory.setInputSlots(IntStream.range(0, 16).toArray());
     }
 
@@ -74,16 +81,38 @@ public class TileHollowedPumpkin extends ModTile {
         return this.heat;
     }
 
+    private void updateRecipe() {
+        if (this.world != null && !this.world.isRemote) {
+            for (IRecipe<?> r : this.world.getRecipeManager().getRecipes()) {
+                if (r instanceof HollowedPumpkinRecipe) {
+                    HollowedPumpkinRecipe recipe = (HollowedPumpkinRecipe) r;
+                    if (recipe.matches(this.inventory.toIInventory(), this.world)) {
+                        if (this.fluidInventory.getFluid().isFluidEqual(recipe.getFluidInput())
+                                && this.fluidInventory.getFluidAmount() >= recipe.getFluidInput().getAmount()) {
+                            this.recipe = recipe;
+                            this.markDispatchable();
+                            return;
+                        }
+                    }
+                }
+            }
+        }
+        this.recipe = null;
+    }
+
     @Override
     public void tick() {
-        super.tick();
         if (world != null) {
+            updateRecipe();
             BlockState state = this.world.getBlockState(this.pos.down());
             this.heat = HeatSourcesRecipe.getHeatValue(state);
             if (!this.world.isRemote) {
-                this.getFluidInventory().setFluid(new FluidStack(Registration.FLUID_PLANT_OIL.get(), 1000));
-                this.markDirty();
-                this.markDispatchable();
+                if (this.recipe != null) {
+                    if (this.progress < 200) {
+                        this.progress++;
+                        this.markDispatchable();
+                    }
+                }
             } else {
                 if (this.fluidInventory.getFluidAmount() > 0 && this.hasHeat()) {
                     Random rand = this.world.rand;
@@ -96,16 +125,54 @@ public class TileHollowedPumpkin extends ModTile {
                 }
             }
         }
+        super.tick();
+    }
+
+    private int getFreeSlot() {
+        for (int i = 0; i < this.inventory.getInputSlots().length; i++) {
+            if (this.inventory.getStackInSlot(i).isEmpty()) return i;
+        }
+        return -1;
+    }
+
+    public void addToInventory(ItemStack stack) {
+        if (this.world != null) {
+            if (this.getFreeSlot() != -1) {
+                ItemStack stack1 = stack.copy();
+                stack1.setCount(1);
+                stack.shrink(1);
+                this.inventory.setStackInSlot(this.getFreeSlot(), stack1);
+                this.markDispatchable();
+            }
+        }
     }
 
     public void onWanded() {
-        System.out.println("It's done!");
+        if (this.world != null && !this.world.isRemote && this.recipe != null && this.progress >= 200) {
+            this.recipe.getIngredients().forEach(ingredient -> {
+                this.inventory.getStacks().forEach(stack -> {
+                    if (ingredient.test(stack)) {
+                        stack.shrink(1);
+                    }
+                });
+            });
+            this.fluidInventory.getFluid().setAmount(this.fluidInventory.getFluidAmount() - recipe.getFluidInput().getAmount());
+            for (Pair<ItemStack, Double> output : this.recipe.getOutputs()) {
+                if (this.world.rand.nextDouble() < output.getValue()) {
+                    ItemEntity item = new ItemEntity(this.world, this.pos.getX() + 0.5D, this.pos.getY() + 0.5D, this.pos.getZ() + 0.5D, output.getKey());
+                    this.world.addEntity(item);
+                }
+            }
+            this.progress = 0;
+            this.markDispatchable();
+        }
     }
 
     @Override
     public void readPacketNBT(CompoundNBT cmp) {
         this.getInventory().deserializeNBT(cmp.getCompound("inventory"));
         this.getFluidInventory().setFluid(FluidStack.loadFluidStackFromNBT(cmp.getCompound("fluid")));
+        this.progress = cmp.getInt("progress");
     }
 
     @Override
@@ -114,6 +181,7 @@ public class TileHollowedPumpkin extends ModTile {
         final CompoundNBT tankTag = new CompoundNBT();
         this.getFluidInventory().getFluid().writeToNBT(tankTag);
         cmp.put("fluid", tankTag);
+        cmp.putInt("progress", this.progress);
     }
 
     @Nonnull

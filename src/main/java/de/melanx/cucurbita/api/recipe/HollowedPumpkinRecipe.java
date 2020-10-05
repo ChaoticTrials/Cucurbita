@@ -25,6 +25,7 @@ import org.apache.commons.lang3.tuple.Pair;
 import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.IntStream;
 
 public class HollowedPumpkinRecipe implements IHollowedPumpkin {
     private final ResourceLocation id;
@@ -61,7 +62,11 @@ public class HollowedPumpkinRecipe implements IHollowedPumpkin {
 
     @Override
     public boolean matches(IInventory inv, World worldIn) {
-        return false;
+        List<Ingredient> ingredientsMissing = new ArrayList<>(this.ingredients);
+        IntStream.range(0, inv.getSizeInventory()).boxed().map(inv::getStackInSlot).filter(stack -> !stack.isEmpty()).forEach(stack ->
+                ingredientsMissing.stream().filter(ingredient -> ingredient.test(stack)).findFirst().ifPresent(ingredientsMissing::remove)
+        );
+        return ingredientsMissing.isEmpty();
     }
 
     @Override
