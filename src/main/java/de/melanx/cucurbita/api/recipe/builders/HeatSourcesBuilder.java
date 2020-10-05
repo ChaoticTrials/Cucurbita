@@ -63,13 +63,13 @@ public class HeatSourcesBuilder {
 
     private static class FinishedRecipe implements IFinishedRecipe {
         private final ResourceLocation id;
-        private final int mana;
+        private final int heat;
         private final BlockState catalyst;
         private final String group;
 
-        public FinishedRecipe(ResourceLocation id, int mana, BlockState catalyst, String group) {
+        public FinishedRecipe(ResourceLocation id, int heat, BlockState catalyst, String group) {
             this.id = id;
-            this.mana = mana;
+            this.heat = heat;
             this.catalyst = catalyst;
             this.group = group;
         }
@@ -79,7 +79,7 @@ public class HeatSourcesBuilder {
             if (!this.group.isEmpty()) {
                 json.addProperty("group", this.group);
             }
-            json.addProperty("heat", mana);
+            json.addProperty("heat", heat);
             json.add("source", serializeBlockState(catalyst));
         }
 

@@ -1,4 +1,4 @@
-package de.melanx.cucurbita.data;
+package de.melanx.cucurbita.data.recipes;
 
 import de.melanx.cucurbita.api.recipe.builders.HeatSourcesBuilder;
 import net.minecraft.block.Blocks;

@@ -2,26 +2,25 @@ package de.melanx.cucurbita.api.recipe;
 
 import de.melanx.cucurbita.Cucurbita;
 import de.melanx.cucurbita.api.ModRecipeTypes;
-import net.minecraft.block.BlockState;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.item.crafting.IRecipeType;
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.world.World;
+import net.minecraftforge.fluids.FluidStack;
+import org.apache.commons.lang3.tuple.Pair;
 
-public interface IHeatSources extends IRecipe<IInventory> {
+import java.util.List;
 
-    ResourceLocation TYPE_ID = new ResourceLocation(Cucurbita.MODID, "heat_sources");
+public interface IHollowedPumpkin extends IRecipe<IInventory> {
 
-    BlockState getHeatState();
+    ResourceLocation TYPE_ID = new ResourceLocation(Cucurbita.MODID, "hollowed_pumpkin");
 
-    int getHeatValue();
+    int getMinHeat();
 
-    @Override
-    default boolean matches(IInventory inv, World worldIn) {
-        return false;
-    }
+    List<Pair<ItemStack, Double>> getOutputs();
+
+    FluidStack getFluidInput();
 
     @Override
     default ItemStack getCraftingResult(IInventory inv) {
@@ -40,6 +39,6 @@ public interface IHeatSources extends IRecipe<IInventory> {
 
     @Override
     default IRecipeType<?> getType() {
-        return ModRecipeTypes.HEAT_SOURCES_TYPE;
+        return ModRecipeTypes.HOLLOWED_PUMPKIN_TYPE;
     }
 }
