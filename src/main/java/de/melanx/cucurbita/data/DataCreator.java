@@ -22,6 +22,7 @@ public class DataCreator {
             generator.addProvider(new ModTags.FluidModTags(generator));
             generator.addProvider(new HeatSourceProvider(generator));
             generator.addProvider(new HollowedPumpkinProvider(generator));
+            generator.addProvider(new LootTables(generator));
         }
         if (event.includeClient()) {
             generator.addProvider(new BlockStates(generator, helper));
