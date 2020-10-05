@@ -7,8 +7,9 @@ import de.melanx.cucurbita.util.Util;
 import de.melanx.cucurbita.util.VanillaPacketDispatcher;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.material.Material;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.item.ItemEntity;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.InventoryHelper;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ActionResultType;
@@ -69,6 +70,17 @@ public class BlockHollowedPumpkin extends BlockBase {
             }
 
             super.onReplaced(state, world, pos, newState, isMoving);
+        }
+    }
+
+    @SuppressWarnings("deprecation")
+    @Override
+    public void onEntityCollision(@Nonnull BlockState state, @Nonnull World world, @Nonnull BlockPos pos, @Nonnull Entity entity) {
+        if (!world.isRemote && entity instanceof ItemEntity) {
+            TileHollowedPumpkin tile = (TileHollowedPumpkin) world.getTileEntity(pos);
+            if (tile != null && tile.collideEntityItem((ItemEntity) entity)) {
+                VanillaPacketDispatcher.dispatchTEToNearbyPlayers(tile);
+            }
         }
     }
 

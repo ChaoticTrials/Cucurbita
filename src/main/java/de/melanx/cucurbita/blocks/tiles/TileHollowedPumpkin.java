@@ -108,7 +108,7 @@ public class TileHollowedPumpkin extends ModTile {
             this.heat = HeatSourcesRecipe.getHeatValue(state);
             if (!this.world.isRemote) {
                 if (this.recipe != null) {
-                    if (this.progress < 200) {
+                    if (this.progress < 200 && this.getHeat() >= recipe.getMinHeat()) {
                         this.progress++;
                         this.markDispatchable();
                     }
@@ -166,6 +166,22 @@ public class TileHollowedPumpkin extends ModTile {
             this.progress = 0;
             this.markDispatchable();
         }
+    }
+
+    public boolean collideEntityItem(ItemEntity item) {
+        int freeSlots = (int) this.inventory.getStacks().stream().filter(ItemStack::isEmpty).count();
+        ItemStack stack = item.getItem().copy();
+        if ((this.world != null && this.world.isRemote) || stack.isEmpty() || !item.isAlive()) return false;
+        for (int i = 0; i < freeSlots; i++) {
+            if (!item.getItem().isEmpty() && this.getFreeSlot() != -1) {
+                stack.setCount(1);
+                item.getItem().shrink(1);
+                this.inventory.setStackInSlot(this.getFreeSlot(), stack);
+            } else {
+                return true;
+            }
+        }
+        return false;
     }
 
     @Override
