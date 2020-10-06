@@ -1,5 +1,9 @@
 import net.minecraftforge.gradle.common.util.ModConfig
 import net.minecraftforge.gradle.common.util.RunConfig
+import org.apache.maven.artifact.versioning.ComparableVersion
+
+import java.nio.file.Files
+import java.nio.file.Paths
 
 buildscript {
     repositories {
@@ -9,18 +13,15 @@ buildscript {
     }
     dependencies {
         classpath group: 'net.minecraftforge.gradle', name: 'ForgeGradle', version: '3.+', changing: true
+        classpath group: 'org.apache.maven', name: 'maven-artifact', version: '3.6.3+'
     }
 }
 apply plugin: 'net.minecraftforge.gradle'
 apply plugin: 'maven-publish'
 
-version = "${mod_version}"
-def env = System.getenv()
-if (env.BUILD_NUMBER) {
-    version = version + "+" + "${env.BUILD_NUMBER}"
-}
 group = "de.melanx.${modid}"
 archivesBaseName = "${modid}-${mc_version}"
+version = this.getVersion()
 
 sourceCompatibility = targetCompatibility = compileJava.sourceCompatibility = compileJava.targetCompatibility = '1.8'
 
@@ -91,11 +92,18 @@ publishing {
             artifact jar
             artifact sourcesJar
             artifact deobfJar
+
+            pom {
+                licenses {
+                    license {
+                        name = "MIT License"
+                        url = "https://opensource.org/licenses/MIT"
+                    }
+                }
+            }
         }
     }
-}
 
-publishing {
     repositories {
         maven {
             url "/var/www/maven"
@@ -113,4 +121,22 @@ repositories {
 dependencies {
     minecraft "net.minecraftforge:forge:${mc_version}-${forge_version}"
     runtimeOnly fg.deobf("mezz.jei:jei-${mc_version}:${jei_version}")
+}
+
+private static String getVersion(String group, String artifact, String baseVersion) {
+    java.nio.file.Path mavenPath = Paths.get('/var/www/maven').resolve(group.replace('.', '/')).resolve(artifact)
+    if (!Files.isDirectory(mavenPath)) {
+        return "${baseVersion}.0"
+    }
+    return "${baseVersion}." + Files.walk(mavenPath)
+            .filter{path -> Files.isRegularFile(path) && path.getFileName().toString().endsWith('.pom')}
+            .map{path ->
+                String fileName = path.getFileName().toString()
+                fileName.substring(fileName.indexOf('-', artifact.size()) + 1, fileName.length() - 4)
+            }.filter{version -> version.startsWith(baseVersion)}
+            .max{s1, s2 -> new ComparableVersion(s1).compareTo(new ComparableVersion(s2))}
+            .map{ver -> ver.substring(ver.findLastIndexOf{ str -> !"0123456789".contains(str) } + 1)}
+            .map{ver -> ver.isEmpty() ? "-1" : ver }
+            .map{ver -> (ver.toInteger() + 1).toString()}
+            .orElse("0")
 }
