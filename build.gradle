@@ -21,7 +21,7 @@ apply plugin: 'maven-publish'
 
 group = "de.melanx.${modid}"
 archivesBaseName = "${modid}-${mc_version}"
-version = this.getVersion()
+version = getVersion()
 
 sourceCompatibility = targetCompatibility = compileJava.sourceCompatibility = compileJava.targetCompatibility = '1.8'
 
