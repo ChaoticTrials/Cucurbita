@@ -18,10 +18,7 @@ public class ModRecipeTypes {
     public static final IRecipeSerializer<IHollowedPumpkin> HOLLOWED_PUMPKIN_SERIALIZER = new HollowedPumpkinRecipe.Serializer();
 
     public static void register(RegistryEvent.Register<IRecipeSerializer<?>> event) {
-        Registry.register(Registry.RECIPE_TYPE, IHeatSources.TYPE_ID, HEAT_SOURCES_TYPE);
         event.getRegistry().register(HEAT_SOURCES_SERIALIZER.setRegistryName(IHeatSources.TYPE_ID));
-
-        Registry.register(Registry.RECIPE_TYPE, IHollowedPumpkin.TYPE_ID, HOLLOWED_PUMPKIN_TYPE);
         event.getRegistry().register(HOLLOWED_PUMPKIN_SERIALIZER.setRegistryName(IHollowedPumpkin.TYPE_ID));
     }
 
