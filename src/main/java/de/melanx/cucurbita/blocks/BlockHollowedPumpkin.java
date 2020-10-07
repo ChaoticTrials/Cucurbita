@@ -23,6 +23,9 @@ import net.minecraft.util.math.shapes.VoxelShapes;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
 import net.minecraftforge.common.ToolType;
+import net.minecraftforge.fluids.FluidActionResult;
+import net.minecraftforge.fluids.FluidUtil;
+import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -44,6 +47,16 @@ public class BlockHollowedPumpkin extends BlockBase {
     @Override
     public ActionResultType onBlockActivated(@Nonnull BlockState state, @Nonnull World world, @Nonnull BlockPos pos, @Nonnull PlayerEntity player, @Nonnull Hand hand, @Nonnull BlockRayTraceResult hit) {
         TileEntity tile = world.getTileEntity(pos);
+
+        FluidActionResult fluidActionResult = FluidUtil.tryEmptyContainer(player.getHeldItemMainhand(), tile.getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, null).orElse(null), 1000, player, true);
+        if (fluidActionResult.isSuccess()) {
+            if (!player.isCreative()) {
+                player.addItemStackToInventory(fluidActionResult.getResult());
+                player.getHeldItemMainhand().shrink(1);
+            }
+            return ActionResultType.SUCCESS;
+        }
+
         if (tile instanceof TileHollowedPumpkin) {
             if (player.isSneaking()) {
                 Util.withdrawFromInventory(((TileHollowedPumpkin) tile).getInventory(), player);

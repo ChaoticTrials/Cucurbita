@@ -40,7 +40,7 @@ public class TileHollowedPumpkin extends ModTile {
 
     private final LazyOptional<IItemHandlerModifiable> handler = this.createHandler(this::getInventory);
     private final BaseItemStackHandler inventory = new BaseItemStackHandler(16, null, this::isValidStack);
-    private final ModdedFluidTank fluidInventory = new ModdedFluidTank(FLUID_CAPACITY, fluidStack -> fluidStack.getFluid().isEquivalentTo(Fluids.WATER));
+    private final ModdedFluidTank fluidInventory = new ModdedFluidTank(FLUID_CAPACITY, fluidStack -> true);
     private final LazyOptional<IFluidHandler> fluidHandler = LazyOptional.of(() -> this.fluidInventory);
 
     private int progress;
