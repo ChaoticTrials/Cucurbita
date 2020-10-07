@@ -5,9 +5,11 @@ import de.melanx.cucurbita.blocks.tesrs.TesrHollowedPumpkin;
 import de.melanx.cucurbita.core.CreativeTab;
 import de.melanx.cucurbita.core.RecipeReloadListener;
 import de.melanx.cucurbita.core.Registration;
+import de.melanx.cucurbita.sound.ModSounds;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.RenderTypeLookup;
 import net.minecraft.item.crafting.IRecipeSerializer;
+import net.minecraft.util.SoundEvent;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.AddReloadListenerEvent;
 import net.minecraftforge.fml.client.registry.ClientRegistry;
@@ -31,6 +33,7 @@ public class Cucurbita {
         Registration.init();
         FMLJavaModLoadingContext.get().getModEventBus().addListener(this::onClientSetup);
         FMLJavaModLoadingContext.get().getModEventBus().addGenericListener(IRecipeSerializer.class, ModRecipeTypes::register);
+        FMLJavaModLoadingContext.get().getModEventBus().addGenericListener(SoundEvent.class, ModSounds::registerSounds);
         MinecraftForge.EVENT_BUS.addListener(this::addReloadListeners);
         MinecraftForge.EVENT_BUS.register(new RecipeReloadListener(null));
     }

@@ -6,7 +6,7 @@ issueTrackerURL="http://www.github.com/MelanX/cucurbita/issues/"
 [[mods]]
 modId="cucurbita"
 version="${file.jarVersion}"
-displayName="Spooky Jam 2020"
+displayName="Cucurbita"
 updateJSONURL="https://raw.githubusercontent.com/MelanX/mod-updatechecker-files/master/cucurbita.json"
 displayURL="www.curseforge.com/members/melanx/"
 #logoFile="cucurbita.png"

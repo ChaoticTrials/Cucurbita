@@ -3,15 +3,30 @@ package de.melanx.cucurbita.items;
 import de.melanx.cucurbita.blocks.tiles.TileHollowedPumpkin;
 import de.melanx.cucurbita.core.LibNames;
 import de.melanx.cucurbita.core.Registration;
+import de.melanx.cucurbita.sound.ModSounds;
+import net.minecraft.advancements.CriteriaTriggers;
+import net.minecraft.block.BlockState;
+import net.minecraft.block.IBucketPickupHandler;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.player.ServerPlayerEntity;
+import net.minecraft.fluid.Fluid;
+import net.minecraft.fluid.Fluids;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemUseContext;
+import net.minecraft.particles.ParticleTypes;
+import net.minecraft.stats.Stats;
+import net.minecraft.tags.FluidTags;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Hand;
+import net.minecraft.util.SoundEvents;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.BlockRayTraceResult;
+import net.minecraft.util.math.RayTraceContext;
+import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.util.text.TranslationTextComponent;
@@ -38,6 +53,35 @@ public class PumpkinWand extends Item {
                 return ActionResult.resultSuccess(stack);
             }
         }
+
+        if (hasSpecialMode(stack)) {
+            BlockRayTraceResult rayTraceResult = rayTrace(world, player, RayTraceContext.FluidMode.SOURCE_ONLY);
+            if (rayTraceResult.getType() == RayTraceResult.Type.MISS) {
+                return new ActionResult<>(ActionResultType.PASS, stack);
+            } else if (rayTraceResult.getType() != RayTraceResult.Type.BLOCK) {
+                return new ActionResult<>(ActionResultType.PASS, stack);
+            } else {
+                BlockPos pos = rayTraceResult.getPos();
+                if (world.isBlockModifiable(player, pos) && player.canPlayerEdit(pos, rayTraceResult.getFace(), stack)) {
+                    BlockState state = world.getBlockState(pos);
+                    if (state.getBlock() instanceof IBucketPickupHandler) {
+                        Fluid fluid = ((IBucketPickupHandler) state.getBlock()).pickupFluid(world, pos, state);
+                        if (fluid != Fluids.EMPTY) {
+                            player.addStat(Stats.ITEM_USED.get(this));
+                            player.playSound(ModSounds.WOOSH, 1.0F, 0.8F);
+                            for (int x = 0; x < 5; x++) {
+                                world.addParticle(ParticleTypes.CAMPFIRE_COSY_SMOKE, pos.getX() + Math.random(), pos.getY() + Math.random(), pos.getZ() + Math.random(), 0, 0.05F, 0);
+                            }
+
+
+                            return new ActionResult<>(ActionResultType.SUCCESS, stack);
+                        }
+                    }
+
+                    return new ActionResult<>(ActionResultType.FAIL, stack);
+                }
+            }
+        }
         return super.onItemRightClick(world, player, hand);
     }
 
@@ -49,7 +93,7 @@ public class PumpkinWand extends Item {
             if (!hasSpecialMode(context.getItem())) {
                 ((TileHollowedPumpkin) tile).onWanded();
             } else {
-                ((TileHollowedPumpkin) tile).resetFluid();
+                ((TileHollowedPumpkin) tile).resetFluid(context.getPlayer());
             }
             return ActionResultType.SUCCESS;
         }

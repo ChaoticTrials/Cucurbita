@@ -1,0 +1,11 @@
+{
+  "woosh": {
+    "category": "neutral",
+    "sounds": [
+      "cucurbita:woosh_0",
+      "cucurbita:woosh_1",
+      "cucurbita:woosh_2"
+    ],
+    "subtitle": "sound.cucurbita.woosh"
+  }
+}

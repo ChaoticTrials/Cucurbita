@@ -4,10 +4,12 @@ import de.melanx.cucurbita.api.recipe.HeatSourcesRecipe;
 import de.melanx.cucurbita.api.recipe.HollowedPumpkinRecipe;
 import de.melanx.cucurbita.blocks.base.ModTile;
 import de.melanx.cucurbita.core.Registration;
+import de.melanx.cucurbita.sound.ModSounds;
 import de.melanx.cucurbita.util.inventory.BaseItemStackHandler;
 import de.melanx.cucurbita.util.inventory.ItemStackHandlerWrapper;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.item.ItemEntity;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.fluid.Fluids;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
@@ -168,12 +170,13 @@ public class TileHollowedPumpkin extends ModTile {
         }
     }
 
-    public void resetFluid() {
+    public void resetFluid(PlayerEntity player) {
         if (this.world != null && !this.fluidInventory.isEmpty()) {
             this.fluidInventory.setFluid(FluidStack.EMPTY);
             for (int i = 0; i < 5; i++) {
                 this.world.addParticle(ParticleTypes.CAMPFIRE_COSY_SMOKE, pos.getX() + 0.5D + world.rand.nextDouble() * 0.1D, pos.getY() + 0.4D + world.rand.nextDouble(), pos.getZ() + 0.5D + world.rand.nextDouble() * 0.1D, 0.0D, 0.05D, 0.0D);
             }
+            player.playSound(ModSounds.WOOSH, 1.0F, 0.8F);
             this.markDispatchable();
         }
     }
