@@ -5,5 +5,13 @@
   "block.minecraft.pumpkin_stem": "Pumpkin Stem",
 
   "item.cucurbita.plant_oil_bucket": "Plant Oil Bucket",
-  "item.cucurbita.pumpkin_wand": "Pumpkin Wand"
+  "item.cucurbita.pumpkin_wand": "Pumpkin Wand",
+
+  "tooltip.cucurbita.delete_mode0": "Delete fluids mode",
+  "tooltip.cucurbita.delete_mode1": "The wand will remove any",
+  "tooltip.cucurbita.delete_mode2": "fluid in %s completely.",
+
+  "tooltip.cucurbita.normal_mode0": "Recipe mode",
+  "tooltip.cucurbita.normal_mode1": "The wand can be used to",
+  "tooltip.cucurbita.normal_mode2": "finalize the recipe in an %s."
 }
