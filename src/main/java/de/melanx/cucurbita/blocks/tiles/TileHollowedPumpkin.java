@@ -37,6 +37,7 @@ import java.util.stream.IntStream;
 public class TileHollowedPumpkin extends ModTile {
 
     public static final int FLUID_CAPACITY = 2000;
+    private static final FluidStack WATER = new FluidStack(Fluids.WATER, 1);
 
     private final LazyOptional<IItemHandlerModifiable> handler = this.createHandler(this::getInventory);
     private final BaseItemStackHandler inventory = new BaseItemStackHandler(16, null, this::isValidStack);
@@ -114,6 +115,12 @@ public class TileHollowedPumpkin extends ModTile {
                         this.progress++;
                         this.markDispatchable();
                     }
+                }
+                if (this.world.getWorldInfo().isRaining() && this.world.canBlockSeeSky(this.pos) &&
+                        (this.fluidInventory.isEmpty() || (this.fluidInventory.getFluid().getFluid() == Fluids.WATER &&
+                                this.fluidInventory.getFluidAmount() < this.fluidInventory.getCapacity()))) {
+                    this.fluidInventory.fill(WATER, IFluidHandler.FluidAction.EXECUTE);
+                    this.markDispatchable();
                 }
             } else {
                 if (this.fluidInventory.getFluidAmount() > 0 && this.hasHeat()) {
