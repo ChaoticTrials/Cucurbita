@@ -57,7 +57,7 @@ public class TesrHollowedPumpkin extends HorizontalRotatedTesr<TileHollowedPumpk
         double itemTicks = (double) ((float) Cucurbita.getInstance().ticksInGame + partialTicks) / 2;
 
         matrixStack.push();
-        matrixStack.translate(0.5D, fluidPercentage - ((float) 2 / 16), 0.5D);
+        matrixStack.translate(0.5D, fluidPercentage - ((float) 2.5D / 16), 0.5D);
         matrixStack.scale(0.2F, 0.2F, 0.2F);
 
         int nextIdx = 0;
