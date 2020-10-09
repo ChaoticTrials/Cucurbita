@@ -118,7 +118,8 @@ public class TileHollowedPumpkin extends ModTile {
                 }
                 if (this.world.getWorldInfo().isRaining() && this.world.canBlockSeeSky(this.pos) &&
                         (this.fluidInventory.isEmpty() || (this.fluidInventory.getFluid().getFluid() == Fluids.WATER &&
-                                this.fluidInventory.getFluidAmount() < this.fluidInventory.getCapacity()))) {
+                                this.fluidInventory.getFluidAmount() < this.fluidInventory.getCapacity())) &&
+                        recipe == null) {
                     this.fluidInventory.fill(WATER, IFluidHandler.FluidAction.EXECUTE);
                     this.markDispatchable();
                 }
@@ -159,16 +160,18 @@ public class TileHollowedPumpkin extends ModTile {
     public void onWanded() {
         if (this.world != null && !this.world.isRemote && this.recipe != null && this.progress >= 200) {
             this.recipe.getIngredients().forEach(ingredient -> {
-                this.inventory.getStacks().forEach(stack -> {
+                for (ItemStack stack : inventory.getStacks()) {
                     if (ingredient.test(stack)) {
                         stack.shrink(1);
+                        break;
                     }
-                });
+                }
             });
             this.fluidInventory.getFluid().setAmount(this.fluidInventory.getFluidAmount() - recipe.getFluidInput().getAmount());
             for (Pair<ItemStack, Double> output : this.recipe.getOutputs()) {
                 if (this.world.rand.nextDouble() < output.getValue()) {
-                    ItemEntity item = new ItemEntity(this.world, this.pos.getX() + 0.5D, this.pos.getY() + 0.5D, this.pos.getZ() + 0.5D, output.getKey());
+                    ItemEntity item = new ItemEntity(this.world, this.pos.getX() + 0.5D, this.pos.getY() + 0.5D, this.pos.getZ() + 0.5D, output.getKey().copy());
+                    item.addTag("recipe_output");
                     this.world.addEntity(item);
                 }
             }
@@ -189,6 +192,7 @@ public class TileHollowedPumpkin extends ModTile {
     }
 
     public boolean collideEntityItem(ItemEntity item) {
+        if (item.getTags().contains("recipe_output")) return false;
         int freeSlots = (int) this.inventory.getStacks().stream().filter(ItemStack::isEmpty).count();
         ItemStack stack = item.getItem().copy();
         if ((this.world != null && this.world.isRemote) || stack.isEmpty() || !item.isAlive()) return false;
