@@ -2,7 +2,9 @@ package de.melanx.cucurbita.core;
 
 import de.melanx.cucurbita.api.ModRecipeTypes;
 import de.melanx.cucurbita.api.recipe.HeatSourcesRecipe;
+import de.melanx.cucurbita.api.recipe.HollowedPumpkinRecipe;
 import de.melanx.cucurbita.api.recipe.IHeatSources;
+import de.melanx.cucurbita.api.recipe.IHollowedPumpkin;
 import net.minecraft.client.Minecraft;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.item.crafting.IRecipeType;
@@ -54,6 +56,7 @@ public class RecipeReloadListener implements IResourceManagerReloadListener {
         if (recipes.isEmpty()) return;
 
         HeatSourcesRecipe.HEAT_SOURCES = filterRecipes(recipes, IHeatSources.class, ModRecipeTypes.HEAT_SOURCES_TYPE);
+        HollowedPumpkinRecipe.PUMPKIN_RECIPES = filterRecipes(recipes, IHollowedPumpkin.class, ModRecipeTypes.HOLLOWED_PUMPKIN_TYPE);
     }
 
     private static <X extends IRecipe<?>> Map<ResourceLocation, X> filterRecipes(Collection<IRecipe<?>> recipes, Class<X> recipeClass, IRecipeType<X> recipeType) {

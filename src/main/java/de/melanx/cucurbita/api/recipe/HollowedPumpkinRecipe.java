@@ -24,10 +24,14 @@ import org.apache.commons.lang3.tuple.Pair;
 
 import javax.annotation.Nullable;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.IntStream;
 
 public class HollowedPumpkinRecipe implements IHollowedPumpkin {
+    public static Map<ResourceLocation, IHollowedPumpkin> PUMPKIN_RECIPES = Collections.emptyMap();
+
     private final ResourceLocation id;
     private final int minHeat;
     private final FluidStack fluidInput;

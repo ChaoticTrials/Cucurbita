@@ -6,7 +6,6 @@ import de.melanx.cucurbita.api.recipe.IHeatSources;
 import de.melanx.cucurbita.api.recipe.IHollowedPumpkin;
 import net.minecraft.item.crafting.IRecipeSerializer;
 import net.minecraft.item.crafting.IRecipeType;
-import net.minecraft.util.registry.Registry;
 import net.minecraftforge.event.RegistryEvent;
 
 public class ModRecipeTypes {

@@ -2,6 +2,7 @@ package de.melanx.cucurbita.blocks.tiles;
 
 import de.melanx.cucurbita.api.recipe.HeatSourcesRecipe;
 import de.melanx.cucurbita.api.recipe.HollowedPumpkinRecipe;
+import de.melanx.cucurbita.api.recipe.IHollowedPumpkin;
 import de.melanx.cucurbita.blocks.base.ModTile;
 import de.melanx.cucurbita.core.Registration;
 import de.melanx.cucurbita.sound.ModSounds;
@@ -12,7 +13,6 @@ import net.minecraft.entity.item.ItemEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.fluid.Fluids;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.particles.ParticleTypes;
 import net.minecraft.util.Direction;
@@ -40,7 +40,7 @@ public class TileHollowedPumpkin extends ModTile {
     private static final FluidStack WATER = new FluidStack(Fluids.WATER, 1);
 
     private final LazyOptional<IItemHandlerModifiable> handler = this.createHandler(this::getInventory);
-    private final BaseItemStackHandler inventory = new BaseItemStackHandler(16, null, this::isValidStack);
+    private final BaseItemStackHandler inventory = new BaseItemStackHandler(16, this::onSlotChanged, this::isValidStack);
     private final ModdedFluidTank fluidInventory = new ModdedFluidTank(FLUID_CAPACITY, fluidStack -> true);
     private final LazyOptional<IFluidHandler> fluidHandler = LazyOptional.of(() -> this.fluidInventory);
 
@@ -76,6 +76,12 @@ public class TileHollowedPumpkin extends ModTile {
         return Arrays.stream(this.inventory.getInputSlots()).noneMatch(x -> x == slot);
     }
 
+    private void onSlotChanged(int slot) {
+        this.updateRecipe();
+        this.markDispatchable();
+        this.markDirty();
+    }
+
     public boolean hasHeat() {
         return this.heat > 0;
     }
@@ -86,16 +92,13 @@ public class TileHollowedPumpkin extends ModTile {
 
     private void updateRecipe() {
         if (this.world != null && !this.world.isRemote) {
-            for (IRecipe<?> r : this.world.getRecipeManager().getRecipes()) {
-                if (r instanceof HollowedPumpkinRecipe) {
-                    HollowedPumpkinRecipe recipe = (HollowedPumpkinRecipe) r;
-                    if (recipe.matches(this.inventory.toIInventory(), this.world)) {
-                        if (this.fluidInventory.getFluid().isFluidEqual(recipe.getFluidInput())
-                                && this.fluidInventory.getFluidAmount() >= recipe.getFluidInput().getAmount()) {
-                            this.recipe = recipe;
-                            this.markDispatchable();
-                            return;
-                        }
+            for (IHollowedPumpkin recipe : HollowedPumpkinRecipe.PUMPKIN_RECIPES.values()) {
+                if (recipe.matches(this.inventory.toIInventory(), this.world)) {
+                    if (this.fluidInventory.getFluid().isFluidEqual(recipe.getFluidInput())
+                            && this.fluidInventory.getFluidAmount() >= recipe.getFluidInput().getAmount()) {
+                        this.recipe = (HollowedPumpkinRecipe) recipe;
+                        this.markDispatchable();
+                        return;
                     }
                 }
             }
@@ -106,7 +109,6 @@ public class TileHollowedPumpkin extends ModTile {
     @Override
     public void tick() {
         if (world != null) {
-            updateRecipe();
             BlockState state = this.world.getBlockState(this.pos.down());
             this.heat = HeatSourcesRecipe.getHeatValue(state);
             if (!this.world.isRemote) {
