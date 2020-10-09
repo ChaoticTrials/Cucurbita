@@ -22,7 +22,6 @@ import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidHandler;
 import net.minecraftforge.fluids.capability.templates.FluidTank;
-import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandlerModifiable;
 import org.apache.commons.lang3.tuple.Pair;
 
@@ -39,7 +38,6 @@ public class TileHollowedPumpkin extends ModTile {
     public static final int FLUID_CAPACITY = 2000;
     private static final FluidStack WATER = new FluidStack(Fluids.WATER, 1);
 
-    private final LazyOptional<IItemHandlerModifiable> handler = this.createHandler(this::getInventory);
     private final BaseItemStackHandler inventory = new BaseItemStackHandler(16, this::onSlotChanged, this::isValidStack);
     private final ModdedFluidTank fluidInventory = new ModdedFluidTank(FLUID_CAPACITY, fluidStack -> true);
     private final LazyOptional<IFluidHandler> fluidHandler = LazyOptional.of(() -> this.fluidInventory);
@@ -64,6 +62,7 @@ public class TileHollowedPumpkin extends ModTile {
     }
 
     @Nonnull
+    @Override
     public BaseItemStackHandler getInventory() {
         return this.inventory;
     }
@@ -229,9 +228,7 @@ public class TileHollowedPumpkin extends ModTile {
     @Nonnull
     @Override
     public <X> LazyOptional<X> getCapability(@Nonnull Capability<X> cap, @Nullable Direction side) {
-        if (!this.removed && (cap == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY)) {
-            return this.handler.cast();
-        } else if (cap == CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY) {
+        if (cap == CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY) {
             return this.fluidHandler.cast();
         }
         return super.getCapability(cap, side);
