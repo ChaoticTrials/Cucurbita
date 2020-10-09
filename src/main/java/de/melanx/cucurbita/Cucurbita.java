@@ -12,6 +12,7 @@ import net.minecraft.item.crafting.IRecipeSerializer;
 import net.minecraft.util.SoundEvent;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.AddReloadListenerEvent;
+import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.fml.client.registry.ClientRegistry;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
@@ -25,7 +26,8 @@ public class Cucurbita {
     public static final String MODID = "cucurbita";
     public static final Logger LOGGER = LogManager.getLogger(MODID);
     public static final CreativeTab creativeTab = new CreativeTab();
-    public Cucurbita instance;
+    public static Cucurbita instance;
+    public int ticksInGame = 0;
 
     public Cucurbita() {
         instance = this;
@@ -35,6 +37,7 @@ public class Cucurbita {
         FMLJavaModLoadingContext.get().getModEventBus().addGenericListener(IRecipeSerializer.class, ModRecipeTypes::register);
         FMLJavaModLoadingContext.get().getModEventBus().addGenericListener(SoundEvent.class, ModSounds::registerSounds);
         MinecraftForge.EVENT_BUS.addListener(this::addReloadListeners);
+        MinecraftForge.EVENT_BUS.addListener(this::onClientTick);
         MinecraftForge.EVENT_BUS.register(new RecipeReloadListener(null));
     }
 
@@ -46,5 +49,13 @@ public class Cucurbita {
         RenderTypeLookup.setRenderLayer(Registration.BLOCK_HOLLOWED_PUMPKIN.get(), RenderType.getCutout());
 
         ClientRegistry.bindTileEntityRenderer(Registration.TILE_HOLLOWED_PUMPKIN.get(), TesrHollowedPumpkin::new);
+    }
+
+    private void onClientTick(final TickEvent.ClientTickEvent event) {
+        this.ticksInGame++;
+    }
+
+    public static Cucurbita getInstance() {
+        return instance;
     }
 }
