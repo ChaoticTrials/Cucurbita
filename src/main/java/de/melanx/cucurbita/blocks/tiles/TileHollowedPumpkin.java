@@ -146,12 +146,12 @@ public class TileHollowedPumpkin extends ModTile {
         return -1;
     }
 
-    public void addToInventory(ItemStack stack) {
+    public void addToInventory(ItemStack stack, boolean consume) {
         if (this.world != null) {
             if (this.getFreeSlot() != -1) {
                 ItemStack stack1 = stack.copy();
                 stack1.setCount(1);
-                stack.shrink(1);
+                if (consume) stack.shrink(1);
                 this.inventory.setStackInSlot(this.getFreeSlot(), stack1);
                 this.markDispatchable();
             }

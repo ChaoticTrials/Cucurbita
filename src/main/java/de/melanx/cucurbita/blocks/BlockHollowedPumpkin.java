@@ -68,7 +68,7 @@ public class BlockHollowedPumpkin extends Block implements ITileEntityProvider {
                 return ActionResultType.SUCCESS;
             } else {
                 if (!player.getHeldItemMainhand().isEmpty() && player.getHeldItemMainhand().getItem() != Registration.ITEM_PUMPKIN_WAND.get()) {
-                    ((TileHollowedPumpkin) tile).addToInventory(player.getHeldItemMainhand());
+                    ((TileHollowedPumpkin) tile).addToInventory(player.getHeldItemMainhand(), !player.isCreative());
                     return ActionResultType.SUCCESS;
                 }
             }
