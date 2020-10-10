@@ -1,0 +1,13 @@
+{
+  "type": "cucurbita:refinery",
+  "heat": 240,
+  "input": {
+    "tag": "forge:seeds"
+  },
+  "output": {
+    "fluid": {
+      "name": "cucurbita:plant_oil",
+      "amount": 50
+    }
+  }
+}

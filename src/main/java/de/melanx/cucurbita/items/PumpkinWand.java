@@ -36,7 +36,7 @@ public class PumpkinWand extends Item {
     private static final String TAG = "delete_fluid_mode";
 
     public PumpkinWand(Properties properties) {
-        super(new Item.Properties().maxStackSize(1));
+        super(properties);
     }
 
     @Nonnull
