@@ -1,6 +1,6 @@
 package de.melanx.cucurbita.items;
 
-import de.melanx.cucurbita.core.Registration;
+import de.melanx.cucurbita.core.registration.Registration;
 import net.minecraft.item.BucketItem;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;

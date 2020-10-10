@@ -1,7 +1,7 @@
 package de.melanx.cucurbita.data;
 
 import de.melanx.cucurbita.Cucurbita;
-import de.melanx.cucurbita.core.Registration;
+import de.melanx.cucurbita.core.registration.Registration;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;

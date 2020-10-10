@@ -1,7 +1,7 @@
 package de.melanx.cucurbita.fluids;
 
 import de.melanx.cucurbita.Cucurbita;
-import de.melanx.cucurbita.core.Registration;
+import de.melanx.cucurbita.core.registration.Registration;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.fluid.Fluid;

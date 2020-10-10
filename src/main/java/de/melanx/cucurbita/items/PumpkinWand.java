@@ -2,7 +2,7 @@ package de.melanx.cucurbita.items;
 
 import de.melanx.cucurbita.blocks.tiles.TileHollowedPumpkin;
 import de.melanx.cucurbita.core.LibNames;
-import de.melanx.cucurbita.core.Registration;
+import de.melanx.cucurbita.core.registration.Registration;
 import de.melanx.cucurbita.sound.ModSounds;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.IBucketPickupHandler;

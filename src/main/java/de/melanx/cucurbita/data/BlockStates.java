@@ -1,7 +1,7 @@
 package de.melanx.cucurbita.data;
 
 import de.melanx.cucurbita.Cucurbita;
-import de.melanx.cucurbita.core.Registration;
+import de.melanx.cucurbita.core.registration.Registration;
 import net.minecraft.block.Block;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.state.properties.BlockStateProperties;
@@ -23,8 +23,17 @@ public class BlockStates extends BlockStateProvider {
     protected void registerStatesAndModels() {
         Registration.BLOCKS.getEntries().stream().map(RegistryObject::get).forEach(block -> {
             VariantBlockStateBuilder builder = this.getVariantBuilder(block);
-            this.createRotatableState(builder, block);
+            if (block != Registration.BLOCK_HOMEMADE_REFINERY.get()) {
+                this.createRotatableState(builder, block);
+            } else {
+                this.createState(builder, block);
+            }
         });
+    }
+
+    private void createState(VariantBlockStateBuilder builder, Block block) {
+        //noinspection ConstantConditions
+        builder.partialState().addModels(new ConfiguredModel(this.models().getExistingFile(new ResourceLocation(Cucurbita.MODID, "block/" + block.getRegistryName().getPath()))));
     }
 
     private void createRotatableState(VariantBlockStateBuilder builder, Block block) {

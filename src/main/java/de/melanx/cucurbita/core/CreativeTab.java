@@ -1,6 +1,7 @@
 package de.melanx.cucurbita.core;
 
 import de.melanx.cucurbita.Cucurbita;
+import de.melanx.cucurbita.core.registration.Registration;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
 

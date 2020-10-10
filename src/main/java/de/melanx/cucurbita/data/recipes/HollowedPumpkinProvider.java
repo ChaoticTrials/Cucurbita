@@ -2,7 +2,7 @@ package de.melanx.cucurbita.data.recipes;
 
 import de.melanx.cucurbita.Cucurbita;
 import de.melanx.cucurbita.api.recipe.builders.HollowedPumpkinBuilder;
-import de.melanx.cucurbita.core.Registration;
+import de.melanx.cucurbita.core.registration.Registration;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.IFinishedRecipe;
 import net.minecraft.data.RecipeProvider;

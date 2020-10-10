@@ -1,16 +1,20 @@
 package de.melanx.cucurbita.blocks;
 
-import de.melanx.cucurbita.blocks.base.BlockBase;
 import de.melanx.cucurbita.blocks.tiles.TileHollowedPumpkin;
-import de.melanx.cucurbita.core.Registration;
+import de.melanx.cucurbita.core.registration.Registration;
 import de.melanx.cucurbita.util.Util;
 import de.melanx.cucurbita.util.VanillaPacketDispatcher;
+import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
+import net.minecraft.block.ITileEntityProvider;
 import net.minecraft.block.material.Material;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.item.ItemEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.InventoryHelper;
+import net.minecraft.item.BlockItemUseContext;
+import net.minecraft.state.StateContainer;
+import net.minecraft.state.properties.BlockStateProperties;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Hand;
@@ -30,7 +34,7 @@ import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-public class BlockHollowedPumpkin extends BlockBase {
+public class BlockHollowedPumpkin extends Block implements ITileEntityProvider {
 
     private static final VoxelShape INSIDE = makeCuboidShape(2.0D, 1.0D, 2.0D, 14.0D, 16.0D, 14.0D);
     private static final VoxelShape SHAPE = VoxelShapes.combineAndSimplify(VoxelShapes.fullCube(), VoxelShapes.or(INSIDE), IBooleanFunction.ONLY_FIRST);
@@ -122,5 +126,16 @@ public class BlockHollowedPumpkin extends BlockBase {
     @Override
     public VoxelShape getCollisionShape(@Nonnull BlockState state, @Nonnull IBlockReader reader, @Nonnull BlockPos pos) {
         return SHAPE;
+    }
+
+    @Nullable
+    @Override
+    public BlockState getStateForPlacement(@Nonnull BlockItemUseContext context) {
+        return this.getDefaultState().with(BlockStateProperties.HORIZONTAL_FACING, context.getPlacementHorizontalFacing().getOpposite());
+    }
+
+    @Override
+    protected void fillStateContainer(@Nonnull StateContainer.Builder<Block, BlockState> builder) {
+        builder.add(BlockStateProperties.HORIZONTAL_FACING);
     }
 }

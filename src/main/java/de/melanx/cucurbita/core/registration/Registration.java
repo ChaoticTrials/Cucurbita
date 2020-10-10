@@ -1,8 +1,11 @@
-package de.melanx.cucurbita.core;
+package de.melanx.cucurbita.core.registration;
 
 import de.melanx.cucurbita.Cucurbita;
 import de.melanx.cucurbita.blocks.BlockHollowedPumpkin;
+import de.melanx.cucurbita.blocks.BlockHomemadeRefinery;
 import de.melanx.cucurbita.blocks.tiles.TileHollowedPumpkin;
+import de.melanx.cucurbita.blocks.tiles.TileHomemadeRefinery;
+import de.melanx.cucurbita.core.LibNames;
 import de.melanx.cucurbita.fluids.FluidPlantOil;
 import de.melanx.cucurbita.handler.lootmodifier.PumpkinStemModifier;
 import de.melanx.cucurbita.items.PlantOilBucket;
@@ -34,13 +37,16 @@ public class Registration {
     public static final RegistryObject<Fluid> FLUID_PLANT_OIL = FLUIDS.register(LibNames.PLANT_OIL, FluidPlantOil::new);
 
     public static final RegistryObject<Block> BLOCK_HOLLOWED_PUMPKIN = BLOCKS.register(LibNames.HOLLOWED_PUMPKIN, BlockHollowedPumpkin::new);
+    public static final RegistryObject<Block> BLOCK_HOMEMADE_REFINERY = BLOCKS.register(LibNames.HOMEMADE_REFINERY, BlockHomemadeRefinery::new);
 
     public static final RegistryObject<Item> ITEM_HOLLOWED_PUMPKIN = ITEMS.register(LibNames.HOLLOWED_PUMPKIN, () -> new BlockItem(BLOCK_HOLLOWED_PUMPKIN.get(), ITEM_PROPS));
+    public static final RegistryObject<Item> ITEM_HOMEMADE_REFINERY = ITEMS.register(LibNames.HOMEMADE_REFINERY, () -> new BlockItem(BLOCK_HOMEMADE_REFINERY.get(), ITEM_PROPS));
     public static final RegistryObject<Item> ITEM_PLANT_OIL_BUCKET = ITEMS.register(LibNames.PLANT_OIL_BUCKET, () -> new PlantOilBucket(ITEM_PROPS));
     public static final RegistryObject<Item> ITEM_PUMPKIN_STEM = ITEMS.register(LibNames.PUMPKIN_STEM, () -> new BlockItem(Blocks.PUMPKIN_STEM, ITEM_PROPS));
     public static final RegistryObject<Item> ITEM_PUMPKIN_WAND = ITEMS.register(LibNames.PUMPKIN_WAND, () -> new PumpkinWand(CONTAINER_ITEM_PROPS));
 
     public static final RegistryObject<TileEntityType<TileHollowedPumpkin>> TILE_HOLLOWED_PUMPKIN = TILES.register(LibNames.HOLLOWED_PUMPKIN, () -> TileEntityType.Builder.create(TileHollowedPumpkin::new, BLOCK_HOLLOWED_PUMPKIN.get()).build(null));
+    public static final RegistryObject<TileEntityType<TileHomemadeRefinery>> TILE_HOMEMADE_REFINERY = TILES.register(LibNames.HOMEMADE_REFINERY, () -> TileEntityType.Builder.create(TileHomemadeRefinery::new, BLOCK_HOMEMADE_REFINERY.get()).build(null));
 
     public static final RegistryObject<GlobalLootModifierSerializer<PumpkinStemModifier>> PUMPKIN_STEM_MODIFIER = LOOT_MODIFIERS.register("pumpkin_stem", PumpkinStemModifier.Serializer::new);
 

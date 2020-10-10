@@ -2,7 +2,7 @@ package de.melanx.cucurbita.data;
 
 import de.melanx.cucurbita.Cucurbita;
 import de.melanx.cucurbita.core.LibNames;
-import de.melanx.cucurbita.core.Registration;
+import de.melanx.cucurbita.core.registration.Registration;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.FluidTagsProvider;
 import net.minecraft.fluid.Fluid;

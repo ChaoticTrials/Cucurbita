@@ -4,7 +4,7 @@ import de.melanx.cucurbita.api.recipe.HeatSourcesRecipe;
 import de.melanx.cucurbita.api.recipe.HollowedPumpkinRecipe;
 import de.melanx.cucurbita.api.recipe.IHollowedPumpkin;
 import de.melanx.cucurbita.blocks.base.ModTile;
-import de.melanx.cucurbita.core.Registration;
+import de.melanx.cucurbita.core.registration.Registration;
 import de.melanx.cucurbita.sound.ModSounds;
 import de.melanx.cucurbita.util.inventory.BaseItemStackHandler;
 import de.melanx.cucurbita.util.inventory.ItemStackHandlerWrapper;

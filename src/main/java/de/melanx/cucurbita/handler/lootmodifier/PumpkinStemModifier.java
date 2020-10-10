@@ -1,7 +1,7 @@
 package de.melanx.cucurbita.handler.lootmodifier;
 
 import com.google.gson.JsonObject;
-import de.melanx.cucurbita.core.Registration;
+import de.melanx.cucurbita.core.registration.Registration;
 import net.minecraft.item.ItemStack;
 import net.minecraft.loot.LootContext;
 import net.minecraft.loot.conditions.ILootCondition;
