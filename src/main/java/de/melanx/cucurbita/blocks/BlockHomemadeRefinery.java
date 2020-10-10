@@ -2,18 +2,25 @@ package de.melanx.cucurbita.blocks;
 
 import de.melanx.cucurbita.blocks.tiles.TileHomemadeRefinery;
 import de.melanx.cucurbita.util.DirectionShape;
+import de.melanx.cucurbita.util.Util;
+import de.melanx.cucurbita.util.VanillaPacketDispatcher;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.ITileEntityProvider;
 import net.minecraft.block.material.Material;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Direction;
+import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.util.math.shapes.IBooleanFunction;
 import net.minecraft.util.math.shapes.ISelectionContext;
 import net.minecraft.util.math.shapes.VoxelShape;
 import net.minecraft.util.math.shapes.VoxelShapes;
 import net.minecraft.world.IBlockReader;
+import net.minecraft.world.World;
 import net.minecraftforge.common.ToolType;
 
 import javax.annotation.Nonnull;
@@ -35,6 +42,26 @@ public class BlockHomemadeRefinery extends Block implements ITileEntityProvider 
                 .harvestLevel(1)
                 .hardnessAndResistance(5)
         );
+    }
+
+    @SuppressWarnings("deprecation")
+    @Nonnull
+    @Override
+    public ActionResultType onBlockActivated(@Nonnull BlockState state, @Nonnull World world, @Nonnull BlockPos pos, @Nonnull PlayerEntity player, @Nonnull Hand hand, @Nonnull BlockRayTraceResult hit) {
+        TileHomemadeRefinery tile = (TileHomemadeRefinery) world.getTileEntity(pos);
+        if (tile != null) {
+            if (player.isSneaking()) {
+                Util.withdrawFromInventory(tile.getInventory(), player);
+                VanillaPacketDispatcher.dispatchTEToNearbyPlayers(tile);
+                return ActionResultType.SUCCESS;
+            } else {
+                if (!player.getHeldItemMainhand().isEmpty()) {
+                    tile.addToInventory(player.getHeldItemMainhand(), !player.isCreative());
+                    return ActionResultType.SUCCESS;
+                }
+            }
+        }
+        return super.onBlockActivated(state, world, pos, player, hand, hit);
     }
 
     @Nullable
