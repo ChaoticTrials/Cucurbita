@@ -15,7 +15,7 @@ public interface IRefinery extends IRecipe<IInventory> {
 
     FluidStack getFluidOutput();
 
-    int minHeat();
+    int getMinHeat();
 
     Ingredient getInput();
 

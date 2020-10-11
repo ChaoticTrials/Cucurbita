@@ -182,7 +182,7 @@ public class TileHollowedPumpkin extends ModTile {
     }
 
     public void resetFluid(PlayerEntity player) {
-        if (this.world != null && !this.fluidInventory.isEmpty()) {
+        if (this.world != null && !this.fluidInventory.isEmpty() && this.recipe == null) {
             this.fluidInventory.setFluid(FluidStack.EMPTY);
             for (int i = 0; i < 5; i++) {
                 this.world.addParticle(ParticleTypes.CAMPFIRE_COSY_SMOKE, pos.getX() + 0.5D + world.rand.nextDouble() * 0.1D, pos.getY() + 0.4D + world.rand.nextDouble(), pos.getZ() + 0.5D + world.rand.nextDouble() * 0.1D, 0.0D, 0.05D, 0.0D);

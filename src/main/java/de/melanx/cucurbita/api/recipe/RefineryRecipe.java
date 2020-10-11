@@ -46,7 +46,7 @@ public class RefineryRecipe implements IRefinery {
     }
 
     @Override
-    public int minHeat() {
+    public int getMinHeat() {
         return this.minHeat;
     }
 
@@ -118,7 +118,7 @@ public class RefineryRecipe implements IRefinery {
 
         @Override
         public void write(PacketBuffer buffer, IRefinery recipe) {
-            buffer.writeInt(recipe.minHeat());
+            buffer.writeInt(recipe.getMinHeat());
             recipe.getInput().write(buffer);
             buffer.writeItemStack(recipe.getRecipeOutput());
             buffer.writeFluidStack(recipe.getFluidOutput());

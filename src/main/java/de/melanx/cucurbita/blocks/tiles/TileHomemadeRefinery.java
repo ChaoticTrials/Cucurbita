@@ -1,8 +1,12 @@
 package de.melanx.cucurbita.blocks.tiles;
 
+import de.melanx.cucurbita.api.recipe.HeatSourcesRecipe;
+import de.melanx.cucurbita.api.recipe.IRefinery;
+import de.melanx.cucurbita.api.recipe.RefineryRecipe;
 import de.melanx.cucurbita.blocks.base.ModTile;
 import de.melanx.cucurbita.core.registration.Registration;
 import de.melanx.cucurbita.util.inventory.BaseItemStackHandler;
+import net.minecraft.block.BlockState;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.Direction;
@@ -12,21 +16,26 @@ import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidHandler;
 import net.minecraftforge.fluids.capability.templates.FluidTank;
+import net.minecraftforge.items.ItemHandlerHelper;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.function.Predicate;
 
 public class TileHomemadeRefinery extends ModTile {
-    public static final int FLUID_CAPACITY = 4000;
+    public static final int FLUID_CAPACITY = 1000;
 
     private final BaseItemStackHandler inventory = new BaseItemStackHandler(2, null, null);
-    private final TileHomemadeRefinery.ModdedFluidTank fluidInventory = new TileHomemadeRefinery.ModdedFluidTank(FLUID_CAPACITY, fluidStack -> true);
+    private final ModdedFluidTank fluidInventory = new ModdedFluidTank(FLUID_CAPACITY, fluidStack -> true);
     private final LazyOptional<IFluidHandler> fluidHandler = LazyOptional.of(() -> this.fluidInventory);
     private int progress;
+    private RefineryRecipe recipe;
+    private int heat;
 
     public TileHomemadeRefinery() {
         super(Registration.TILE_HOMEMADE_REFINERY.get());
+        this.inventory.setInputSlots(0);
+        this.inventory.setOutputSlots(1);
     }
 
     @Nonnull
@@ -35,15 +44,62 @@ public class TileHomemadeRefinery extends ModTile {
         return this.inventory;
     }
 
+    public TileHomemadeRefinery.ModdedFluidTank getFluidInventory() {
+        return this.fluidInventory;
+    }
+
     @Override
     public boolean isValidStack(int slot, ItemStack stack) {
         return true;
     }
 
+    private void updateRecipe() {
+        if (this.world != null && !this.world.isRemote) {
+            for (IRefinery recipe : RefineryRecipe.REFINERY_RECIPES.values()) {
+                if (recipe.matches(this.inventory.toIInventory(), this.world)) {
+                    if ((this.fluidInventory.getFluid().isFluidEqual(recipe.getFluidOutput()) || this.fluidInventory.isEmpty())
+                            && this.fluidInventory.getCapacity() >= recipe.getFluidOutput().getAmount() + this.fluidInventory.getFluidAmount()
+                            && (ItemHandlerHelper.canItemStacksStack(this.inventory.getStackInSlot(1), recipe.getRecipeOutput().copy())
+                            || this.inventory.getStackInSlot(0).isEmpty() || recipe.getRecipeOutput().isEmpty())) {
+                        this.recipe = (RefineryRecipe) recipe;
+                        this.markDispatchable();
+                        return;
+                    }
+                }
+            }
+        }
+        this.recipe = null;
+    }
+
+    public boolean hasHeat() {
+        return this.heat > 0;
+    }
+
+    public int getHeat() {
+        return this.heat;
+    }
+
     @Override
     public void tick() {
         if (this.world != null) {
-
+            this.updateRecipe();
+            BlockState state = this.world.getBlockState(this.pos.down());
+            this.heat = HeatSourcesRecipe.getHeatValue(state);
+            if (!this.world.isRemote) {
+                if (this.recipe != null) {
+                    if (this.progress < 200 && this.getHeat() >= this.recipe.getMinHeat()) {
+                        this.progress++;
+                        this.markDispatchable();
+                    } else if (this.progress >= 200) {
+                        this.inventory.getStackInSlot(0).shrink(1);
+                        this.inventory.getUnrestricted().insertItem(1, this.recipe.getRecipeOutput().copy(), false);
+                        this.fluidInventory.setFluid(new FluidStack(this.recipe.getFluidOutput().getFluid(), this.fluidInventory.getFluid().getAmount() + this.recipe.getFluidOutput().getAmount()));
+                        this.progress = 0;
+                        this.markDirty();
+                        this.markDispatchable();
+                    }
+                }
+            }
         }
         super.tick();
     }

@@ -22,6 +22,10 @@ import net.minecraft.util.math.shapes.VoxelShapes;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
 import net.minecraftforge.common.ToolType;
+import net.minecraftforge.fluids.FluidActionResult;
+import net.minecraftforge.fluids.FluidUtil;
+import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
+import net.minecraftforge.fluids.capability.IFluidHandler;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -50,6 +54,16 @@ public class BlockHomemadeRefinery extends Block implements ITileEntityProvider 
     public ActionResultType onBlockActivated(@Nonnull BlockState state, @Nonnull World world, @Nonnull BlockPos pos, @Nonnull PlayerEntity player, @Nonnull Hand hand, @Nonnull BlockRayTraceResult hit) {
         TileHomemadeRefinery tile = (TileHomemadeRefinery) world.getTileEntity(pos);
         if (tile != null) {
+            IFluidHandler iFluidHandler = tile.getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, null).orElse(null);
+            FluidActionResult fluidActionResult = FluidUtil.tryFillContainer(player.getHeldItemMainhand(), tile.getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, null).orElse(null), 1000, player, true);
+            if (fluidActionResult.isSuccess()) {
+                if (!player.isCreative()) {
+                    player.addItemStackToInventory(fluidActionResult.getResult());
+                    player.getHeldItemMainhand().shrink(1);
+                }
+                return ActionResultType.SUCCESS;
+            }
+
             if (player.isSneaking()) {
                 Util.withdrawFromInventory(tile.getInventory(), player);
                 VanillaPacketDispatcher.dispatchTEToNearbyPlayers(tile);

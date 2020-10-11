@@ -75,7 +75,7 @@ public class HeatSourcesRecipe implements IHeatSources {
                 return e.getHeatValue();
             }
         }
-        return -1;
+        return 0;
     }
 
     public static class Serializer extends ForgeRegistryEntry<IRecipeSerializer<?>> implements IRecipeSerializer<IHeatSources> {
