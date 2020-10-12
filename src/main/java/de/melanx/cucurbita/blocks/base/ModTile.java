@@ -4,6 +4,7 @@ import de.melanx.cucurbita.util.VanillaPacketDispatcher;
 import de.melanx.cucurbita.util.inventory.BaseItemStackHandler;
 import de.melanx.cucurbita.util.inventory.ItemStackHandlerWrapper;
 import net.minecraft.block.BlockState;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.network.NetworkManager;
@@ -71,6 +72,10 @@ public abstract class ModTile extends TileEntity implements ITickableTileEntity 
         super.read(state, nbt);
         readPacketNBT(nbt);
     }
+
+    public abstract void resetFluid(PlayerEntity player);
+
+    public void onWanded() {}
 
     public void writePacketNBT(CompoundNBT cmp) {}
 

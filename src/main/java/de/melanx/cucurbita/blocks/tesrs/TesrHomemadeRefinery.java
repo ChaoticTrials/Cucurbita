@@ -30,6 +30,15 @@ public class TesrHomemadeRefinery extends TileEntityRenderer<TileHomemadeRefiner
         IVertexBuilder vertexBuffer = buffer.getBuffer(RenderTypeLookup.func_239220_a_(tile.getBlockState(), false));
         IBakedModel press = ClientRegistration.HOMEMADE_REFINERY_PRESS;
         matrixStack.push();
+        double posY = 0;
+        if (tile.getProgressAnimation() <= 100)
+            posY = -(tile.getProgressAnimation() / 100D) * 11 / 16D;
+        else if (tile.getProgressAnimation() <= 150)
+            posY = -11 / 16D;
+        else if (tile.getProgressAnimation() <= 200) {
+            posY = -(tile.getProgressAnimation() - 200D) / 50 * -11 / 16D;
+        }
+        matrixStack.translate(0, posY, 0);
         Minecraft.getInstance().getBlockRendererDispatcher().getBlockModelRenderer()
                 .renderModelBrightnessColor(matrixStack.getLast(), vertexBuffer, tile.getBlockState(),
                         press, 1, 1, 1, light, OverlayTexture.NO_OVERLAY);
@@ -42,13 +51,17 @@ public class TesrHomemadeRefinery extends TileEntityRenderer<TileHomemadeRefiner
         matrixStack.rotate(Vector3f.XP.rotationDegrees(90));
         matrixStack.rotate(Vector3f.ZP.rotationDegrees(45));
 
-        Minecraft.getInstance().getItemRenderer().renderItem(tile.getInventory().getStackInSlot(0), ItemCameraTransforms.TransformType.GROUND, light, overlay, matrixStack, buffer);
+        if (!tile.getInventory().getStackInSlot(0).isEmpty()) {
+            Minecraft.getInstance().getItemRenderer().renderItem(tile.getInventory().getStackInSlot(0), ItemCameraTransforms.TransformType.GROUND, light, overlay, matrixStack, buffer);
+        } else if (!tile.getInventory().getStackInSlot(1).isEmpty()) {
+            Minecraft.getInstance().getItemRenderer().renderItem(tile.getInventory().getStackInSlot(1), ItemCameraTransforms.TransformType.GROUND, light, overlay, matrixStack, buffer);
+        }
         matrixStack.pop();
 
         double fluidPercentage = (double) tile.getFluidInventory().getFluidAmount() / TileHomemadeRefinery.FLUID_CAPACITY;
         if (fluidPercentage > 0) {
             matrixStack.push();
-            matrixStack.translate(1 / 16D, fluidPercentage * (2 / 16D - 0.05 / 16D), 1 / 16D);
+            matrixStack.translate(1 / 16D, Math.max(0.05D / 16D + 1 / 16D, (fluidPercentage * 1 / 16D) + (1 / 16D - 0.05 / 16D)), 1 / 16D);
             matrixStack.rotate(Vector3f.XP.rotationDegrees(90.0F));
             matrixStack.scale(7 / 64F, 7 / 64F, 1 / 16F);
 

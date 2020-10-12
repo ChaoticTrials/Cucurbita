@@ -158,6 +158,7 @@ public class TileHollowedPumpkin extends ModTile {
         }
     }
 
+    @Override
     public void onWanded() {
         if (this.world != null && !this.world.isRemote && this.recipe != null && this.progress >= 200) {
             this.recipe.getIngredients().forEach(ingredient -> {
@@ -181,6 +182,7 @@ public class TileHollowedPumpkin extends ModTile {
         }
     }
 
+    @Override
     public void resetFluid(PlayerEntity player) {
         if (this.world != null && !this.fluidInventory.isEmpty() && this.recipe == null) {
             this.fluidInventory.setFluid(FluidStack.EMPTY);

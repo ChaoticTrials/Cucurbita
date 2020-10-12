@@ -1,6 +1,7 @@
 package de.melanx.cucurbita.blocks;
 
 import de.melanx.cucurbita.blocks.tiles.TileHomemadeRefinery;
+import de.melanx.cucurbita.core.registration.Registration;
 import de.melanx.cucurbita.util.DirectionShape;
 import de.melanx.cucurbita.util.Util;
 import de.melanx.cucurbita.util.VanillaPacketDispatcher;
@@ -25,7 +26,6 @@ import net.minecraftforge.common.ToolType;
 import net.minecraftforge.fluids.FluidActionResult;
 import net.minecraftforge.fluids.FluidUtil;
 import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
-import net.minecraftforge.fluids.capability.IFluidHandler;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -54,22 +54,21 @@ public class BlockHomemadeRefinery extends Block implements ITileEntityProvider 
     public ActionResultType onBlockActivated(@Nonnull BlockState state, @Nonnull World world, @Nonnull BlockPos pos, @Nonnull PlayerEntity player, @Nonnull Hand hand, @Nonnull BlockRayTraceResult hit) {
         TileHomemadeRefinery tile = (TileHomemadeRefinery) world.getTileEntity(pos);
         if (tile != null) {
-            IFluidHandler iFluidHandler = tile.getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, null).orElse(null);
             FluidActionResult fluidActionResult = FluidUtil.tryFillContainer(player.getHeldItemMainhand(), tile.getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, null).orElse(null), 1000, player, true);
             if (fluidActionResult.isSuccess()) {
                 if (!player.isCreative()) {
-                    player.addItemStackToInventory(fluidActionResult.getResult());
                     player.getHeldItemMainhand().shrink(1);
+                    player.addItemStackToInventory(fluidActionResult.getResult());
                 }
                 return ActionResultType.SUCCESS;
             }
 
-            if (player.isSneaking()) {
+            if (player.isSneaking() && tile.getProgressAnimation() <= 100) {
                 Util.withdrawFromInventory(tile.getInventory(), player);
                 VanillaPacketDispatcher.dispatchTEToNearbyPlayers(tile);
                 return ActionResultType.SUCCESS;
             } else {
-                if (!player.getHeldItemMainhand().isEmpty()) {
+                if (!player.getHeldItemMainhand().isEmpty() && player.getHeldItemMainhand().getItem() != Registration.ITEM_PUMPKIN_WAND.get()) {
                     tile.addToInventory(player.getHeldItemMainhand(), !player.isCreative());
                     return ActionResultType.SUCCESS;
                 }

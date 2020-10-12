@@ -1,5 +1,6 @@
 package de.melanx.cucurbita.items;
 
+import de.melanx.cucurbita.blocks.base.ModTile;
 import de.melanx.cucurbita.blocks.tiles.TileHollowedPumpkin;
 import de.melanx.cucurbita.core.LibNames;
 import de.melanx.cucurbita.core.registration.Registration;
@@ -68,12 +69,9 @@ public class PumpkinWand extends Item {
                             for (int x = 0; x < 5; x++) {
                                 world.addParticle(ParticleTypes.CAMPFIRE_COSY_SMOKE, pos.getX() + Math.random(), pos.getY() + Math.random(), pos.getZ() + Math.random(), 0, 0.05F, 0);
                             }
-
-
                             return new ActionResult<>(ActionResultType.SUCCESS, stack);
                         }
                     }
-
                     return new ActionResult<>(ActionResultType.FAIL, stack);
                 }
             }
@@ -85,11 +83,11 @@ public class PumpkinWand extends Item {
     @Override
     public ActionResultType onItemUse(@Nonnull ItemUseContext context) {
         TileEntity tile = context.getWorld().getTileEntity(context.getPos());
-        if (tile instanceof TileHollowedPumpkin) {
+        if (tile instanceof ModTile) {
             if (!hasSpecialMode(context.getItem())) {
-                ((TileHollowedPumpkin) tile).onWanded();
+                ((ModTile) tile).onWanded();
             } else {
-                ((TileHollowedPumpkin) tile).resetFluid(context.getPlayer());
+                ((ModTile) tile).resetFluid(context.getPlayer());
             }
             return ActionResultType.SUCCESS;
         }

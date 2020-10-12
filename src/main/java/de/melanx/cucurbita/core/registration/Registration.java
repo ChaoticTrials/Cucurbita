@@ -41,7 +41,7 @@ public class Registration {
 
     public static final RegistryObject<Item> ITEM_HOLLOWED_PUMPKIN = ITEMS.register(LibNames.HOLLOWED_PUMPKIN, () -> new BlockItem(BLOCK_HOLLOWED_PUMPKIN.get(), ITEM_PROPS));
     public static final RegistryObject<Item> ITEM_HOMEMADE_REFINERY = ITEMS.register(LibNames.HOMEMADE_REFINERY, () -> new BlockItem(BLOCK_HOMEMADE_REFINERY.get(), ITEM_PROPS));
-    public static final RegistryObject<Item> ITEM_PLANT_OIL_BUCKET = ITEMS.register(LibNames.PLANT_OIL_BUCKET, () -> new PlantOilBucket(ITEM_PROPS));
+    public static final RegistryObject<Item> ITEM_PLANT_OIL_BUCKET = ITEMS.register(LibNames.PLANT_OIL_BUCKET, () -> new PlantOilBucket(CONTAINER_ITEM_PROPS));
     public static final RegistryObject<Item> ITEM_PUMPKIN_STEM = ITEMS.register(LibNames.PUMPKIN_STEM, () -> new BlockItem(Blocks.PUMPKIN_STEM, ITEM_PROPS));
     public static final RegistryObject<Item> ITEM_PUMPKIN_WAND = ITEMS.register(LibNames.PUMPKIN_WAND, () -> new PumpkinWand(CONTAINER_ITEM_PROPS));
 
