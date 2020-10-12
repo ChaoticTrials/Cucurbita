@@ -1,0 +1,14 @@
+{
+  "type": "cucurbita:heat_sources",
+  "group": "heat_sources",
+  "heat": 300,
+  "source": {
+    "name": "minecraft:campfire",
+    "properties": {
+      "waterlogged": "false",
+      "signal_fire": "false",
+      "lit": "true",
+      "facing": "north"
+    }
+  }
+}

@@ -1,0 +1,56 @@
+{
+  "type": "cucurbita:hollowed_pumpkin",
+  "group": "hollowed_pumpkin",
+  "heat": 900,
+  "fluid": {
+    "name": "cucurbita:plant_oil",
+    "amount": 2000
+  },
+  "ingredients": [
+    {
+      "item": "minecraft:potion"
+    },
+    {
+      "item": "minecraft:potion"
+    },
+    {
+      "item": "minecraft:potion"
+    },
+    {
+      "item": "minecraft:potion"
+    },
+    {
+      "item": "minecraft:gold_block"
+    },
+    {
+      "item": "minecraft:gold_block"
+    },
+    {
+      "item": "minecraft:gold_block"
+    },
+    {
+      "item": "minecraft:gold_block"
+    },
+    {
+      "item": "minecraft:gold_block"
+    },
+    {
+      "item": "minecraft:gold_block"
+    },
+    {
+      "item": "minecraft:gold_block"
+    },
+    {
+      "item": "minecraft:gold_block"
+    },
+    {
+      "item": "minecraft:golden_apple"
+    }
+  ],
+  "outputs": [
+    {
+      "item": "minecraft:enchanted_golden_apple",
+      "chance": 1.0
+    }
+  ]
+}

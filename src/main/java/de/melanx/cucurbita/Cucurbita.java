@@ -22,6 +22,7 @@ import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.client.registry.ClientRegistry;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
+import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -42,11 +43,16 @@ public class Cucurbita {
         IEventBus eventBus = FMLJavaModLoadingContext.get().getModEventBus();
         eventBus.addListener(ClientRegistration.INSTANCE::onClientSetup);
         eventBus.addListener(ClientRegistration.INSTANCE::onModelBake);
+        eventBus.addListener(this::onCommonSetup);
         eventBus.addGenericListener(IRecipeSerializer.class, ModRecipeTypes::register);
         eventBus.addGenericListener(SoundEvent.class, ModSounds::registerSounds);
         MinecraftForge.EVENT_BUS.addListener(this::addReloadListeners);
         MinecraftForge.EVENT_BUS.addListener(this::onClientTick);
         MinecraftForge.EVENT_BUS.register(new RecipeReloadListener(null));
+    }
+
+    private void onCommonSetup(final FMLCommonSetupEvent event) {
+        Registration.registerBrewingRecipes();
     }
 
     private void addReloadListeners(AddReloadListenerEvent event) {

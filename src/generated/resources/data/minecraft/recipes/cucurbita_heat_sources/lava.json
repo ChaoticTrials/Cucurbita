@@ -1,7 +1,7 @@
 {
   "type": "cucurbita:heat_sources",
   "group": "heat_sources",
-  "heat": 2500,
+  "heat": 1200,
   "source": {
     "name": "minecraft:lava",
     "properties": {

@@ -1,8 +1,8 @@
 {
   "type": "cucurbita:heat_sources",
   "group": "heat_sources",
-  "heat": 250,
+  "heat": 1000,
   "source": {
-    "name": "minecraft:magma_block"
+    "name": "minecraft:soul_fire"
   }
 }

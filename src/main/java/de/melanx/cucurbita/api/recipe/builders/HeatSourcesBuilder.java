@@ -6,6 +6,7 @@ import com.mojang.serialization.JsonOps;
 import de.melanx.cucurbita.Cucurbita;
 import de.melanx.cucurbita.api.ModRecipeTypes;
 import de.melanx.cucurbita.api.util.ItemNBTHelper;
+import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.data.IFinishedRecipe;
 import net.minecraft.item.crafting.IRecipeSerializer;
@@ -24,11 +25,15 @@ public class HeatSourcesBuilder {
     private BlockState heatState;
     private int heatValue;
 
-    public static HeatSourcesBuilder heatSource() {
+    public static HeatSourcesBuilder create() {
         return new HeatSourcesBuilder().setGroup("heat_sources");
     }
 
-    public HeatSourcesBuilder setHeatState(BlockState state) {
+    public HeatSourcesBuilder setHeatBlock(Block block) {
+        return this.setHeatBlock(block.getDefaultState());
+    }
+
+    public HeatSourcesBuilder setHeatBlock(BlockState state) {
         this.heatState = state;
         return this;
     }

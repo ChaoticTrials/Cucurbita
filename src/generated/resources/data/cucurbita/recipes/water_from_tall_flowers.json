@@ -1,0 +1,13 @@
+{
+  "type": "cucurbita:refinery",
+  "heat": 120,
+  "input": {
+    "tag": "minecraft:tall_flowers"
+  },
+  "output": {
+    "fluid": {
+      "name": "minecraft:water",
+      "amount": 50
+    }
+  }
+}

@@ -1,0 +1,13 @@
+{
+  "type": "cucurbita:refinery",
+  "heat": 110,
+  "input": {
+    "tag": "minecraft:saplings"
+  },
+  "output": {
+    "fluid": {
+      "name": "minecraft:water",
+      "amount": 100
+    }
+  }
+}

@@ -1,0 +1,35 @@
+{
+  "type": "cucurbita:hollowed_pumpkin",
+  "group": "hollowed_pumpkin",
+  "heat": 1000,
+  "fluid": {
+    "name": "minecraft:lava",
+    "amount": 200
+  },
+  "ingredients": [
+    {
+      "item": "minecraft:creeper_head"
+    },
+    {
+      "item": "minecraft:zombie_head"
+    },
+    {
+      "item": "minecraft:skeleton_skull"
+    },
+    {
+      "item": "minecraft:wither_skeleton_skull"
+    },
+    {
+      "item": "minecraft:dragon_head"
+    }
+  ],
+  "outputs": [
+    {
+      "nbt": {
+        "SkullOwner": "MelanX"
+      },
+      "item": "minecraft:player_head",
+      "chance": 1.0
+    }
+  ]
+}

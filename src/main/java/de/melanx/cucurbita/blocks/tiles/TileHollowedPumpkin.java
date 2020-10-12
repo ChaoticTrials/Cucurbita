@@ -178,6 +178,7 @@ public class TileHollowedPumpkin extends ModTile {
                 }
             }
             this.progress = 0;
+            this.recipe = null;
             this.markDispatchable();
         }
     }

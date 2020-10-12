@@ -1,0 +1,13 @@
+{
+  "type": "cucurbita:refinery",
+  "heat": 300,
+  "input": {
+    "item": "minecraft:nether_wart"
+  },
+  "output": {
+    "fluid": {
+      "name": "minecraft:lava",
+      "amount": 100
+    }
+  }
+}

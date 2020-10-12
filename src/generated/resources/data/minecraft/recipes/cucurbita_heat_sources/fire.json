@@ -1,7 +1,7 @@
 {
   "type": "cucurbita:heat_sources",
   "group": "heat_sources",
-  "heat": 2000,
+  "heat": 750,
   "source": {
     "name": "minecraft:fire",
     "properties": {

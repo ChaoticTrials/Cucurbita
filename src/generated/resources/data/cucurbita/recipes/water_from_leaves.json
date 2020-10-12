@@ -1,0 +1,13 @@
+{
+  "type": "cucurbita:refinery",
+  "heat": 130,
+  "input": {
+    "tag": "minecraft:leaves"
+  },
+  "output": {
+    "fluid": {
+      "name": "minecraft:water",
+      "amount": 200
+    }
+  }
+}
