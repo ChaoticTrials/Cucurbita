@@ -24,6 +24,13 @@ description='''
     side="BOTH"
 
 [[dependencies.cucurbita]]
+    modId="libx"
+    mandatory=true
+    versionRange="[0.1.9,)"
+    ordering="NONE"
+    side="BOTH"
+
+[[dependencies.cucurbita]]
     modId="minecraft"
     mandatory=true
     versionRange="[1.16.3, 1.17)"
