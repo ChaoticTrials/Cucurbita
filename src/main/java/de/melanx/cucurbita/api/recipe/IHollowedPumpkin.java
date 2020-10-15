@@ -14,7 +14,7 @@ import java.util.List;
 
 public interface IHollowedPumpkin extends IRecipe<IInventory> {
 
-    ResourceLocation TYPE_ID = new ResourceLocation(Cucurbita.MODID, "hollowed_pumpkin");
+    ResourceLocation TYPE_ID = new ResourceLocation(Cucurbita.getInstance().modid, "hollowed_pumpkin");
 
     int getMinHeat();
 

@@ -12,7 +12,7 @@ import net.minecraft.world.World;
 
 public interface IHeatSources extends IRecipe<IInventory> {
 
-    ResourceLocation TYPE_ID = new ResourceLocation(Cucurbita.MODID, "heat_sources");
+    ResourceLocation TYPE_ID = new ResourceLocation(Cucurbita.getInstance().modid, "heat_sources");
 
     BlockState getHeatState();
 

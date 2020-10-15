@@ -54,7 +54,7 @@ public class HeatSourcesBuilder {
 
     public void build(Consumer<IFinishedRecipe> consumer, ResourceLocation id) {
         this.validate(id);
-        consumer.accept(new FinishedRecipe(new ResourceLocation(id.getNamespace(), Cucurbita.MODID + "_heat_sources/" + id.getPath()), this.heatValue, this.heatState, this.group == null ? "" : this.group));
+        consumer.accept(new FinishedRecipe(new ResourceLocation(id.getNamespace(), Cucurbita.getInstance().modid + "_heat_sources/" + id.getPath()), this.heatValue, this.heatState, this.group == null ? "" : this.group));
     }
 
     private void validate(ResourceLocation id) {

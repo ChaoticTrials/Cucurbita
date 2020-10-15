@@ -1,17 +1,17 @@
 package de.melanx.cucurbita.items;
 
 import de.melanx.cucurbita.blocks.base.ModTile;
-import de.melanx.cucurbita.blocks.tiles.TileHollowedPumpkin;
 import de.melanx.cucurbita.core.LibNames;
-import de.melanx.cucurbita.core.registration.Registration;
+import de.melanx.cucurbita.core.registration.ModBlocks;
 import de.melanx.cucurbita.sound.ModSounds;
+import io.github.noeppi_noeppi.libx.mod.ModX;
+import io.github.noeppi_noeppi.libx.mod.registration.ItemBase;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.IBucketPickupHandler;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.fluid.Fluid;
 import net.minecraft.fluid.Fluids;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemUseContext;
 import net.minecraft.particles.ParticleTypes;
@@ -33,11 +33,11 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.List;
 
-public class PumpkinWand extends Item {
+public class PumpkinWand extends ItemBase {
     private static final String TAG = "delete_fluid_mode";
 
-    public PumpkinWand(Properties properties) {
-        super(properties);
+    public PumpkinWand(ModX mod, Properties properties) {
+        super(mod, properties);
     }
 
     @Nonnull
@@ -138,12 +138,12 @@ public class PumpkinWand extends Item {
             if (stack.getOrCreateTag().getBoolean(TAG)) {
                 tooltip.add(new TranslationTextComponent(LibNames.getTooltipString("delete_mode1")).mergeStyle(TextFormatting.GOLD));
                 tooltip.add(new TranslationTextComponent(LibNames.getTooltipString("delete_mode2"),
-                        Registration.BLOCK_HOLLOWED_PUMPKIN.get().getTranslatedName()).mergeStyle(TextFormatting.GOLD));
+                        ModBlocks.HOLLOWED_PUMPKIN.getTranslatedName()).mergeStyle(TextFormatting.GOLD));
                 return;
             }
         }
         tooltip.add(new TranslationTextComponent(LibNames.getTooltipString("normal_mode1")).mergeStyle(TextFormatting.GOLD));
         tooltip.add(new TranslationTextComponent(LibNames.getTooltipString("normal_mode2"),
-                Registration.BLOCK_HOLLOWED_PUMPKIN.get().getTranslatedName()).mergeStyle(TextFormatting.GOLD));
+                ModBlocks.HOLLOWED_PUMPKIN.getTranslatedName()).mergeStyle(TextFormatting.GOLD));
     }
 }

@@ -1,7 +1,9 @@
 package de.melanx.cucurbita.data.recipes;
 
 import de.melanx.cucurbita.api.recipe.builders.HollowedPumpkinBuilder;
-import de.melanx.cucurbita.core.registration.Registration;
+import de.melanx.cucurbita.core.registration.ModFluids;
+import de.melanx.cucurbita.core.registration.ModItems;
+import de.melanx.cucurbita.core.registration.ModPotions;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.IFinishedRecipe;
 import net.minecraft.data.RecipeProvider;
@@ -9,7 +11,6 @@ import net.minecraft.fluid.Fluids;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.item.crafting.Ingredient;
-import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.potion.PotionUtils;
 import net.minecraft.potion.Potions;
 import net.minecraftforge.common.Tags;
@@ -26,27 +27,27 @@ public class HollowedPumpkinProvider extends RecipeProvider {
     protected void registerRecipes(@Nonnull Consumer<IFinishedRecipe> consumer) {
         HollowedPumpkinBuilder.create().addOutput(Items.ENCHANTED_GOLDEN_APPLE)
                 .setMinHeat(900)
-                .setFluidInput(Registration.FLUID_PLANT_OIL.get(), 2000)
+                .setFluidInput(ModFluids.PLANT_OIL, 2000)
                 // todo fix potions need nbt
                 .addIngredient(Ingredient.fromStacks(PotionUtils.addPotionToItemStack(new ItemStack(Items.POTION), Potions.LONG_FIRE_RESISTANCE)))
                 .addIngredient(Ingredient.fromStacks(PotionUtils.addPotionToItemStack(new ItemStack(Items.POTION), Potions.STRONG_REGENERATION)))
-                .addIngredient(Ingredient.fromStacks(PotionUtils.addPotionToItemStack(new ItemStack(Items.POTION), Registration.POTION_LONG_RESISTANCE.get())))
-                .addIngredient(Ingredient.fromStacks(PotionUtils.addPotionToItemStack(new ItemStack(Items.POTION), Registration.POTION_ABSORPTION_IV.get())))
+                .addIngredient(Ingredient.fromStacks(PotionUtils.addPotionToItemStack(new ItemStack(Items.POTION), ModPotions.LONG_RESISTANCE)))
+                .addIngredient(Ingredient.fromStacks(PotionUtils.addPotionToItemStack(new ItemStack(Items.POTION), ModPotions.ABSORPTION_IV)))
                 .addIngredient(Items.GOLD_BLOCK, 8)
                 .addIngredient(Items.GOLDEN_APPLE)
                 .build(consumer);
-        HollowedPumpkinBuilder.create().addOutput(Registration.ITEM_PUMPKIN_STEW.get())
+        HollowedPumpkinBuilder.create().addOutput(ModItems.PUMPKIN_STEW)
                 .setMinHeat(240)
-                .setFluidInput(Registration.FLUID_PLANT_OIL.get(), 200)
+                .setFluidInput(ModFluids.PLANT_OIL, 200)
                 .addIngredient(Items.BOWL)
-                .addIngredient(Registration.ITEM_PUMPKIN_PULP.get(), 2)
+                .addIngredient(ModItems.PUMPKIN_PULP, 2)
                 .addIngredient(Items.POTATO)
                 .build(consumer);
-        HollowedPumpkinBuilder.create().addOutput(Registration.FOOD_PUMPKIN_JAM.get())
-                .addOutput(Registration.ITEM_PUMPKIN_PULP.get(), 1, 0.1D)
+        HollowedPumpkinBuilder.create().addOutput(ModItems.PUMPKIN_JAM)
+                .addOutput(ModItems.PUMPKIN_PULP, 1, 0.1D)
                 .setMinHeat(300)
-                .setFluidInput(Registration.FLUID_PLANT_OIL.get(), 100)
-                .addIngredient(Registration.ITEM_PUMPKIN_PULP.get(), 5)
+                .setFluidInput(ModFluids.PLANT_OIL, 100)
+                .addIngredient(ModItems.PUMPKIN_PULP, 5)
                 .addIngredient(Items.GLASS_BOTTLE)
                 .build(consumer);
         HollowedPumpkinBuilder.create().addOutput(Items.HEART_OF_THE_SEA)

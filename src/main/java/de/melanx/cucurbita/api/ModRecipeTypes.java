@@ -1,7 +1,6 @@
 package de.melanx.cucurbita.api;
 
 import de.melanx.cucurbita.api.recipe.*;
-import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.item.crafting.IRecipeSerializer;
 import net.minecraft.item.crafting.IRecipeType;
 import net.minecraftforge.event.RegistryEvent;
@@ -22,5 +21,4 @@ public class ModRecipeTypes {
         event.getRegistry().register(HOLLOWED_PUMPKIN_SERIALIZER.setRegistryName(IHollowedPumpkin.TYPE_ID));
         event.getRegistry().register(REFINERY_SERIALIZER.setRegistryName(IRefinery.TYPE_ID));
     }
-
 }

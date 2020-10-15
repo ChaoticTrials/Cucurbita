@@ -1,13 +1,15 @@
 package de.melanx.cucurbita.blocks;
 
+import de.melanx.cucurbita.blocks.tesrs.TesrHollowedPumpkin;
 import de.melanx.cucurbita.blocks.tiles.TileHollowedPumpkin;
-import de.melanx.cucurbita.core.registration.Registration;
+import de.melanx.cucurbita.core.registration.ModItems;
 import de.melanx.cucurbita.util.Util;
-import de.melanx.cucurbita.util.VanillaPacketDispatcher;
+import io.github.noeppi_noeppi.libx.mod.ModX;
+import io.github.noeppi_noeppi.libx.mod.registration.BlockTE;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
-import net.minecraft.block.ITileEntityProvider;
-import net.minecraft.block.material.Material;
+import net.minecraft.client.renderer.RenderType;
+import net.minecraft.client.renderer.RenderTypeLookup;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.item.ItemEntity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -18,6 +20,7 @@ import net.minecraft.state.properties.BlockStateProperties;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Hand;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.util.math.shapes.IBooleanFunction;
@@ -26,24 +29,26 @@ import net.minecraft.util.math.shapes.VoxelShape;
 import net.minecraft.util.math.shapes.VoxelShapes;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
-import net.minecraftforge.common.ToolType;
 import net.minecraftforge.fluids.FluidActionResult;
 import net.minecraftforge.fluids.FluidUtil;
 import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
+import net.minecraftforge.fml.client.registry.ClientRegistry;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-public class BlockHollowedPumpkin extends Block implements ITileEntityProvider {
-
+public class BlockHollowedPumpkin extends BlockTE<TileHollowedPumpkin> {
     private static final VoxelShape INSIDE = makeCuboidShape(2.0D, 1.0D, 2.0D, 14.0D, 16.0D, 14.0D);
     private static final VoxelShape SHAPE = VoxelShapes.combineAndSimplify(VoxelShapes.fullCube(), VoxelShapes.or(INSIDE), IBooleanFunction.ONLY_FIRST);
 
-    public BlockHollowedPumpkin() {
-        super(Properties.create(Material.ORGANIC)
-                .harvestTool(ToolType.AXE)
-                .harvestLevel(1)
-                .hardnessAndResistance(2));
+    public BlockHollowedPumpkin(ModX mod, Class<TileHollowedPumpkin> teClass, Properties properties) {
+        super(mod, teClass, properties);
+    }
+
+    @Override
+    public void registerClient(ResourceLocation id) {
+        ClientRegistry.bindTileEntityRenderer(this.getTileType(), TesrHollowedPumpkin::new);
+        RenderTypeLookup.setRenderLayer(this, RenderType.getCutout());
     }
 
     @SuppressWarnings("deprecation")
@@ -64,10 +69,10 @@ public class BlockHollowedPumpkin extends Block implements ITileEntityProvider {
         if (tile instanceof TileHollowedPumpkin) {
             if (player.isSneaking()) {
                 Util.withdrawFromInventory(((TileHollowedPumpkin) tile).getInventory(), player);
-                VanillaPacketDispatcher.dispatchTEToNearbyPlayers(tile);
+                ((TileHollowedPumpkin) tile).markDispatchable();
                 return ActionResultType.SUCCESS;
             } else {
-                if (!player.getHeldItemMainhand().isEmpty() && player.getHeldItemMainhand().getItem() != Registration.ITEM_PUMPKIN_WAND.get()) {
+                if (!player.getHeldItemMainhand().isEmpty() && player.getHeldItemMainhand().getItem() != ModItems.PUMPKIN_WAND) {
                     ((TileHollowedPumpkin) tile).addToInventory(player.getHeldItemMainhand(), !player.isCreative());
                     return ActionResultType.SUCCESS;
                 }
@@ -96,15 +101,9 @@ public class BlockHollowedPumpkin extends Block implements ITileEntityProvider {
         if (!world.isRemote && entity instanceof ItemEntity) {
             TileHollowedPumpkin tile = (TileHollowedPumpkin) world.getTileEntity(pos);
             if (tile != null && tile.collideEntityItem((ItemEntity) entity)) {
-                VanillaPacketDispatcher.dispatchTEToNearbyPlayers(tile);
+                tile.markDispatchable();
             }
         }
-    }
-
-    @Nullable
-    @Override
-    public TileEntity createNewTileEntity(@Nonnull IBlockReader worldIn) {
-        return new TileHollowedPumpkin();
     }
 
     @SuppressWarnings("deprecation")

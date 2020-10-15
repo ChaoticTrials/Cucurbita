@@ -11,7 +11,7 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fluids.FluidStack;
 
 public interface IRefinery extends IRecipe<IInventory> {
-    ResourceLocation TYPE_ID = new ResourceLocation(Cucurbita.MODID, "refinery");
+    ResourceLocation TYPE_ID = new ResourceLocation(Cucurbita.getInstance().modid, "refinery");
 
     FluidStack getFluidOutput();
 

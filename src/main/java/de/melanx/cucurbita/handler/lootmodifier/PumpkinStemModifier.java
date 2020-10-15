@@ -1,7 +1,7 @@
 package de.melanx.cucurbita.handler.lootmodifier;
 
 import com.google.gson.JsonObject;
-import de.melanx.cucurbita.core.registration.Registration;
+import de.melanx.cucurbita.core.registration.ModItems;
 import net.minecraft.item.ItemStack;
 import net.minecraft.loot.LootContext;
 import net.minecraft.loot.conditions.ILootCondition;
@@ -21,7 +21,7 @@ public class PumpkinStemModifier extends LootModifier {
     @Nonnull
     @Override
     protected List<ItemStack> doApply(List<ItemStack> generatedLoot, LootContext context) {
-        return generatedLoot.size() != 0 ? Collections.singletonList(new ItemStack(Registration.ITEM_PUMPKIN_STEM.get())) : generatedLoot;
+        return generatedLoot.size() != 0 ? Collections.singletonList(new ItemStack(ModItems.PUMPKIN_STEM)) : generatedLoot;
     }
 
     public static class Serializer extends GlobalLootModifierSerializer<PumpkinStemModifier> {

@@ -1,7 +1,7 @@
 package de.melanx.cucurbita.fluids;
 
 import de.melanx.cucurbita.Cucurbita;
-import de.melanx.cucurbita.core.registration.Registration;
+import de.melanx.cucurbita.core.registration.ModItems;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.fluid.Fluid;
@@ -21,7 +21,7 @@ import javax.annotation.Nonnull;
 
 public class FluidPlantOil extends Fluid {
 
-    public static final ResourceLocation OIL_SOURCE = new ResourceLocation(Cucurbita.MODID, "block/fluid/plant_oil");
+    public static final ResourceLocation OIL_SOURCE = new ResourceLocation(Cucurbita.getInstance().modid, "block/fluid/plant_oil");
 
     @Nonnull
     @Override
@@ -32,7 +32,7 @@ public class FluidPlantOil extends Fluid {
     @Nonnull
     @Override
     public Item getFilledBucket() {
-        return Registration.ITEM_PLANT_OIL_BUCKET.get();
+        return ModItems.PLANT_OIL_BUCKET;
     }
 
     @Override

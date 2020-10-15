@@ -1,6 +1,6 @@
 package de.melanx.cucurbita.data.recipes;
 
-import de.melanx.cucurbita.core.registration.Registration;
+import de.melanx.cucurbita.core.registration.ModItems;
 import net.minecraft.data.CookingRecipeBuilder;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.IFinishedRecipe;
@@ -18,7 +18,7 @@ public class SmeltingRecipes extends RecipeProvider {
 
     @Override
     protected void registerRecipes(@Nonnull Consumer<IFinishedRecipe> consumer) {
-        CookingRecipeBuilder.cookingRecipe(Ingredient.fromItems(Registration.ITEM_PUMPKIN_STEM.get()), Registration.ITEM_PUMPKIN_WAND.get(), 0.5F, 1000, IRecipeSerializer.CAMPFIRE_COOKING)
-                .addCriterion("has_item", hasItem(Registration.ITEM_PUMPKIN_STEM.get())).build(consumer);
+        CookingRecipeBuilder.cookingRecipe(Ingredient.fromItems(ModItems.PUMPKIN_STEM), ModItems.PUMPKIN_WAND, 0.5F, 1000, IRecipeSerializer.CAMPFIRE_COOKING)
+                .addCriterion("has_item", hasItem(ModItems.PUMPKIN_STEM)).build(consumer);
     }
 }

@@ -4,15 +4,14 @@ import de.melanx.cucurbita.api.recipe.HeatSourcesRecipe;
 import de.melanx.cucurbita.api.recipe.IRefinery;
 import de.melanx.cucurbita.api.recipe.RefineryRecipe;
 import de.melanx.cucurbita.blocks.base.ModTile;
-import de.melanx.cucurbita.core.registration.Registration;
 import de.melanx.cucurbita.sound.ModSounds;
-import de.melanx.cucurbita.util.inventory.BaseItemStackHandler;
+import io.github.noeppi_noeppi.libx.inventory.BaseItemStackHandler;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.particles.ParticleTypes;
+import net.minecraft.tileentity.TileEntityType;
 import net.minecraft.util.Direction;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.capabilities.Capability;
@@ -38,8 +37,8 @@ public class TileHomemadeRefinery extends ModTile {
     private int heat;
     private boolean init;
 
-    public TileHomemadeRefinery() {
-        super(Registration.TILE_HOMEMADE_REFINERY.get());
+    public TileHomemadeRefinery(TileEntityType<?> type) {
+        super(type);
         this.inventory.setInputSlots(0);
         this.inventory.setOutputSlots(1);
         this.inventory.setDefaultSlotLimit(1);
@@ -131,7 +130,6 @@ public class TileHomemadeRefinery extends ModTile {
                 }
             }
         }
-        super.tick();
     }
 
     @Override
@@ -159,7 +157,7 @@ public class TileHomemadeRefinery extends ModTile {
     }
 
     @Override
-    public void readPacketNBT(CompoundNBT cmp) {
+    public void read(@Nonnull BlockState state, @Nonnull CompoundNBT cmp) {
         this.getInventory().deserializeNBT(cmp.getCompound("inventory"));
         this.fluidInventory.setFluid(FluidStack.loadFluidStackFromNBT(cmp.getCompound("fluid")));
         this.progress = cmp.getInt("progress");
@@ -175,8 +173,9 @@ public class TileHomemadeRefinery extends ModTile {
         }
     }
 
+    @Nonnull
     @Override
-    public void writePacketNBT(CompoundNBT cmp) {
+    public CompoundNBT write(@Nonnull CompoundNBT cmp) {
         cmp.put("inventory", this.getInventory().serializeNBT());
         final CompoundNBT tankTag = new CompoundNBT();
         this.fluidInventory.getFluid().writeToNBT(tankTag);
@@ -190,6 +189,45 @@ public class TileHomemadeRefinery extends ModTile {
                 cmp.putString("recipe", "");
             }
         }
+        return cmp;
+    }
+
+    @Override
+    public void handleUpdateTag(BlockState state, CompoundNBT cmp) {
+        if (world != null && !world.isRemote) return;
+        this.fluidInventory.setFluid(FluidStack.loadFluidStackFromNBT(cmp.getCompound("fluid")));
+        this.progress = cmp.getInt("progress");
+        this.progressAnimation = cmp.getInt("animation");
+        if (!this.init) {
+            RefineryRecipe.REFINERY_RECIPES.values().forEach(recipe -> {
+                ResourceLocation savedRecipe = ResourceLocation.tryCreate(cmp.getString("recipe"));
+                if (savedRecipe == null) return;
+                if (recipe.getId() == savedRecipe) {
+                    this.recipe = recipe;
+                }
+            });
+        }
+    }
+
+    @Nonnull
+    @Override
+    public CompoundNBT getUpdateTag() {
+        if (world != null && world.isRemote) return new CompoundNBT();
+        CompoundNBT cmp = new CompoundNBT();
+        cmp.put("inventory", this.getInventory().serializeNBT());
+        final CompoundNBT tankTag = new CompoundNBT();
+        this.fluidInventory.getFluid().writeToNBT(tankTag);
+        cmp.put("fluid", tankTag);
+        cmp.putInt("progress", this.progress);
+        cmp.putInt("animation", this.progressAnimation);
+        if (this.init) {
+            if (this.recipe != null) {
+                cmp.putString("recipe", this.recipe.getId().toString());
+            } else {
+                cmp.putString("recipe", "");
+            }
+        }
+        return super.getUpdateTag();
     }
 
     @Nonnull

@@ -1,6 +1,6 @@
 package de.melanx.cucurbita.util;
 
-import de.melanx.cucurbita.util.inventory.BaseItemStackHandler;
+import io.github.noeppi_noeppi.libx.inventory.BaseItemStackHandler;
 import net.minecraft.entity.item.ItemEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;

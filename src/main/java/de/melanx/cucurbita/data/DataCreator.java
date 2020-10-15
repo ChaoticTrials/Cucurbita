@@ -1,20 +1,15 @@
 package de.melanx.cucurbita.data;
 
-import de.melanx.cucurbita.Cucurbita;
 import de.melanx.cucurbita.data.recipes.HeatSourceProvider;
 import de.melanx.cucurbita.data.recipes.HollowedPumpkinProvider;
 import de.melanx.cucurbita.data.recipes.RefineryProvider;
 import de.melanx.cucurbita.data.recipes.SmeltingRecipes;
 import net.minecraft.data.DataGenerator;
 import net.minecraftforge.common.data.ExistingFileHelper;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.GatherDataEvent;
 
-@Mod.EventBusSubscriber(modid = Cucurbita.MODID, bus = Mod.EventBusSubscriber.Bus.MOD)
 public class DataCreator {
 
-    @SubscribeEvent
     public static void onGatherData(GatherDataEvent event) {
         DataGenerator generator = event.getGenerator();
         ExistingFileHelper helper = event.getExistingFileHelper();

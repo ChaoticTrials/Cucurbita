@@ -4,10 +4,9 @@ import de.melanx.cucurbita.api.recipe.HeatSourcesRecipe;
 import de.melanx.cucurbita.api.recipe.HollowedPumpkinRecipe;
 import de.melanx.cucurbita.api.recipe.IHollowedPumpkin;
 import de.melanx.cucurbita.blocks.base.ModTile;
-import de.melanx.cucurbita.core.registration.Registration;
 import de.melanx.cucurbita.sound.ModSounds;
-import de.melanx.cucurbita.util.inventory.BaseItemStackHandler;
-import de.melanx.cucurbita.util.inventory.ItemStackHandlerWrapper;
+import io.github.noeppi_noeppi.libx.inventory.BaseItemStackHandler;
+import io.github.noeppi_noeppi.libx.inventory.ItemStackHandlerWrapper;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.item.ItemEntity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -15,6 +14,7 @@ import net.minecraft.fluid.Fluids;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.particles.ParticleTypes;
+import net.minecraft.tileentity.TileEntityType;
 import net.minecraft.util.Direction;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.LazyOptional;
@@ -46,17 +46,12 @@ public class TileHollowedPumpkin extends ModTile {
     private int heat;
     private HollowedPumpkinRecipe recipe;
 
-    public TileHollowedPumpkin() {
-        super(Registration.TILE_HOLLOWED_PUMPKIN.get());
+    public TileHollowedPumpkin(TileEntityType<?> type) {
+        super(type);
         this.inventory.setDefaultSlotLimit(1);
         this.inventory.setInputSlots(IntStream.range(0, 16).toArray());
     }
 
-    /**
-     * This can be used to add canExtract or canInsert to the wrapper used as capability. You may not call the supplier
-     * now. Always use IItemHandlerModifiable.createLazy. You may call the supplier inside the canExtract and canInsert
-     * lambda.
-     */
     protected LazyOptional<IItemHandlerModifiable> createHandler(Supplier<IItemHandlerModifiable> inventory) {
         return ItemStackHandlerWrapper.createLazy(inventory);
     }
@@ -136,7 +131,6 @@ public class TileHollowedPumpkin extends ModTile {
                 }
             }
         }
-        super.tick();
     }
 
     private int getFreeSlot() {
@@ -213,19 +207,43 @@ public class TileHollowedPumpkin extends ModTile {
     }
 
     @Override
-    public void readPacketNBT(CompoundNBT cmp) {
-        this.getInventory().deserializeNBT(cmp.getCompound("inventory"));
-        this.getFluidInventory().setFluid(FluidStack.loadFluidStackFromNBT(cmp.getCompound("fluid")));
+    public void read(@Nonnull BlockState state, @Nonnull CompoundNBT cmp) {
+        super.read(state, cmp);
+        this.inventory.deserializeNBT(cmp.getCompound("inventory"));
+        this.fluidInventory.setFluid(FluidStack.loadFluidStackFromNBT(cmp.getCompound("fluid")));
         this.progress = cmp.getInt("progress");
     }
 
+    @Nonnull
     @Override
-    public void writePacketNBT(CompoundNBT cmp) {
-        cmp.put("inventory", this.getInventory().serializeNBT());
+    public CompoundNBT write(@Nonnull CompoundNBT cmp) {
+        cmp.put("inventory", this.inventory.serializeNBT());
         final CompoundNBT tankTag = new CompoundNBT();
         this.getFluidInventory().getFluid().writeToNBT(tankTag);
         cmp.put("fluid", tankTag);
         cmp.putInt("progress", this.progress);
+        return super.write(cmp);
+    }
+
+    @Override
+    public void handleUpdateTag(BlockState state, CompoundNBT cmp) {
+        if (world != null && !world.isRemote) return;
+        this.inventory.deserializeNBT(cmp.getCompound("inventory"));
+        this.fluidInventory.setFluid(FluidStack.loadFluidStackFromNBT(cmp.getCompound("fluid")));
+        this.progress = cmp.getInt("progress");
+    }
+
+    @Nonnull
+    @Override
+    public CompoundNBT getUpdateTag() {
+        if (world != null && world.isRemote) return new CompoundNBT();
+        CompoundNBT cmp = new CompoundNBT();
+        cmp.put("inventory", this.inventory.serializeNBT());
+        final CompoundNBT tankTag = new CompoundNBT();
+        this.getFluidInventory().getFluid().writeToNBT(tankTag);
+        cmp.put("fluid", tankTag);
+        cmp.putInt("progress", this.progress);
+        return cmp;
     }
 
     @Nonnull

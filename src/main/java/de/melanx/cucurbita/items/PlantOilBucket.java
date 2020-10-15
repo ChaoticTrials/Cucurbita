@@ -1,6 +1,6 @@
 package de.melanx.cucurbita.items;
 
-import de.melanx.cucurbita.core.registration.Registration;
+import de.melanx.cucurbita.core.registration.ModFluids;
 import net.minecraft.item.BucketItem;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
@@ -13,7 +13,7 @@ import javax.annotation.Nullable;
 
 public class PlantOilBucket extends BucketItem {
     public PlantOilBucket(Properties builder) {
-        super(Registration.FLUID_PLANT_OIL, builder);
+        super(ModFluids.PLANT_OIL, builder);
     }
 
     @Override

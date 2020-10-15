@@ -10,7 +10,7 @@ public class ModSounds {
     public static final SoundEvent WOOSH = createSoundEvent("woosh");
 
     private static SoundEvent createSoundEvent(final String soundName) {
-        final ResourceLocation soundID = new ResourceLocation(Cucurbita.MODID, soundName);
+        final ResourceLocation soundID = new ResourceLocation(Cucurbita.getInstance().modid, soundName);
         return new SoundEvent(soundID).setRegistryName(soundID);
     }
 
