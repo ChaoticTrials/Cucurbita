@@ -95,7 +95,10 @@ public class TileHomemadeRefinery extends ModTile {
     @Override
     public void tick() {
         if (this.world != null) {
-            if (!this.init) this.init = true;
+            if (!this.init) {
+                this.init = true;
+                this.markDispatchable();
+            }
             this.updateRecipe();
             BlockState state = this.world.getBlockState(this.pos.down());
             this.heat = HeatSourcesRecipe.getHeatValue(state);
@@ -158,6 +161,7 @@ public class TileHomemadeRefinery extends ModTile {
 
     @Override
     public void read(@Nonnull BlockState state, @Nonnull CompoundNBT cmp) {
+        super.read(state, cmp);
         this.getInventory().deserializeNBT(cmp.getCompound("inventory"));
         this.fluidInventory.setFluid(FluidStack.loadFluidStackFromNBT(cmp.getCompound("fluid")));
         this.progress = cmp.getInt("progress");
@@ -189,12 +193,13 @@ public class TileHomemadeRefinery extends ModTile {
                 cmp.putString("recipe", "");
             }
         }
-        return cmp;
+        return super.write(cmp);
     }
 
     @Override
     public void handleUpdateTag(BlockState state, CompoundNBT cmp) {
         if (world != null && !world.isRemote) return;
+        this.inventory.deserializeNBT(cmp.getCompound("inventory"));
         this.fluidInventory.setFluid(FluidStack.loadFluidStackFromNBT(cmp.getCompound("fluid")));
         this.progress = cmp.getInt("progress");
         this.progressAnimation = cmp.getInt("animation");
@@ -212,7 +217,7 @@ public class TileHomemadeRefinery extends ModTile {
     @Nonnull
     @Override
     public CompoundNBT getUpdateTag() {
-        if (world != null && world.isRemote) return new CompoundNBT();
+        if (world != null && world.isRemote) return super.getUpdateTag();
         CompoundNBT cmp = new CompoundNBT();
         cmp.put("inventory", this.getInventory().serializeNBT());
         final CompoundNBT tankTag = new CompoundNBT();
@@ -227,7 +232,7 @@ public class TileHomemadeRefinery extends ModTile {
                 cmp.putString("recipe", "");
             }
         }
-        return super.getUpdateTag();
+        return cmp;
     }
 
     @Nonnull

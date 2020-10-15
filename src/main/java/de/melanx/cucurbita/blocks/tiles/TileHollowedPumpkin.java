@@ -45,6 +45,7 @@ public class TileHollowedPumpkin extends ModTile {
     private int progress;
     private int heat;
     private HollowedPumpkinRecipe recipe;
+    private boolean init;
 
     public TileHollowedPumpkin(TileEntityType<?> type) {
         super(type);
@@ -103,6 +104,10 @@ public class TileHollowedPumpkin extends ModTile {
     @Override
     public void tick() {
         if (world != null) {
+            if (!this.init) {
+                this.init = true;
+                this.markDispatchable();
+            }
             BlockState state = this.world.getBlockState(this.pos.down());
             this.heat = HeatSourcesRecipe.getHeatValue(state);
             if (!this.world.isRemote) {
@@ -236,7 +241,7 @@ public class TileHollowedPumpkin extends ModTile {
     @Nonnull
     @Override
     public CompoundNBT getUpdateTag() {
-        if (world != null && world.isRemote) return new CompoundNBT();
+        if (world != null && world.isRemote) return super.getUpdateTag();
         CompoundNBT cmp = new CompoundNBT();
         cmp.put("inventory", this.inventory.serializeNBT());
         final CompoundNBT tankTag = new CompoundNBT();
