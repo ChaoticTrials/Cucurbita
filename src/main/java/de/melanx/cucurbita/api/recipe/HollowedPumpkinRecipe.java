@@ -93,7 +93,8 @@ public class HollowedPumpkinRecipe implements IHollowedPumpkin {
         public IHollowedPumpkin read(ResourceLocation id, JsonObject json) {
             int minHeat = JSONUtils.getInt(json, "heat", 0);
 
-            JsonObject fluidObject = JSONUtils.getJsonObject(json, "fluid");
+            JsonObject inputs = JSONUtils.getJsonObject(json, "inputs");
+            JsonObject fluidObject = JSONUtils.getJsonObject(inputs, "fluid");
             String s = JSONUtils.getString(fluidObject, "name");
             ResourceLocation fluidName = ResourceLocation.tryCreate(s);
             Fluid fluid = Registry.FLUID.getOrDefault(fluidName);
@@ -106,7 +107,7 @@ public class HollowedPumpkinRecipe implements IHollowedPumpkin {
             }
             FluidStack fluidInput = new FluidStack(fluid, fluidAmount);
 
-            JsonArray ingrs = JSONUtils.getJsonArray(json, "ingredients");
+            JsonArray ingrs = JSONUtils.getJsonArray(inputs, "ingredients");
             Ingredient[] ingredients = new Ingredient[ingrs.size()];
             for (int i = 0; i < ingrs.size(); i++) {
                 ingredients[i] = Ingredient.deserialize(ingrs.get(i));

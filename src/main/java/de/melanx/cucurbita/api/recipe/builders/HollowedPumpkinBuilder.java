@@ -3,8 +3,10 @@ package de.melanx.cucurbita.api.recipe.builders;
 import com.google.common.collect.Lists;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
+import de.melanx.cucurbita.Cucurbita;
 import de.melanx.cucurbita.api.ModRecipeTypes;
 import de.melanx.cucurbita.api.util.ItemNBTHelper;
+import io.github.noeppi_noeppi.libx.crafting.ingredient.NbtIngredient;
 import net.minecraft.data.IFinishedRecipe;
 import net.minecraft.fluid.Fluid;
 import net.minecraft.item.Item;
@@ -14,6 +16,8 @@ import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.tags.ITag;
 import net.minecraft.util.IItemProvider;
 import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.common.crafting.CraftingHelper;
+import net.minecraftforge.common.crafting.NBTIngredient;
 import net.minecraftforge.fluids.FluidStack;
 import org.apache.commons.lang3.tuple.Pair;
 
@@ -73,6 +77,11 @@ public class HollowedPumpkinBuilder {
         return this.addIngredient(Ingredient.fromItems(item), quantity);
     }
 
+    public HollowedPumpkinBuilder addIngredient(NbtIngredient ingredient) {
+        ingredients.add(ingredient);
+        return this;
+    }
+
     public HollowedPumpkinBuilder addIngredient(Ingredient ingredient) {
         return this.addIngredient(ingredient, 1);
     }
@@ -112,7 +121,7 @@ public class HollowedPumpkinBuilder {
 
     public void build(Consumer<IFinishedRecipe> consumerIn, ResourceLocation id) {
         this.validate(id);
-        consumerIn.accept(new HollowedPumpkinBuilder.FinishedRecipe(new ResourceLocation(id.getNamespace(), "hollowed_pumpkin/" + id.getPath()), this.ingredients, this.group == null ? "" : this.group, this.minHeat, this.fluidInput, this.outputs));
+        consumerIn.accept(new HollowedPumpkinBuilder.FinishedRecipe(new ResourceLocation(id.getNamespace(), Cucurbita.getInstance().modid + "_hollowed_pumpkin/" + id.getPath()), this.ingredients, this.group == null ? "" : this.group, this.minHeat, this.fluidInput, this.outputs));
     }
 
     private void validate(ResourceLocation id) {
@@ -157,22 +166,24 @@ public class HollowedPumpkinBuilder {
             if (this.minHeat != 0) {
                 json.addProperty("heat", this.minHeat);
             }
+            JsonObject inputs = new JsonObject();
             JsonObject fluidObject = new JsonObject();
             fluidObject.addProperty("name", this.fluidInput.getRawFluid().getRegistryName().toString());
             fluidObject.addProperty("amount", this.fluidInput.getAmount());
-            json.add("fluid", fluidObject);
+            inputs.add("fluid", fluidObject);
             JsonArray ingredients = new JsonArray();
             for (Ingredient ingredient : this.ingredients) {
                 ingredients.add(ingredient.serialize());
             }
-            json.add("ingredients", ingredients);
+            inputs.add("ingredients", ingredients);
             JsonArray outputs = new JsonArray();
             for (Pair<ItemStack, Double> output : this.outputs) {
                 JsonObject outputObject = ItemNBTHelper.serializeStack(output.getKey());
                 outputObject.addProperty("chance", output.getValue());
                 outputs.add(outputObject);
             }
-            json.add("outputs", outputs);
+            json.add("input", inputs);
+            json.add("output", outputs);
         }
 
         @Nonnull

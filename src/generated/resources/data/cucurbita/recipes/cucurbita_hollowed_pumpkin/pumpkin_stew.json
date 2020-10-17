@@ -1,0 +1,31 @@
+{
+  "type": "cucurbita:hollowed_pumpkin",
+  "group": "hollowed_pumpkin",
+  "heat": 240,
+  "input": {
+    "fluid": {
+      "name": "cucurbita:plant_oil",
+      "amount": 200
+    },
+    "ingredients": [
+      {
+        "item": "minecraft:bowl"
+      },
+      {
+        "item": "cucurbita:pumpkin_pulp"
+      },
+      {
+        "item": "cucurbita:pumpkin_pulp"
+      },
+      {
+        "item": "minecraft:potato"
+      }
+    ]
+  },
+  "output": [
+    {
+      "item": "cucurbita:pumpkin_stew",
+      "chance": 1.0
+    }
+  ]
+}

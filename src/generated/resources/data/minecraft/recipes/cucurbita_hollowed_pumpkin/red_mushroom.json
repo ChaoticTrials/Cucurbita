@@ -1,0 +1,22 @@
+{
+  "type": "cucurbita:hollowed_pumpkin",
+  "group": "hollowed_pumpkin",
+  "heat": 400,
+  "input": {
+    "fluid": {
+      "name": "minecraft:water",
+      "amount": 200
+    },
+    "ingredients": [
+      {
+        "item": "minecraft:crimson_fungus"
+      }
+    ]
+  },
+  "output": [
+    {
+      "item": "minecraft:red_mushroom",
+      "chance": 1.0
+    }
+  ]
+}

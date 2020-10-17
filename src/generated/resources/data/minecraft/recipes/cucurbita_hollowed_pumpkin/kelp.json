@@ -1,0 +1,35 @@
+{
+  "type": "cucurbita:hollowed_pumpkin",
+  "group": "hollowed_pumpkin",
+  "heat": 300,
+  "input": {
+    "fluid": {
+      "name": "minecraft:water",
+      "amount": 200
+    },
+    "ingredients": [
+      {
+        "item": "minecraft:seagrass"
+      },
+      {
+        "item": "minecraft:seagrass"
+      },
+      {
+        "item": "minecraft:seagrass"
+      },
+      {
+        "item": "minecraft:seagrass"
+      },
+      {
+        "item": "minecraft:seagrass"
+      }
+    ]
+  },
+  "output": [
+    {
+      "item": "minecraft:kelp",
+      "count": 3,
+      "chance": 0.8
+    }
+  ]
+}

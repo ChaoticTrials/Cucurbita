@@ -1,0 +1,70 @@
+{
+  "type": "cucurbita:hollowed_pumpkin",
+  "group": "hollowed_pumpkin",
+  "heat": 900,
+  "input": {
+    "fluid": {
+      "name": "cucurbita:plant_oil",
+      "amount": 2000
+    },
+    "ingredients": [
+      {
+        "type": "libx:nbt",
+        "item": "minecraft:potion",
+        "nbt": "{Potion:\"minecraft:long_fire_resistance\"}",
+        "exactMatch": false
+      },
+      {
+        "type": "libx:nbt",
+        "item": "minecraft:potion",
+        "nbt": "{Potion:\"minecraft:strong_regeneration\"}",
+        "exactMatch": false
+      },
+      {
+        "type": "libx:nbt",
+        "item": "minecraft:potion",
+        "nbt": "{Potion:\"cucurbita:long_resistance\"}",
+        "exactMatch": false
+      },
+      {
+        "type": "libx:nbt",
+        "item": "minecraft:potion",
+        "nbt": "{Potion:\"cucurbita:absorption_iv\"}",
+        "exactMatch": false
+      },
+      {
+        "item": "minecraft:gold_block"
+      },
+      {
+        "item": "minecraft:gold_block"
+      },
+      {
+        "item": "minecraft:gold_block"
+      },
+      {
+        "item": "minecraft:gold_block"
+      },
+      {
+        "item": "minecraft:gold_block"
+      },
+      {
+        "item": "minecraft:gold_block"
+      },
+      {
+        "item": "minecraft:gold_block"
+      },
+      {
+        "item": "minecraft:gold_block"
+      },
+      {
+        "item": "minecraft:golden_apple"
+      }
+    ]
+  },
+  "output": [
+    {
+      "item": "minecraft:enchanted_golden_apple",
+      "chance": 1.0
+    }
+  ]
+}

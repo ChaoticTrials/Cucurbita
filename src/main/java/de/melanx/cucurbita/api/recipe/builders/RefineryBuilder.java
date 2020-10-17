@@ -1,8 +1,10 @@
 package de.melanx.cucurbita.api.recipe.builders;
 
 import com.google.gson.JsonObject;
+import de.melanx.cucurbita.Cucurbita;
 import de.melanx.cucurbita.api.ModRecipeTypes;
 import de.melanx.cucurbita.api.util.ItemNBTHelper;
+import io.github.noeppi_noeppi.libx.crafting.ingredient.NbtIngredient;
 import net.minecraft.data.IFinishedRecipe;
 import net.minecraft.fluid.Fluid;
 import net.minecraft.item.Item;
@@ -54,6 +56,11 @@ public class RefineryBuilder {
         return this;
     }
 
+    public RefineryBuilder addIngredient(NbtIngredient ingredient) {
+        this.input = ingredient;
+        return this;
+    }
+
     public RefineryBuilder setFluidOutput(FluidStack fluid) {
         this.fluidOutput = fluid;
         return this;
@@ -88,7 +95,7 @@ public class RefineryBuilder {
 
     public void build(Consumer<IFinishedRecipe> consumer, ResourceLocation id) {
         this.validate(id);
-        consumer.accept(new FinishedRecipe(id, this.group == null ? "" : this.group, minHeat, input, output, fluidOutput));
+        consumer.accept(new FinishedRecipe(new ResourceLocation(id.getNamespace(), Cucurbita.getInstance().modid + "_refinery/" + id.getPath()), this.group == null ? "" : this.group, minHeat, input, output, fluidOutput));
     }
 
     private void validate(ResourceLocation id) {

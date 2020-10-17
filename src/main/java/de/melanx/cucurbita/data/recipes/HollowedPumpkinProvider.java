@@ -4,6 +4,7 @@ import de.melanx.cucurbita.api.recipe.builders.HollowedPumpkinBuilder;
 import de.melanx.cucurbita.core.registration.ModFluids;
 import de.melanx.cucurbita.core.registration.ModItems;
 import de.melanx.cucurbita.core.registration.ModPotions;
+import io.github.noeppi_noeppi.libx.crafting.ingredient.NbtIngredient;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.IFinishedRecipe;
 import net.minecraft.data.RecipeProvider;
@@ -28,11 +29,10 @@ public class HollowedPumpkinProvider extends RecipeProvider {
         HollowedPumpkinBuilder.create().addOutput(Items.ENCHANTED_GOLDEN_APPLE)
                 .setMinHeat(900)
                 .setFluidInput(ModFluids.PLANT_OIL_SOURCE, 2000)
-                // todo fix potions need nbt
-                .addIngredient(Ingredient.fromStacks(PotionUtils.addPotionToItemStack(new ItemStack(Items.POTION), Potions.LONG_FIRE_RESISTANCE)))
-                .addIngredient(Ingredient.fromStacks(PotionUtils.addPotionToItemStack(new ItemStack(Items.POTION), Potions.STRONG_REGENERATION)))
-                .addIngredient(Ingredient.fromStacks(PotionUtils.addPotionToItemStack(new ItemStack(Items.POTION), ModPotions.LONG_RESISTANCE)))
-                .addIngredient(Ingredient.fromStacks(PotionUtils.addPotionToItemStack(new ItemStack(Items.POTION), ModPotions.ABSORPTION_IV)))
+                .addIngredient(new NbtIngredient(PotionUtils.addPotionToItemStack(new ItemStack(Items.POTION), Potions.LONG_FIRE_RESISTANCE)))
+                .addIngredient(new NbtIngredient(PotionUtils.addPotionToItemStack(new ItemStack(Items.POTION), Potions.STRONG_REGENERATION)))
+                .addIngredient(new NbtIngredient(PotionUtils.addPotionToItemStack(new ItemStack(Items.POTION), ModPotions.LONG_RESISTANCE)))
+                .addIngredient(new NbtIngredient(PotionUtils.addPotionToItemStack(new ItemStack(Items.POTION), ModPotions.ABSORPTION_IV)))
                 .addIngredient(Items.GOLD_BLOCK, 8)
                 .addIngredient(Items.GOLDEN_APPLE)
                 .build(consumer);
