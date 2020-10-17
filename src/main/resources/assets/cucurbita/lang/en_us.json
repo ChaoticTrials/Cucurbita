@@ -5,7 +5,13 @@
   "block.cucurbita.homemade_refinery": "Homemade Refinery",
   "block.minecraft.pumpkin_stem": "Pumpkin Stem",
 
+  "fluid.cucurbita.plant_oil": "Plant Oil",
+
+  "item.cucurbita.bio_mass": "Bio Mass",
   "item.cucurbita.plant_oil_bucket": "Plant Oil Bucket",
+  "item.cucurbita.pumpkin_jam": "Pumpkin Jam",
+  "item.cucurbita.pumpkin_pulp": "Pumpkin Pulp",
+  "item.cucurbita.pumpkin_stew": "Pumpkin Stew",
   "item.cucurbita.pumpkin_wand": "Pumpkin Wand",
 
   "item.minecraft.potion.effect.absorption": "Potion of Absorption",
@@ -43,5 +49,8 @@
 
   "tooltip.cucurbita.normal_mode0": "Recipe mode",
   "tooltip.cucurbita.normal_mode1": "The wand can be used to",
-  "tooltip.cucurbita.normal_mode2": "finalize the recipe in an %s."
+  "tooltip.cucurbita.normal_mode2": "finalize the recipe in an %s.",
+
+  "jei.cucurbita.heatS": "Heat:",
+  "jei.cucurbita.heatV": "%s K"
 }

@@ -1,13 +1,13 @@
 {
   "type": "cucurbita:refinery",
-  "heat": 240,
+  "heat": 200,
   "input": {
-    "tag": "forge:seeds"
+    "item": "cucurbita:pumpkin_pulp"
   },
   "output": {
     "fluid": {
       "name": "cucurbita:plant_oil",
-      "amount": 50
+      "amount": 1000
     },
     "item": {
       "item": "cucurbita:bio_mass"

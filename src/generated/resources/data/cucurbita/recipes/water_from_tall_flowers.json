@@ -8,6 +8,9 @@
     "fluid": {
       "name": "minecraft:water",
       "amount": 50
+    },
+    "item": {
+      "item": "cucurbita:bio_mass"
     }
   }
 }

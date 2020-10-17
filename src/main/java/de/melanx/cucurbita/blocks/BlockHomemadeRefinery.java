@@ -2,7 +2,6 @@ package de.melanx.cucurbita.blocks;
 
 import de.melanx.cucurbita.blocks.tesrs.TesrHomemadeRefinery;
 import de.melanx.cucurbita.blocks.tiles.TileHomemadeRefinery;
-import de.melanx.cucurbita.core.registration.ModBlocks;
 import de.melanx.cucurbita.core.registration.ModItems;
 import de.melanx.cucurbita.util.Util;
 import io.github.noeppi_noeppi.libx.block.DirectionShape;

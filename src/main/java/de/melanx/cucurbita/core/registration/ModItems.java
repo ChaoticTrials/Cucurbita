@@ -11,6 +11,7 @@ import net.minecraft.item.Item;
 import net.minecraft.potion.EffectInstance;
 
 public class ModItems {
+    public static final Item BIO_MASS = new ItemBase(Cucurbita.getInstance(), new Item.Properties());
     public static final Item PLANT_OIL_BUCKET = new PlantOilBucket(new Item.Properties().group(Cucurbita.getInstance().tab).maxStackSize(1));
     public static final Item PUMPKIN_PULP = new ItemBase(Cucurbita.getInstance(), new Item.Properties());
     public static final Item PUMPKIN_STEM = new BlockItem(Blocks.PUMPKIN_STEM, new Item.Properties().group(Cucurbita.getInstance().tab));
@@ -27,6 +28,7 @@ public class ModItems {
     }
 
     public static void register() {
+        Cucurbita.getInstance().register("bio_mass", BIO_MASS);
         Cucurbita.getInstance().register("plant_oil_bucket", PLANT_OIL_BUCKET);
         Cucurbita.getInstance().register("pumpkin_pulp", PUMPKIN_PULP);
         Cucurbita.getInstance().register("pumpkin_stem", PUMPKIN_STEM);
