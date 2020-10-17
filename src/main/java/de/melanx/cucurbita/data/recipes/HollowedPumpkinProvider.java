@@ -27,7 +27,7 @@ public class HollowedPumpkinProvider extends RecipeProvider {
     protected void registerRecipes(@Nonnull Consumer<IFinishedRecipe> consumer) {
         HollowedPumpkinBuilder.create().addOutput(Items.ENCHANTED_GOLDEN_APPLE)
                 .setMinHeat(900)
-                .setFluidInput(ModFluids.PLANT_OIL, 2000)
+                .setFluidInput(ModFluids.PLANT_OIL_SOURCE, 2000)
                 // todo fix potions need nbt
                 .addIngredient(Ingredient.fromStacks(PotionUtils.addPotionToItemStack(new ItemStack(Items.POTION), Potions.LONG_FIRE_RESISTANCE)))
                 .addIngredient(Ingredient.fromStacks(PotionUtils.addPotionToItemStack(new ItemStack(Items.POTION), Potions.STRONG_REGENERATION)))
@@ -38,7 +38,7 @@ public class HollowedPumpkinProvider extends RecipeProvider {
                 .build(consumer);
         HollowedPumpkinBuilder.create().addOutput(ModItems.PUMPKIN_STEW)
                 .setMinHeat(240)
-                .setFluidInput(ModFluids.PLANT_OIL, 200)
+                .setFluidInput(ModFluids.PLANT_OIL_SOURCE, 200)
                 .addIngredient(Items.BOWL)
                 .addIngredient(ModItems.PUMPKIN_PULP, 2)
                 .addIngredient(Items.POTATO)
@@ -46,7 +46,7 @@ public class HollowedPumpkinProvider extends RecipeProvider {
         HollowedPumpkinBuilder.create().addOutput(ModItems.PUMPKIN_JAM)
                 .addOutput(ModItems.PUMPKIN_PULP, 1, 0.1D)
                 .setMinHeat(300)
-                .setFluidInput(ModFluids.PLANT_OIL, 100)
+                .setFluidInput(ModFluids.PLANT_OIL_SOURCE, 100)
                 .addIngredient(ModItems.PUMPKIN_PULP, 5)
                 .addIngredient(Items.GLASS_BOTTLE)
                 .build(consumer);

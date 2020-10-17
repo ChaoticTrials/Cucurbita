@@ -25,7 +25,7 @@ public class RefineryProvider extends RecipeProvider {
     protected void registerRecipes(@Nonnull Consumer<IFinishedRecipe> consumer) {
         RefineryBuilder.create().setInput(Tags.Items.SEEDS)
                 .setMinHeat(240)
-                .setFluidOutput(ModFluids.PLANT_OIL, 50)
+                .setFluidOutput(ModFluids.PLANT_OIL_SOURCE, 50)
                 .setOutput(ModItems.BIO_MASS)
                 .build(consumer, loc("plant_oil_from_seeds"));
         RefineryBuilder.create().setInput(ItemTags.SMALL_FLOWERS)
@@ -44,7 +44,7 @@ public class RefineryProvider extends RecipeProvider {
                 .build(consumer, loc("lava_from_nether_wart"));
         RefineryBuilder.create().setInput(ModItems.PUMPKIN_PULP)
                 .setMinHeat(200)
-                .setFluidOutput(ModFluids.PLANT_OIL)
+                .setFluidOutput(ModFluids.PLANT_OIL_SOURCE)
                 .setOutput(ModItems.BIO_MASS)
                 .build(consumer, loc("plant_oil_from_pumpkin_pulp"));
         RefineryBuilder.create().setInput(ItemTags.SAPLINGS)

@@ -22,7 +22,7 @@ public class ModTags {
 
         @Override
         protected void registerTags() {
-            this.getOrCreateBuilder(Fluids.PLANT_OIL).add(ModFluids.PLANT_OIL);
+            this.getOrCreateBuilder(Fluids.PLANT_OIL).add(ModFluids.PLANT_OIL_SOURCE);
         }
     }
 

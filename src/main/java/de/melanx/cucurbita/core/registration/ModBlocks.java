@@ -7,15 +7,18 @@ import de.melanx.cucurbita.blocks.tiles.TileHollowedPumpkin;
 import de.melanx.cucurbita.blocks.tiles.TileHomemadeRefinery;
 import io.github.noeppi_noeppi.libx.mod.registration.BlockTE;
 import net.minecraft.block.AbstractBlock;
+import net.minecraft.block.FlowingFluidBlock;
 import net.minecraft.block.material.Material;
 import net.minecraftforge.common.ToolType;
 
 public class ModBlocks {
     public static final BlockTE<TileHollowedPumpkin> HOLLOWED_PUMPKIN = new BlockHollowedPumpkin(Cucurbita.getInstance(), TileHollowedPumpkin.class, AbstractBlock.Properties.create(Material.ORGANIC).harvestTool(ToolType.AXE).harvestLevel(1).hardnessAndResistance(2));
     public static final BlockTE<TileHomemadeRefinery> HOMEMADE_REFINERY = new BlockHomemadeRefinery(Cucurbita.getInstance(), TileHomemadeRefinery.class, AbstractBlock.Properties.create(Material.IRON).harvestTool(ToolType.PICKAXE).harvestLevel(1).hardnessAndResistance(5));
+    public static final FlowingFluidBlock PLANT_OIL = new FlowingFluidBlock(() -> ModFluids.PLANT_OIL_SOURCE, AbstractBlock.Properties.create(Material.WATER).hardnessAndResistance(100).noDrops());
 
     public static void register() {
         Cucurbita.getInstance().register("hollowed_pumpkin", HOLLOWED_PUMPKIN);
         Cucurbita.getInstance().register("homemade_refinery", HOMEMADE_REFINERY);
+        Cucurbita.getInstance().register("plant_oil", PLANT_OIL);
     }
 }

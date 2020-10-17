@@ -4,6 +4,7 @@ import com.google.common.collect.ImmutableList;
 import com.mojang.datafixers.util.Pair;
 import de.melanx.cucurbita.Cucurbita;
 import net.minecraft.block.Block;
+import net.minecraft.block.FlowingFluidBlock;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.LootTableProvider;
 import net.minecraft.data.loot.BlockLootTables;
@@ -41,7 +42,8 @@ public class LootTables extends LootTableProvider {
     private static class BlockTable extends BlockLootTables {
         @Override
         protected void addTables() {
-            ForgeRegistries.BLOCKS.getEntries().stream().map(Map.Entry::getValue).filter(block -> block.getRegistryName().getNamespace().equals(Cucurbita.getInstance().modid))
+            ForgeRegistries.BLOCKS.getEntries().stream().map(Map.Entry::getValue).filter(block -> block.getRegistryName().getNamespace().equals(Cucurbita.getInstance().modid) &&
+                    !(block instanceof FlowingFluidBlock))
                     .collect(Collectors.toList()).forEach(this::registerDropSelfLootTable);
         }
 

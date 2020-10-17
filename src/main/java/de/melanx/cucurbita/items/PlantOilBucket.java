@@ -13,7 +13,7 @@ import javax.annotation.Nullable;
 
 public class PlantOilBucket extends BucketItem {
     public PlantOilBucket(Properties builder) {
-        super(ModFluids.PLANT_OIL, builder);
+        super(ModFluids.PLANT_OIL_SOURCE, builder);
     }
 
     @Override
