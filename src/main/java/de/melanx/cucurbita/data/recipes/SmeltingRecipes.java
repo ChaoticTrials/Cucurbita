@@ -18,6 +18,8 @@ public class SmeltingRecipes extends RecipeProvider {
 
     @Override
     protected void registerRecipes(@Nonnull Consumer<IFinishedRecipe> consumer) {
+        CookingRecipeBuilder.cookingRecipe(Ingredient.fromItems(ModItems.MELON_STEM), ModItems.MELON_WAND, 0.5F, 1000, IRecipeSerializer.CAMPFIRE_COOKING)
+                .addCriterion("has_item", hasItem(ModItems.MELON_STEM)).build(consumer);
         CookingRecipeBuilder.cookingRecipe(Ingredient.fromItems(ModItems.PUMPKIN_STEM), ModItems.PUMPKIN_WAND, 0.5F, 1000, IRecipeSerializer.CAMPFIRE_COOKING)
                 .addCriterion("has_item", hasItem(ModItems.PUMPKIN_STEM)).build(consumer);
     }

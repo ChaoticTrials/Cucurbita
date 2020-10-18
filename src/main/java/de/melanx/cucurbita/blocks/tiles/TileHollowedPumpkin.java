@@ -3,6 +3,7 @@ package de.melanx.cucurbita.blocks.tiles;
 import de.melanx.cucurbita.api.recipe.HeatSourcesRecipe;
 import de.melanx.cucurbita.api.recipe.HollowedPumpkinRecipe;
 import de.melanx.cucurbita.api.recipe.IHollowedPumpkin;
+import de.melanx.cucurbita.blocks.BlockHollowedPumpkin;
 import de.melanx.cucurbita.blocks.base.ModTile;
 import de.melanx.cucurbita.sound.ModSounds;
 import io.github.noeppi_noeppi.libx.inventory.BaseItemStackHandler;
@@ -22,6 +23,7 @@ import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidHandler;
 import net.minecraftforge.fluids.capability.templates.FluidTank;
+import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandlerModifiable;
 import org.apache.commons.lang3.tuple.Pair;
 
@@ -29,6 +31,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.Arrays;
 import java.util.Random;
+import java.util.function.Consumer;
 import java.util.function.Predicate;
 import java.util.function.Supplier;
 import java.util.stream.IntStream;
@@ -38,8 +41,9 @@ public class TileHollowedPumpkin extends ModTile {
     public static final int FLUID_CAPACITY = 2000;
     private static final FluidStack WATER = new FluidStack(Fluids.WATER, 1);
 
+    private final LazyOptional<IItemHandlerModifiable> handler = this.createHandler(this::getInventory);
     private final BaseItemStackHandler inventory = new BaseItemStackHandler(16, this::onSlotChanged, this::isValidStack);
-    private final ModdedFluidTank fluidInventory = new ModdedFluidTank(FLUID_CAPACITY, fluidStack -> true);
+    private final ModdedFluidTank fluidInventory = new ModdedFluidTank(FLUID_CAPACITY, fluidStack -> true, this::onSlotChanged);
     private final LazyOptional<IFluidHandler> fluidHandler = LazyOptional.of(() -> this.fluidInventory);
 
     private int progress;
@@ -103,7 +107,7 @@ public class TileHollowedPumpkin extends ModTile {
 
     @Override
     public void tick() {
-        if (world != null) {
+        if (world != null && getBlockState().get(BlockHollowedPumpkin.CARVING) == 14) {
             if (!this.init) {
                 this.init = true;
                 this.markDispatchable();
@@ -125,6 +129,18 @@ public class TileHollowedPumpkin extends ModTile {
                     this.markDispatchable();
                 }
             } else {
+                if (this.progress > 0) {
+                    if (this.world.rand.nextDouble() < 0.3D) {
+                        double x = pos.getX() + world.rand.nextDouble();
+                        double y = pos.getY() + 0.4D + world.rand.nextDouble();
+                        double z = pos.getZ() + world.rand.nextDouble();
+                        if (this.progress < 200) {
+                            this.world.addParticle(ParticleTypes.LARGE_SMOKE, x, y, z, 0.0D, 0.05D, 0.0D);
+                        } else {
+                            this.world.addParticle(ParticleTypes.HAPPY_VILLAGER, x, y, z, 0.0D, 0.0D, 0.0D);
+                        }
+                    }
+                }
                 if (this.fluidInventory.getFluidAmount() > 0 && this.hasHeat()) {
                     Random rand = this.world.rand;
                     if (rand.nextDouble() < 0.1D) {
@@ -187,7 +203,10 @@ public class TileHollowedPumpkin extends ModTile {
         if (this.world != null && !this.fluidInventory.isEmpty() && this.recipe == null) {
             this.fluidInventory.setFluid(FluidStack.EMPTY);
             for (int i = 0; i < 5; i++) {
-                this.world.addParticle(ParticleTypes.CAMPFIRE_COSY_SMOKE, pos.getX() + 0.5D + world.rand.nextDouble() * 0.1D, pos.getY() + 0.4D + world.rand.nextDouble(), pos.getZ() + 0.5D + world.rand.nextDouble() * 0.1D, 0.0D, 0.05D, 0.0D);
+                double x = pos.getX() + 0.5D + world.rand.nextDouble() * 0.1D;
+                double y = pos.getY() + 0.4D + world.rand.nextDouble();
+                double z = pos.getZ() + 0.5D + world.rand.nextDouble() * 0.1D;
+                this.world.addParticle(ParticleTypes.CAMPFIRE_COSY_SMOKE, x, y, z, 0.0D, 0.05D, 0.0D);
             }
             player.playSound(ModSounds.WOOSH, 1.0F, 0.8F);
             this.markDispatchable();
@@ -242,7 +261,7 @@ public class TileHollowedPumpkin extends ModTile {
     @Override
     public CompoundNBT getUpdateTag() {
         if (world != null && world.isRemote) return super.getUpdateTag();
-        CompoundNBT cmp = new CompoundNBT();
+        CompoundNBT cmp = super.getUpdateTag();
         cmp.put("inventory", this.inventory.serializeNBT());
         final CompoundNBT tankTag = new CompoundNBT();
         this.getFluidInventory().getFluid().writeToNBT(tankTag);
@@ -254,15 +273,30 @@ public class TileHollowedPumpkin extends ModTile {
     @Nonnull
     @Override
     public <X> LazyOptional<X> getCapability(@Nonnull Capability<X> cap, @Nullable Direction side) {
-        if (cap == CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY) {
-            return this.fluidHandler.cast();
+        if (this.getBlockState().get(BlockHollowedPumpkin.CARVING) == 14) {
+            if (!this.removed && cap == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY) {
+                return this.handler.cast();
+            }
+            if (cap == CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY) {
+                return this.fluidHandler.cast();
+            }
         }
         return super.getCapability(cap, side);
     }
 
     private static class ModdedFluidTank extends FluidTank {
-        public ModdedFluidTank(int capacity, Predicate<FluidStack> validator) {
+        private final Consumer<Integer> onContentsChanged;
+
+        public ModdedFluidTank(int capacity, Predicate<FluidStack> validator, Consumer<Integer> onContentsChanged) {
             super(capacity, validator);
+            this.onContentsChanged = onContentsChanged;
+        }
+
+        @Override
+        protected void onContentsChanged() {
+            if (this.onContentsChanged != null) {
+                this.onContentsChanged.accept(-1);
+            }
         }
 
         @Nonnull

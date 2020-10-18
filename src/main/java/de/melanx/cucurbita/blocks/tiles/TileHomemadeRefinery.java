@@ -20,6 +20,8 @@ import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidHandler;
 import net.minecraftforge.fluids.capability.templates.FluidTank;
+import net.minecraftforge.items.CapabilityItemHandler;
+import net.minecraftforge.items.IItemHandlerModifiable;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -28,6 +30,7 @@ import java.util.function.Predicate;
 public class TileHomemadeRefinery extends ModTile {
     public static final int FLUID_CAPACITY = 1000;
 
+    private final LazyOptional<IItemHandlerModifiable> handler = this.createHandler(this::getInventory);
     private final BaseItemStackHandler inventory = new BaseItemStackHandler(2, null, this::isValidStack);
     private final ModdedFluidTank fluidInventory = new ModdedFluidTank(FLUID_CAPACITY, fluidStack -> true);
     private final LazyOptional<IFluidHandler> fluidHandler = LazyOptional.of(() -> this.fluidInventory);
@@ -218,7 +221,7 @@ public class TileHomemadeRefinery extends ModTile {
     @Override
     public CompoundNBT getUpdateTag() {
         if (world != null && world.isRemote) return super.getUpdateTag();
-        CompoundNBT cmp = new CompoundNBT();
+        CompoundNBT cmp = super.getUpdateTag();
         cmp.put("inventory", this.getInventory().serializeNBT());
         final CompoundNBT tankTag = new CompoundNBT();
         this.fluidInventory.getFluid().writeToNBT(tankTag);
@@ -238,6 +241,9 @@ public class TileHomemadeRefinery extends ModTile {
     @Nonnull
     @Override
     public <T> LazyOptional<T> getCapability(@Nonnull Capability<T> cap, @Nullable Direction side) {
+        if (!this.removed && cap == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY) {
+            return this.handler.cast();
+        }
         if (!this.removed && cap == CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY) {
             return this.fluidHandler.cast();
         }

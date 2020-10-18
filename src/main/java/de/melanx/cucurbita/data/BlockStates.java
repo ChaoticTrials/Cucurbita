@@ -9,7 +9,7 @@ import net.minecraftforge.common.data.ExistingFileHelper;
 public class BlockStates extends BlockStateProviderBase {
     public BlockStates(DataGenerator generator, ExistingFileHelper helper) {
         super(Cucurbita.getInstance(), generator, helper);
-        manualModel(ModBlocks.HOLLOWED_PUMPKIN);
+        manualState(ModBlocks.HOLLOWED_PUMPKIN);
         manualModel(ModBlocks.HOMEMADE_REFINERY);
     }
 }

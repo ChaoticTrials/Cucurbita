@@ -3,16 +3,20 @@
 
   "block.cucurbita.hollowed_pumpkin": "Hollowed Pumpkin",
   "block.cucurbita.homemade_refinery": "Homemade Refinery",
-  "block.minecraft.pumpkin_stem": "Pumpkin Stem",
 
   "fluid.cucurbita.plant_oil": "Plant Oil",
 
   "item.cucurbita.bio_mass": "Bio Mass",
+  "item.cucurbita.melon_stem": "Melon Stem",
+  "item.cucurbita.melon_wand": "Melan Wand",
   "item.cucurbita.plant_oil_bucket": "Plant Oil Bucket",
   "item.cucurbita.pumpkin_jam": "Pumpkin Jam",
   "item.cucurbita.pumpkin_pulp": "Pumpkin Pulp",
+  "item.cucurbita.pumpkin_stem": "Pumpkin Stem",
   "item.cucurbita.pumpkin_stew": "Pumpkin Stew",
   "item.cucurbita.pumpkin_wand": "Pumpkin Wand",
+  "item.cucurbita.spoon": "Spoon",
+  "item.cucurbita.super_cool_spoon": "Swaggiest Spoon ever",
 
   "item.minecraft.potion.effect.absorption": "Potion of Absorption",
   "item.minecraft.splash_potion.effect.absorption": "Splash Potion of Absorption",

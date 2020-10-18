@@ -3,6 +3,7 @@ package de.melanx.cucurbita.blocks;
 import de.melanx.cucurbita.blocks.tesrs.TesrHomemadeRefinery;
 import de.melanx.cucurbita.blocks.tiles.TileHomemadeRefinery;
 import de.melanx.cucurbita.core.registration.ModItems;
+import de.melanx.cucurbita.items.WandItem;
 import de.melanx.cucurbita.util.Util;
 import io.github.noeppi_noeppi.libx.block.DirectionShape;
 import io.github.noeppi_noeppi.libx.mod.ModX;
@@ -70,7 +71,7 @@ public class BlockHomemadeRefinery extends BlockTE<TileHomemadeRefinery> {
                 tile.markDispatchable();
                 return ActionResultType.SUCCESS;
             } else {
-                if (!player.getHeldItemMainhand().isEmpty() && player.getHeldItemMainhand().getItem() != ModItems.PUMPKIN_WAND) {
+                if (!player.getHeldItemMainhand().isEmpty() && !(player.getHeldItemMainhand().getItem() instanceof WandItem)) {
                     tile.addToInventory(player.getHeldItemMainhand(), !player.isCreative());
                     return ActionResultType.SUCCESS;
                 }

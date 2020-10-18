@@ -9,12 +9,5 @@ import net.minecraftforge.common.data.ExistingFileHelper;
 public class ItemModels extends ItemModelProviderBase {
     public ItemModels(DataGenerator generator, ExistingFileHelper helper) {
         super(Cucurbita.getInstance(), generator, helper);
-        this.manualModel(ModItems.PUMPKIN_STEM);
-    }
-
-    @Override
-    protected void registerModels() {
-        super.registerModels();
-        this.defaultItem(ModItems.PUMPKIN_STEM.getRegistryName(), ModItems.PUMPKIN_STEM);
     }
 }

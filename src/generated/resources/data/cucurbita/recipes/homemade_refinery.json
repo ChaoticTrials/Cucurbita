@@ -1,0 +1,28 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "III",
+    "RBR",
+    "SXS"
+  ],
+  "key": {
+    "I": {
+      "tag": "forge:ingots/iron"
+    },
+    "R": {
+      "item": "minecraft:iron_bars"
+    },
+    "B": {
+      "item": "minecraft:bucket"
+    },
+    "S": {
+      "item": "minecraft:smooth_stone"
+    },
+    "X": {
+      "tag": "forge:storage_blocks/iron"
+    }
+  },
+  "result": {
+    "item": "cucurbita:homemade_refinery"
+  }
+}

@@ -33,10 +33,10 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.List;
 
-public class PumpkinWand extends ItemBase {
+public class WandItem extends ItemBase {
     private static final String TAG = "delete_fluid_mode";
 
-    public PumpkinWand(ModX mod, Properties properties) {
+    public WandItem(ModX mod, Properties properties) {
         super(mod, properties);
     }
 

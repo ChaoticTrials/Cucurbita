@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    " N",
+    "S "
+  ],
+  "key": {
+    "N": {
+      "tag": "forge:ingots/netherite"
+    },
+    "S": {
+      "tag": "forge:rods/wooden"
+    }
+  },
+  "result": {
+    "item": "cucurbita:super_cool_spoon"
+  }
+}

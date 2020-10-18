@@ -2,6 +2,7 @@ package de.melanx.cucurbita.data;
 
 import de.melanx.cucurbita.Cucurbita;
 import de.melanx.cucurbita.core.registration.ModLootModifiers;
+import de.melanx.cucurbita.handler.lootmodifier.MelonStemModifier;
 import de.melanx.cucurbita.handler.lootmodifier.PumpkinStemModifier;
 import net.minecraft.block.Blocks;
 import net.minecraft.data.DataGenerator;
@@ -21,6 +22,12 @@ public class LootModifierProvider extends GlobalLootModifierProvider {
                 Alternative.builder(
                         BlockStateProperty.builder(Blocks.PUMPKIN_STEM),
                         BlockStateProperty.builder(Blocks.ATTACHED_PUMPKIN_STEM)
+                ).build()
+        }));
+        add("melon_stem", ModLootModifiers.MELON_STEM_MODIFIER, new MelonStemModifier(new ILootCondition[]{
+                Alternative.builder(
+                        BlockStateProperty.builder(Blocks.MELON_STEM),
+                        BlockStateProperty.builder(Blocks.ATTACHED_MELON_STEM)
                 ).build()
         }));
     }

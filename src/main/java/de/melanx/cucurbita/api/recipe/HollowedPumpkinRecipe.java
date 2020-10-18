@@ -93,7 +93,7 @@ public class HollowedPumpkinRecipe implements IHollowedPumpkin {
         public IHollowedPumpkin read(ResourceLocation id, JsonObject json) {
             int minHeat = JSONUtils.getInt(json, "heat", 0);
 
-            JsonObject inputs = JSONUtils.getJsonObject(json, "inputs");
+            JsonObject inputs = JSONUtils.getJsonObject(json, "input");
             JsonObject fluidObject = JSONUtils.getJsonObject(inputs, "fluid");
             String s = JSONUtils.getString(fluidObject, "name");
             ResourceLocation fluidName = ResourceLocation.tryCreate(s);
@@ -113,7 +113,7 @@ public class HollowedPumpkinRecipe implements IHollowedPumpkin {
                 ingredients[i] = Ingredient.deserialize(ingrs.get(i));
             }
 
-            JsonArray outputs = JSONUtils.getJsonArray(json, "outputs");
+            JsonArray outputs = JSONUtils.getJsonArray(json, "output");
             List<Pair<ItemStack, Double>> outputList = new ArrayList<>();
             for (JsonElement e : outputs) {
                 JsonObject object = e.getAsJsonObject();

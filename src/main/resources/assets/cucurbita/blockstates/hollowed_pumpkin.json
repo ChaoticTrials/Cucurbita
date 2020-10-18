@@ -1,0 +1,229 @@
+{
+  "variants": {
+    "facing=north,carving=0": {
+      "model": "cucurbita:block/hollowed_pumpkin_0"
+    },
+    "facing=south,carving=0": {
+      "model": "cucurbita:block/hollowed_pumpkin_0",
+      "y": 180
+    },
+    "facing=west,carving=0": {
+      "model": "cucurbita:block/hollowed_pumpkin_0",
+      "y": 270
+    },
+    "facing=east,carving=0": {
+      "model": "cucurbita:block/hollowed_pumpkin_0",
+      "y": 90
+    },
+    "facing=north,carving=1": {
+      "model": "cucurbita:block/hollowed_pumpkin_1"
+    },
+    "facing=south,carving=1": {
+      "model": "cucurbita:block/hollowed_pumpkin_1",
+      "y": 180
+    },
+    "facing=west,carving=1": {
+      "model": "cucurbita:block/hollowed_pumpkin_1",
+      "y": 270
+    },
+    "facing=east,carving=1": {
+      "model": "cucurbita:block/hollowed_pumpkin_1",
+      "y": 90
+    },
+    "facing=north,carving=2": {
+      "model": "cucurbita:block/hollowed_pumpkin_2"
+    },
+    "facing=south,carving=2": {
+      "model": "cucurbita:block/hollowed_pumpkin_2",
+      "y": 180
+    },
+    "facing=west,carving=2": {
+      "model": "cucurbita:block/hollowed_pumpkin_2",
+      "y": 270
+    },
+    "facing=east,carving=2": {
+      "model": "cucurbita:block/hollowed_pumpkin_2",
+      "y": 90
+    },
+    "facing=north,carving=3": {
+      "model": "cucurbita:block/hollowed_pumpkin_3"
+    },
+    "facing=south,carving=3": {
+      "model": "cucurbita:block/hollowed_pumpkin_3",
+      "y": 180
+    },
+    "facing=west,carving=3": {
+      "model": "cucurbita:block/hollowed_pumpkin_3",
+      "y": 270
+    },
+    "facing=east,carving=3": {
+      "model": "cucurbita:block/hollowed_pumpkin_3",
+      "y": 90
+    },
+    "facing=north,carving=4": {
+      "model": "cucurbita:block/hollowed_pumpkin_4"
+    },
+    "facing=south,carving=4": {
+      "model": "cucurbita:block/hollowed_pumpkin_4",
+      "y": 180
+    },
+    "facing=west,carving=4": {
+      "model": "cucurbita:block/hollowed_pumpkin_4",
+      "y": 270
+    },
+    "facing=east,carving=4": {
+      "model": "cucurbita:block/hollowed_pumpkin_4",
+      "y": 90
+    },
+    "facing=north,carving=5": {
+      "model": "cucurbita:block/hollowed_pumpkin_5"
+    },
+    "facing=south,carving=5": {
+      "model": "cucurbita:block/hollowed_pumpkin_5",
+      "y": 180
+    },
+    "facing=west,carving=5": {
+      "model": "cucurbita:block/hollowed_pumpkin_5",
+      "y": 270
+    },
+    "facing=east,carving=5": {
+      "model": "cucurbita:block/hollowed_pumpkin_5",
+      "y": 90
+    },
+    "facing=north,carving=6": {
+      "model": "cucurbita:block/hollowed_pumpkin_6"
+    },
+    "facing=south,carving=6": {
+      "model": "cucurbita:block/hollowed_pumpkin_6",
+      "y": 180
+    },
+    "facing=west,carving=6": {
+      "model": "cucurbita:block/hollowed_pumpkin_6",
+      "y": 270
+    },
+    "facing=east,carving=6": {
+      "model": "cucurbita:block/hollowed_pumpkin_6",
+      "y": 90
+    },
+    "facing=north,carving=7": {
+      "model": "cucurbita:block/hollowed_pumpkin_7"
+    },
+    "facing=south,carving=7": {
+      "model": "cucurbita:block/hollowed_pumpkin_7",
+      "y": 180
+    },
+    "facing=west,carving=7": {
+      "model": "cucurbita:block/hollowed_pumpkin_7",
+      "y": 270
+    },
+    "facing=east,carving=7": {
+      "model": "cucurbita:block/hollowed_pumpkin_7",
+      "y": 90
+    },
+    "facing=north,carving=8": {
+      "model": "cucurbita:block/hollowed_pumpkin_8"
+    },
+    "facing=south,carving=8": {
+      "model": "cucurbita:block/hollowed_pumpkin_8",
+      "y": 180
+    },
+    "facing=west,carving=8": {
+      "model": "cucurbita:block/hollowed_pumpkin_8",
+      "y": 270
+    },
+    "facing=east,carving=8": {
+      "model": "cucurbita:block/hollowed_pumpkin_8",
+      "y": 90
+    },
+    "facing=north,carving=9": {
+      "model": "cucurbita:block/hollowed_pumpkin_9"
+    },
+    "facing=south,carving=9": {
+      "model": "cucurbita:block/hollowed_pumpkin_9",
+      "y": 180
+    },
+    "facing=west,carving=9": {
+      "model": "cucurbita:block/hollowed_pumpkin_9",
+      "y": 270
+    },
+    "facing=east,carving=9": {
+      "model": "cucurbita:block/hollowed_pumpkin_9",
+      "y": 90
+    },
+    "facing=north,carving=10": {
+      "model": "cucurbita:block/hollowed_pumpkin_10"
+    },
+    "facing=south,carving=10": {
+      "model": "cucurbita:block/hollowed_pumpkin_10",
+      "y": 180
+    },
+    "facing=west,carving=10": {
+      "model": "cucurbita:block/hollowed_pumpkin_10",
+      "y": 270
+    },
+    "facing=east,carving=10": {
+      "model": "cucurbita:block/hollowed_pumpkin_10",
+      "y": 90
+    },
+    "facing=north,carving=11": {
+      "model": "cucurbita:block/hollowed_pumpkin_11"
+    },
+    "facing=south,carving=11": {
+      "model": "cucurbita:block/hollowed_pumpkin_11",
+      "y": 180
+    },
+    "facing=west,carving=11": {
+      "model": "cucurbita:block/hollowed_pumpkin_11",
+      "y": 270
+    },
+    "facing=east,carving=11": {
+      "model": "cucurbita:block/hollowed_pumpkin_11",
+      "y": 90
+    },
+    "facing=north,carving=12": {
+      "model": "cucurbita:block/hollowed_pumpkin_12"
+    },
+    "facing=south,carving=12": {
+      "model": "cucurbita:block/hollowed_pumpkin_12",
+      "y": 180
+    },
+    "facing=west,carving=12": {
+      "model": "cucurbita:block/hollowed_pumpkin_12",
+      "y": 270
+    },
+    "facing=east,carving=12": {
+      "model": "cucurbita:block/hollowed_pumpkin_12",
+      "y": 90
+    },
+    "facing=north,carving=13": {
+      "model": "cucurbita:block/hollowed_pumpkin_13"
+    },
+    "facing=south,carving=13": {
+      "model": "cucurbita:block/hollowed_pumpkin_13",
+      "y": 180
+    },
+    "facing=west,carving=13": {
+      "model": "cucurbita:block/hollowed_pumpkin_13",
+      "y": 270
+    },
+    "facing=east,carving=13": {
+      "model": "cucurbita:block/hollowed_pumpkin_13",
+      "y": 90
+    },
+    "facing=north,carving=14": {
+      "model": "cucurbita:block/hollowed_pumpkin_14"
+    },
+    "facing=south,carving=14": {
+      "model": "cucurbita:block/hollowed_pumpkin_14",
+      "y": 180
+    },
+    "facing=west,carving=14": {
+      "model": "cucurbita:block/hollowed_pumpkin_14",
+      "y": 270
+    },
+    "facing=east,carving=14": {
+      "model": "cucurbita:block/hollowed_pumpkin_14",
+      "y": 90
+    }
+  }
+}

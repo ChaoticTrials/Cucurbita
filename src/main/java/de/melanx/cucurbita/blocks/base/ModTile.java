@@ -18,8 +18,6 @@ import javax.annotation.Nullable;
 import java.util.function.Supplier;
 
 public abstract class ModTile extends TileEntityBase implements ITickableTileEntity {
-    private final LazyOptional<IItemHandlerModifiable> handler = this.createHandler(this::getInventory);
-
     public ModTile(TileEntityType<?> type) {
         super(type);
     }
@@ -36,14 +34,5 @@ public abstract class ModTile extends TileEntityBase implements ITickableTileEnt
     public abstract void resetFluid(PlayerEntity player);
 
     public void onWanded() {
-    }
-
-    @Nonnull
-    @Override
-    public <T> LazyOptional<T> getCapability(@Nonnull Capability<T> cap, @Nullable Direction side) {
-        if (!this.removed && cap == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY) {
-            return this.handler.cast();
-        }
-        return super.getCapability(cap, side);
     }
 }

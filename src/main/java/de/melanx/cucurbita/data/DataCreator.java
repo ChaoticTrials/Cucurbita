@@ -1,9 +1,6 @@
 package de.melanx.cucurbita.data;
 
-import de.melanx.cucurbita.data.recipes.HeatSourceProvider;
-import de.melanx.cucurbita.data.recipes.HollowedPumpkinProvider;
-import de.melanx.cucurbita.data.recipes.RefineryProvider;
-import de.melanx.cucurbita.data.recipes.SmeltingRecipes;
+import de.melanx.cucurbita.data.recipes.*;
 import net.minecraft.data.DataGenerator;
 import net.minecraftforge.common.data.ExistingFileHelper;
 import net.minecraftforge.fml.event.lifecycle.GatherDataEvent;
@@ -18,6 +15,7 @@ public class DataCreator {
             generator.addProvider(new LootModifierProvider(generator));
             generator.addProvider(new ModTags.FluidModTags(generator));
             generator.addProvider(new LootTables(generator));
+            generator.addProvider(new ModRecipeProvider(generator));
             generator.addProvider(new HeatSourceProvider(generator));
             generator.addProvider(new HollowedPumpkinProvider(generator));
             generator.addProvider(new RefineryProvider(generator));

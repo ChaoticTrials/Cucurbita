@@ -1,0 +1,9 @@
+{
+  "type": "minecraft:campfire_cooking",
+  "ingredient": {
+    "item": "cucurbita:melon_stem"
+  },
+  "result": "cucurbita:melon_wand",
+  "experience": 0.5,
+  "cookingtime": 1000
+}
