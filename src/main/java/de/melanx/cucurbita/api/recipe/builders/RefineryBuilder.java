@@ -95,7 +95,7 @@ public class RefineryBuilder {
 
     public void build(Consumer<IFinishedRecipe> consumer, ResourceLocation id) {
         this.validate(id);
-        consumer.accept(new FinishedRecipe(new ResourceLocation(id.getNamespace(), Cucurbita.getInstance().modid + "_refinery/" + id.getPath()), this.group == null ? "" : this.group, minHeat, input, output, fluidOutput));
+        consumer.accept(new FinishedRecipe(new ResourceLocation(id.getNamespace(), Cucurbita.getInstance().modid + "_refinery/" + id.getPath()), this.group == null ? "" : this.group, this.minHeat, this.input, this.output, this.fluidOutput));
     }
 
     private void validate(ResourceLocation id) {
@@ -129,8 +129,8 @@ public class RefineryBuilder {
 
         @Override
         public void serialize(@Nonnull JsonObject json) {
-            if (!group.isEmpty()) json.addProperty("group", this.group);
-            if (minHeat > 0) json.addProperty("heat", this.minHeat);
+            if (!this.group.isEmpty()) json.addProperty("group", this.group);
+            if (this.minHeat > 0) json.addProperty("heat", this.minHeat);
             json.add("input", this.input.serialize());
             JsonObject outputObject = new JsonObject();
             JsonObject fluidObject = new JsonObject();

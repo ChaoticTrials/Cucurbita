@@ -143,7 +143,7 @@ public class TileHomemadeRefinery extends ModTile {
         if (this.world != null && !this.fluidInventory.isEmpty() && this.recipe == null) {
             this.fluidInventory.setFluid(FluidStack.EMPTY);
             for (int i = 0; i < 5; i++) {
-                this.world.addParticle(ParticleTypes.CAMPFIRE_COSY_SMOKE, pos.getX() + 0.5D + world.rand.nextDouble() * 0.1D, pos.getY() + 0.4D + world.rand.nextDouble(), pos.getZ() + 0.5D + world.rand.nextDouble() * 0.1D, 0.0D, 0.05D, 0.0D);
+                this.world.addParticle(ParticleTypes.CAMPFIRE_COSY_SMOKE, this.pos.getX() + 0.5D + this.world.rand.nextDouble() * 0.1D, this.pos.getY() + 0.4D + this.world.rand.nextDouble(), this.pos.getZ() + 0.5D + this.world.rand.nextDouble() * 0.1D, 0.0D, 0.05D, 0.0D);
             }
             player.playSound(ModSounds.WOOSH, 1.0F, 0.8F);
             this.markDispatchable();
@@ -201,7 +201,7 @@ public class TileHomemadeRefinery extends ModTile {
 
     @Override
     public void handleUpdateTag(BlockState state, CompoundNBT cmp) {
-        if (world != null && !world.isRemote) return;
+        if (this.world != null && !this.world.isRemote) return;
         this.inventory.deserializeNBT(cmp.getCompound("inventory"));
         this.fluidInventory.setFluid(FluidStack.loadFluidStackFromNBT(cmp.getCompound("fluid")));
         this.progress = cmp.getInt("progress");
@@ -220,7 +220,7 @@ public class TileHomemadeRefinery extends ModTile {
     @Nonnull
     @Override
     public CompoundNBT getUpdateTag() {
-        if (world != null && world.isRemote) return super.getUpdateTag();
+        if (this.world != null && this.world.isRemote) return super.getUpdateTag();
         CompoundNBT cmp = super.getUpdateTag();
         cmp.put("inventory", this.getInventory().serializeNBT());
         final CompoundNBT tankTag = new CompoundNBT();

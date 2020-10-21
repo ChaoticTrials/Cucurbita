@@ -107,7 +107,7 @@ public class TileHollowedPumpkin extends ModTile {
 
     @Override
     public void tick() {
-        if (world != null && getBlockState().get(BlockHollowedPumpkin.CARVING) == 14) {
+        if (this.world != null && this.getBlockState().get(BlockHollowedPumpkin.CARVING) == 14) {
             if (!this.init) {
                 this.init = true;
                 this.markDispatchable();
@@ -116,7 +116,7 @@ public class TileHollowedPumpkin extends ModTile {
             this.heat = HeatSourcesRecipe.getHeatValue(state);
             if (!this.world.isRemote) {
                 if (this.recipe != null) {
-                    if (this.progress < 200 && this.getHeat() >= recipe.getMinHeat()) {
+                    if (this.progress < 200 && this.getHeat() >= this.recipe.getMinHeat()) {
                         this.progress++;
                         this.markDispatchable();
                     }
@@ -124,16 +124,16 @@ public class TileHollowedPumpkin extends ModTile {
                 if (this.world.getWorldInfo().isRaining() && this.world.canBlockSeeSky(this.pos) &&
                         (this.fluidInventory.isEmpty() || (this.fluidInventory.getFluid().getFluid() == Fluids.WATER &&
                                 this.fluidInventory.getFluidAmount() < this.fluidInventory.getCapacity())) &&
-                        recipe == null) {
+                        this.recipe == null) {
                     this.fluidInventory.fill(WATER, IFluidHandler.FluidAction.EXECUTE);
                     this.markDispatchable();
                 }
             } else {
                 if (this.progress > 0) {
                     if (this.world.rand.nextDouble() < 0.3D) {
-                        double x = pos.getX() + world.rand.nextDouble();
-                        double y = pos.getY() + 0.4D + world.rand.nextDouble();
-                        double z = pos.getZ() + world.rand.nextDouble();
+                        double x = this.pos.getX() + this.world.rand.nextDouble();
+                        double y = this.pos.getY() + 0.4D + this.world.rand.nextDouble();
+                        double z = this.pos.getZ() + this.world.rand.nextDouble();
                         if (this.progress < 200) {
                             this.world.addParticle(ParticleTypes.LARGE_SMOKE, x, y, z, 0.0D, 0.05D, 0.0D);
                         } else {
@@ -177,14 +177,14 @@ public class TileHollowedPumpkin extends ModTile {
     public void onWanded() {
         if (this.world != null && !this.world.isRemote && this.recipe != null && this.progress >= 200) {
             this.recipe.getIngredients().forEach(ingredient -> {
-                for (ItemStack stack : inventory.getStacks()) {
+                for (ItemStack stack : this.inventory.getStacks()) {
                     if (ingredient.test(stack)) {
                         stack.shrink(1);
                         break;
                     }
                 }
             });
-            this.fluidInventory.getFluid().setAmount(this.fluidInventory.getFluidAmount() - recipe.getFluidInput().getAmount());
+            this.fluidInventory.getFluid().setAmount(this.fluidInventory.getFluidAmount() - this.recipe.getFluidInput().getAmount());
             for (Pair<ItemStack, Double> output : this.recipe.getOutputs()) {
                 if (this.world.rand.nextDouble() < output.getValue()) {
                     ItemEntity item = new ItemEntity(this.world, this.pos.getX() + 0.5D, this.pos.getY() + 0.5D, this.pos.getZ() + 0.5D, output.getKey().copy());
@@ -203,9 +203,9 @@ public class TileHollowedPumpkin extends ModTile {
         if (this.world != null && !this.fluidInventory.isEmpty() && this.recipe == null) {
             this.fluidInventory.setFluid(FluidStack.EMPTY);
             for (int i = 0; i < 5; i++) {
-                double x = pos.getX() + 0.5D + world.rand.nextDouble() * 0.1D;
-                double y = pos.getY() + 0.4D + world.rand.nextDouble();
-                double z = pos.getZ() + 0.5D + world.rand.nextDouble() * 0.1D;
+                double x = this.pos.getX() + 0.5D + this.world.rand.nextDouble() * 0.1D;
+                double y = this.pos.getY() + 0.4D + this.world.rand.nextDouble();
+                double z = this.pos.getZ() + 0.5D + this.world.rand.nextDouble() * 0.1D;
                 this.world.addParticle(ParticleTypes.CAMPFIRE_COSY_SMOKE, x, y, z, 0.0D, 0.05D, 0.0D);
             }
             player.playSound(ModSounds.WOOSH, 1.0F, 0.8F);
@@ -251,7 +251,7 @@ public class TileHollowedPumpkin extends ModTile {
 
     @Override
     public void handleUpdateTag(BlockState state, CompoundNBT cmp) {
-        if (world != null && !world.isRemote) return;
+        if (this.world != null && !this.world.isRemote) return;
         this.inventory.deserializeNBT(cmp.getCompound("inventory"));
         this.fluidInventory.setFluid(FluidStack.loadFluidStackFromNBT(cmp.getCompound("fluid")));
         this.progress = cmp.getInt("progress");
@@ -260,7 +260,7 @@ public class TileHollowedPumpkin extends ModTile {
     @Nonnull
     @Override
     public CompoundNBT getUpdateTag() {
-        if (world != null && world.isRemote) return super.getUpdateTag();
+        if (this.world != null && this.world.isRemote) return super.getUpdateTag();
         CompoundNBT cmp = super.getUpdateTag();
         cmp.put("inventory", this.inventory.serializeNBT());
         final CompoundNBT tankTag = new CompoundNBT();

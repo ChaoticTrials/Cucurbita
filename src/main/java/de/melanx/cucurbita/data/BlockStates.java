@@ -13,7 +13,7 @@ public class BlockStates extends BlockStateProviderBase {
 
     @Override
     protected void setup() {
-        manualState(ModBlocks.HOLLOWED_PUMPKIN);
-        manualModel(ModBlocks.HOMEMADE_REFINERY);
+        this.manualState(ModBlocks.HOLLOWED_PUMPKIN);
+        this.manualModel(ModBlocks.HOMEMADE_REFINERY);
     }
 }

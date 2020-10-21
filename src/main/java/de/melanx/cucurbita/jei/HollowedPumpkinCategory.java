@@ -90,7 +90,7 @@ public class HollowedPumpkinCategory implements IRecipeCategory<IHollowedPumpkin
 
         matrixStack.push();
         matrixStack.translate(39, 30, 0);
-        slot.draw(matrixStack);
+        this.slot.draw(matrixStack);
         matrixStack.pop();
         matrixStack.push();
         String heatS = new TranslationTextComponent("jei.cucurbita.heatS").getString();

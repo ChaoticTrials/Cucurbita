@@ -24,10 +24,10 @@ public class ModRecipeProvider extends RecipeProviderBase {
     protected void registerRecipes(@Nonnull Consumer<IFinishedRecipe> consumer) {
         ShapelessRecipeBuilder.shapelessRecipe(Items.MELON_SEEDS, 2)
                 .addIngredient(ModItems.MELON_STEM)
-                .addCriterion("has_item", hasItem(ModItems.MELON_STEM)).build(consumer, loc(Items.MELON_SEEDS));
+                .addCriterion("has_item", hasItem(ModItems.MELON_STEM)).build(consumer, this.loc(Items.MELON_SEEDS));
         ShapelessRecipeBuilder.shapelessRecipe(Items.PUMPKIN_SEEDS, 2)
                 .addIngredient(ModItems.PUMPKIN_STEM)
-                .addCriterion("has_item", hasItem(ModItems.PUMPKIN_STEM)).build(consumer, loc(Items.PUMPKIN_SEEDS));
+                .addCriterion("has_item", hasItem(ModItems.PUMPKIN_STEM)).build(consumer, this.loc(Items.PUMPKIN_SEEDS));
         ShapedRecipeBuilder.shapedRecipe(ModItems.SPOON)
                 .patternLine(" I")
                 .patternLine("S ")

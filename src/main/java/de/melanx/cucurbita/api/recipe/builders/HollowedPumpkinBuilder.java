@@ -78,7 +78,7 @@ public class HollowedPumpkinBuilder {
     }
 
     public HollowedPumpkinBuilder addIngredient(NbtIngredient ingredient) {
-        ingredients.add(ingredient);
+        this.ingredients.add(ingredient);
         return this;
     }
 
@@ -88,7 +88,7 @@ public class HollowedPumpkinBuilder {
 
     public HollowedPumpkinBuilder addIngredient(Ingredient ingredient, int quantity) {
         for (int i = 0; i < quantity; i++) {
-            ingredients.add(ingredient);
+            this.ingredients.add(ingredient);
         }
         return this;
     }

@@ -32,7 +32,7 @@ public class PumpkinStemModifier extends LootModifier {
 
         @Override
         public JsonObject write(PumpkinStemModifier instance) {
-            return makeConditions(instance.conditions);
+            return this.makeConditions(instance.conditions);
         }
     }
 }

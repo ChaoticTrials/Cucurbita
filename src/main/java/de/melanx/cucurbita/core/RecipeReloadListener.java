@@ -35,7 +35,7 @@ public class RecipeReloadListener implements IResourceManagerReloadListener {
     @Override
     public void onResourceManagerReload(@Nonnull IResourceManager resourceManager) {
         if (this.dataPackRegistries != null) {
-            RecipeManager recipeManager = dataPackRegistries.getRecipeManager();
+            RecipeManager recipeManager = this.dataPackRegistries.getRecipeManager();
             buildRecipeLists(recipeManager);
         }
     }

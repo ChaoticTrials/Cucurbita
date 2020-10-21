@@ -84,8 +84,8 @@ public class HeatSourcesBuilder {
             if (!this.group.isEmpty()) {
                 json.addProperty("group", this.group);
             }
-            json.addProperty("heat", heat);
-            json.add("source", serializeBlockState(catalyst));
+            json.addProperty("heat", this.heat);
+            json.add("source", serializeBlockState(this.catalyst));
         }
 
         @Nonnull

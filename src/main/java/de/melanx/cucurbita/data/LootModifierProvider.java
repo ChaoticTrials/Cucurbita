@@ -18,13 +18,13 @@ public class LootModifierProvider extends GlobalLootModifierProvider {
 
     @Override
     protected void start() {
-        add("pumpkin_stem", ModLootModifiers.PUMPKIN_STEM_MODIFIER, new PumpkinStemModifier(new ILootCondition[]{
+        this.add("pumpkin_stem", ModLootModifiers.PUMPKIN_STEM_MODIFIER, new PumpkinStemModifier(new ILootCondition[]{
                 Alternative.builder(
                         BlockStateProperty.builder(Blocks.PUMPKIN_STEM),
                         BlockStateProperty.builder(Blocks.ATTACHED_PUMPKIN_STEM)
                 ).build()
         }));
-        add("melon_stem", ModLootModifiers.MELON_STEM_MODIFIER, new MelonStemModifier(new ILootCondition[]{
+        this.add("melon_stem", ModLootModifiers.MELON_STEM_MODIFIER, new MelonStemModifier(new ILootCondition[]{
                 Alternative.builder(
                         BlockStateProperty.builder(Blocks.MELON_STEM),
                         BlockStateProperty.builder(Blocks.ATTACHED_MELON_STEM)

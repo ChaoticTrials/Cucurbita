@@ -85,18 +85,18 @@ public class RefineryCategory implements IRecipeCategory<IRefinery> {
         boolean hasItemOutput = !recipe.getRecipeOutput().isEmpty();
         matrixStack.push();
         matrixStack.translate(22, 17, 0);
-        slot.draw(matrixStack);
+        this.slot.draw(matrixStack);
         matrixStack.pop();
 
         matrixStack.push();
         matrixStack.translate(hasItemOutput ? 101 : 110, 17, 0);
-        slot.draw(matrixStack);
+        this.slot.draw(matrixStack);
         matrixStack.pop();
 
         if (hasItemOutput) {
             matrixStack.push();
             matrixStack.translate(120, 17, 0);
-            slot.draw(matrixStack);
+            this.slot.draw(matrixStack);
             matrixStack.pop();
         }
     }

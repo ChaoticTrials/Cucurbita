@@ -57,7 +57,7 @@ public class RefineryRecipe implements IRefinery {
 
     @Override
     public boolean matches(IInventory inv, World worldIn) {
-        return input.test(inv.getStackInSlot(0));
+        return this.input.test(inv.getStackInSlot(0));
     }
 
     @Override

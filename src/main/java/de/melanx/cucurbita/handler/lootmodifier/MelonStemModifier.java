@@ -32,7 +32,7 @@ public class MelonStemModifier extends LootModifier {
 
         @Override
         public JsonObject write(MelonStemModifier instance) {
-            return makeConditions(instance.conditions);
+            return this.makeConditions(instance.conditions);
         }
     }
 }

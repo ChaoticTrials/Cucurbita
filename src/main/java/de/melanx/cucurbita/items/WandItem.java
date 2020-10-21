@@ -51,7 +51,7 @@ public class WandItem extends ItemBase {
             }
         }
 
-        if (hasSpecialMode(stack)) {
+        if (this.hasSpecialMode(stack)) {
             BlockRayTraceResult rayTraceResult = rayTrace(world, player, RayTraceContext.FluidMode.SOURCE_ONLY);
             if (rayTraceResult.getType() == RayTraceResult.Type.MISS) {
                 return new ActionResult<>(ActionResultType.PASS, stack);
@@ -84,7 +84,7 @@ public class WandItem extends ItemBase {
     public ActionResultType onItemUse(@Nonnull ItemUseContext context) {
         TileEntity tile = context.getWorld().getTileEntity(context.getPos());
         if (tile instanceof ModTile) {
-            if (!hasSpecialMode(context.getItem())) {
+            if (!this.hasSpecialMode(context.getItem())) {
                 ((ModTile) tile).onWanded();
             } else {
                 ((ModTile) tile).resetFluid(context.getPlayer());

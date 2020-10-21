@@ -39,7 +39,7 @@ public class StemItem extends ItemBase {
         if (!context.canPlace()) {
             return ActionResultType.FAIL;
         } else {
-            BlockState state = block.getStateForPlacement(context);
+            BlockState state = this.block.getStateForPlacement(context);
             BlockPos pos = context.getPos();
             World world = context.getWorld();
             PlayerEntity player = context.getPlayer();
@@ -56,7 +56,7 @@ public class StemItem extends ItemBase {
             BlockState placedState = world.getBlockState(pos);
             if (placedState.getBlock() == state.getBlock()) {
                 BlockItem.setTileEntityNBT(world, player, pos, stack);
-                block.onBlockPlacedBy(world, pos, placedState, player, stack);
+                this.block.onBlockPlacedBy(world, pos, placedState, player, stack);
                 if (player instanceof ServerPlayerEntity) {
                     CriteriaTriggers.PLACED_BLOCK.trigger((ServerPlayerEntity) player, pos, stack);
                 }
