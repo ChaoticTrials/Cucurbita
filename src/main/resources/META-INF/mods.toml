@@ -13,7 +13,7 @@ displayURL="www.curseforge.com/members/melanx/"
 credits=""
 authors="MelanX"
 description='''
-
+Pumpkins used for crafting? Nice!
 '''
 
 [[dependencies.cucurbita]]
@@ -26,7 +26,7 @@ description='''
 [[dependencies.cucurbita]]
     modId="libx"
     mandatory=true
-    versionRange="[1.16.3-0.1.9,)"
+    versionRange="[1.16.3-1.0,)"
     ordering="NONE"
     side="BOTH"
 

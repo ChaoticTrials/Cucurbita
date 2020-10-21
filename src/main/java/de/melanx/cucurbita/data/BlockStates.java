@@ -9,6 +9,10 @@ import net.minecraftforge.common.data.ExistingFileHelper;
 public class BlockStates extends BlockStateProviderBase {
     public BlockStates(DataGenerator generator, ExistingFileHelper helper) {
         super(Cucurbita.getInstance(), generator, helper);
+    }
+
+    @Override
+    protected void setup() {
         manualState(ModBlocks.HOLLOWED_PUMPKIN);
         manualModel(ModBlocks.HOMEMADE_REFINERY);
     }
