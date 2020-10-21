@@ -56,5 +56,7 @@
   "tooltip.cucurbita.normal_mode2": "finalize the recipe in an %s.",
 
   "jei.cucurbita.heatS": "Heat:",
-  "jei.cucurbita.heatV": "%s K"
+  "jei.cucurbita.heatV": "%s K",
+  "jei.cucurbita.wands.desc": "With these wands you can finish a recipe in the hollowed pumpkin. You simply right click the pumpkin when the recipe is finished. With shift right-click you toggle the mode to delete fluids. It will delete the fluid in the refinery as well as in the pumpkin or any fluids placed in world.",
+  "jei.cucurbita.hollowed_pumpkin_crafting.desc": "You need to right-click a carved pumpkin with a spoon to scoop out the pumpkin and use it for crafting.\nDrop the ingredients or right click them to add it to the pumpkin."
 }

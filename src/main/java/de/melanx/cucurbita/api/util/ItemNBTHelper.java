@@ -3,7 +3,6 @@ package de.melanx.cucurbita.api.util;
 import com.google.gson.JsonObject;
 import com.mojang.serialization.Dynamic;
 import com.mojang.serialization.JsonOps;
-import io.github.noeppi_noeppi.libx.util.NbtToJson;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.nbt.INBT;
