@@ -47,6 +47,8 @@
   "item.minecraft.lingering_potion.effect.long_resistance": "Verweiltrank der Resistenz II",
   "item.minecraft.tipped_arrow.effect.long_resistance": "Pfeil der Resistenz II",
 
+  "sound.cucurbita.woosh": "Flüssigkeit löschen",
+
   "tooltip.cucurbita.delete_mode0": "Flüssigkeitslöschmodus",
   "tooltip.cucurbita.delete_mode1": "Der Zauberstab löscht alle Flüssigkeiten",
   "tooltip.cucurbita.delete_mode2": "in einem %s oder der Welt komplett.",

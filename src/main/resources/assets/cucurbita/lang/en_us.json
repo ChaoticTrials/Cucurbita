@@ -47,6 +47,8 @@
   "item.minecraft.lingering_potion.effect.long_resistance": "Lingering Potion of Resistance II",
   "item.minecraft.tipped_arrow.effect.long_resistance": "Arrow of Resistance II",
 
+  "sound.cucurbita.woosh": "Delete fluid",
+
   "tooltip.cucurbita.delete_mode0": "Delete fluids mode",
   "tooltip.cucurbita.delete_mode1": "The wand will remove any",
   "tooltip.cucurbita.delete_mode2": "fluid in %s completely.",
