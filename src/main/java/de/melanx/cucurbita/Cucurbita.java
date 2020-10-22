@@ -43,6 +43,7 @@ public class Cucurbita extends ModXRegistration {
         this.addRegistrationHandler(ModItems::register);
         this.addRegistrationHandler(ModLootModifiers::register);
         IEventBus eventBus = FMLJavaModLoadingContext.get().getModEventBus();
+        eventBus.addListener(ClientRegistration.INSTANCE::modelRegistryEvent);
         eventBus.addListener(ClientRegistration.INSTANCE::onModelBake);
         eventBus.addListener(DataCreator::onGatherData);
         eventBus.addListener(this::setup);
@@ -73,6 +74,6 @@ public class Cucurbita extends ModXRegistration {
 
     @Override
     protected void clientSetup(FMLClientSetupEvent event) {
-        ClientRegistration.INSTANCE.onClientSetup(event);
+        //
     }
 }
