@@ -4,7 +4,6 @@ import de.melanx.cucurbita.Cucurbita;
 import de.melanx.cucurbita.api.recipe.*;
 import net.minecraft.item.crafting.IRecipeSerializer;
 import net.minecraft.item.crafting.IRecipeType;
-import net.minecraftforge.event.RegistryEvent;
 
 public class ModRecipeTypes {
 

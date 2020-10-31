@@ -2,9 +2,9 @@ package de.melanx.cucurbita.blocks.tesrs;
 
 import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.vertex.IVertexBuilder;
-import de.melanx.cucurbita.Cucurbita;
 import de.melanx.cucurbita.blocks.tiles.TileHollowedPumpkin;
 import io.github.noeppi_noeppi.libx.block.tesr.HorizontalRotatedTesr;
+import io.github.noeppi_noeppi.libx.render.ClientTickHandler;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.Atlases;
 import net.minecraft.client.renderer.IRenderTypeBuffer;
@@ -54,7 +54,7 @@ public class TesrHollowedPumpkin extends HorizontalRotatedTesr<TileHollowedPumpk
         }
 
         double offsetPerItem = 360D / items;
-        double itemTicks = (double) ((float) Cucurbita.getInstance().ticksInGame + partialTicks) / 2;
+        double itemTicks = (double) ((float) ClientTickHandler.ticksInGame + partialTicks) / 2;
 
         matrixStack.push();
         matrixStack.translate(0.5D, fluidPercentage - ((float) 2.5D / 16), 0.5D);

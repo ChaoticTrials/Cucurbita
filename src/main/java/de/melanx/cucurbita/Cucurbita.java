@@ -28,7 +28,6 @@ import javax.annotation.Nonnull;
 public class Cucurbita extends ModXRegistration {
 
     private static Cucurbita instance;
-    public int ticksInGame = 0;
 
     public Cucurbita() {
         super("cucurbita", new ItemGroup("cucurbita") {
@@ -51,7 +50,6 @@ public class Cucurbita extends ModXRegistration {
         eventBus.addListener(this::setup);
         eventBus.addGenericListener(SoundEvent.class, ModSounds::registerSounds);
         MinecraftForge.EVENT_BUS.addListener(this::addReloadListeners);
-        MinecraftForge.EVENT_BUS.addListener(this::onClientTick);
         MinecraftForge.EVENT_BUS.register(new RecipeReloadListener(null));
 
         DistExecutor.runWhenOn(Dist.CLIENT, () -> Cucurbita::addClientListeners);
@@ -65,10 +63,6 @@ public class Cucurbita extends ModXRegistration {
 
     private void addReloadListeners(AddReloadListenerEvent event) {
         event.addListener(new RecipeReloadListener(event.getDataPackRegistries()));
-    }
-
-    private void onClientTick(final TickEvent.ClientTickEvent event) {
-        this.ticksInGame++;
     }
 
     @Nonnull
