@@ -56,11 +56,6 @@ public class RefineryBuilder {
         return this;
     }
 
-    public RefineryBuilder addIngredient(NbtIngredient ingredient) {
-        this.input = ingredient;
-        return this;
-    }
-
     public RefineryBuilder setFluidOutput(FluidStack fluid) {
         this.fluidOutput = fluid;
         return this;

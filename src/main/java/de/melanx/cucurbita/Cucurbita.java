@@ -10,10 +10,13 @@ import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipeSerializer;
 import net.minecraft.util.SoundEvent;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.AddReloadListenerEvent;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
+import net.minecraftforge.fml.DistExecutor;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
@@ -42,16 +45,22 @@ public class Cucurbita extends ModXRegistration {
         this.addRegistrationHandler(ModBlocks::register);
         this.addRegistrationHandler(ModItems::register);
         this.addRegistrationHandler(ModLootModifiers::register);
+        this.addRegistrationHandler(ModRecipeTypes::register);
         IEventBus eventBus = FMLJavaModLoadingContext.get().getModEventBus();
-        eventBus.addListener(ClientRegistration.INSTANCE::modelRegistryEvent);
-        eventBus.addListener(ClientRegistration.INSTANCE::onModelBake);
         eventBus.addListener(DataCreator::onGatherData);
         eventBus.addListener(this::setup);
-        eventBus.addGenericListener(IRecipeSerializer.class, ModRecipeTypes::register);
         eventBus.addGenericListener(SoundEvent.class, ModSounds::registerSounds);
         MinecraftForge.EVENT_BUS.addListener(this::addReloadListeners);
         MinecraftForge.EVENT_BUS.addListener(this::onClientTick);
         MinecraftForge.EVENT_BUS.register(new RecipeReloadListener(null));
+
+        DistExecutor.runWhenOn(Dist.CLIENT, () -> Cucurbita::addClientListeners);
+    }
+
+    @OnlyIn(Dist.CLIENT)
+    private static void addClientListeners() {
+        FMLJavaModLoadingContext.get().getModEventBus().addListener(ClientRegistration.INSTANCE::onModelBake);
+        FMLJavaModLoadingContext.get().getModEventBus().addListener(ClientRegistration.INSTANCE::modelRegistryEvent);
     }
 
     private void addReloadListeners(AddReloadListenerEvent event) {

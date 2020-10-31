@@ -117,8 +117,8 @@ public class HeatSourcesRecipe implements IHeatSources {
 
         @Override
         public void write(PacketBuffer buffer, IHeatSources recipe) {
-            buffer.writeVarInt(recipe.getHeatValue());
             buffer.writeInt(Block.getStateId(recipe.getHeatState()));
+            buffer.writeVarInt(recipe.getHeatValue());
         }
 
         public static BlockState readBlockState(JsonObject object) {

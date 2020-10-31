@@ -23,10 +23,7 @@ import net.minecraftforge.registries.ForgeRegistryEntry;
 import org.apache.commons.lang3.tuple.Pair;
 
 import javax.annotation.Nullable;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.IntStream;
 
 public class HollowedPumpkinRecipe implements IHollowedPumpkin {
@@ -128,7 +125,7 @@ public class HollowedPumpkinRecipe implements IHollowedPumpkin {
         @Nullable
         @Override
         public IHollowedPumpkin read(ResourceLocation id, PacketBuffer buffer) {
-            int minHeat = buffer.readVarInt();
+            int minHeat = buffer.readInt();
             FluidStack fluidInput = buffer.readFluidStack();
             Ingredient[] ingredients = new Ingredient[buffer.readVarInt()];
             for (int i = 0; i < ingredients.length; i++) {
@@ -144,7 +141,7 @@ public class HollowedPumpkinRecipe implements IHollowedPumpkin {
 
         @Override
         public void write(PacketBuffer buffer, IHollowedPumpkin recipe) {
-            buffer.writeVarInt(recipe.getMinHeat());
+            buffer.writeInt(recipe.getMinHeat());
             buffer.writeFluidStack(recipe.getFluidInput());
             buffer.writeVarInt(recipe.getIngredients().size());
             for (Ingredient input : recipe.getIngredients()) {

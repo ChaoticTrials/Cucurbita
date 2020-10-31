@@ -75,11 +75,6 @@ public class HollowedPumpkinBuilder {
         return this.addIngredient(Ingredient.fromItems(item), quantity);
     }
 
-    public HollowedPumpkinBuilder addIngredient(NbtIngredient ingredient) {
-        this.ingredients.add(ingredient);
-        return this;
-    }
-
     public HollowedPumpkinBuilder addIngredient(Ingredient ingredient) {
         return this.addIngredient(ingredient, 1);
     }

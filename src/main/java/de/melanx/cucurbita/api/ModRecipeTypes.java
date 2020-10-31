@@ -1,5 +1,6 @@
 package de.melanx.cucurbita.api;
 
+import de.melanx.cucurbita.Cucurbita;
 import de.melanx.cucurbita.api.recipe.*;
 import net.minecraft.item.crafting.IRecipeSerializer;
 import net.minecraft.item.crafting.IRecipeType;
@@ -16,9 +17,9 @@ public class ModRecipeTypes {
     public static final IRecipeType<IRefinery> REFINERY_TYPE = IRecipeType.register(IRefinery.TYPE_ID.toString());
     public static final IRecipeSerializer<IRefinery> REFINERY_SERIALIZER = new RefineryRecipe.Serializer();
 
-    public static void register(RegistryEvent.Register<IRecipeSerializer<?>> event) {
-        event.getRegistry().register(HEAT_SOURCES_SERIALIZER.setRegistryName(IHeatSources.TYPE_ID));
-        event.getRegistry().register(HOLLOWED_PUMPKIN_SERIALIZER.setRegistryName(IHollowedPumpkin.TYPE_ID));
-        event.getRegistry().register(REFINERY_SERIALIZER.setRegistryName(IRefinery.TYPE_ID));
+    public static void register() {
+        Cucurbita.getInstance().register(IHeatSources.TYPE_ID.getPath(), HEAT_SOURCES_SERIALIZER);
+        Cucurbita.getInstance().register(IHollowedPumpkin.TYPE_ID.getPath(), HOLLOWED_PUMPKIN_SERIALIZER);
+        Cucurbita.getInstance().register(IRefinery.TYPE_ID.getPath(), REFINERY_SERIALIZER);
     }
 }
