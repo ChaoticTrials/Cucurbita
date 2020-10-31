@@ -2,6 +2,7 @@ package de.melanx.cucurbita.api.recipe;
 
 import com.google.common.base.Preconditions;
 import com.google.gson.JsonObject;
+import de.melanx.cucurbita.api.ModRecipeTypes;
 import net.minecraft.fluid.Fluid;
 import net.minecraft.fluid.Fluids;
 import net.minecraft.inventory.IInventory;
@@ -72,7 +73,7 @@ public class RefineryRecipe implements IRefinery {
 
     @Override
     public IRecipeSerializer<?> getSerializer() {
-        return new Serializer();
+        return ModRecipeTypes.REFINERY_SERIALIZER;
     }
 
     public static class Serializer extends ForgeRegistryEntry<IRecipeSerializer<?>> implements IRecipeSerializer<IRefinery> {

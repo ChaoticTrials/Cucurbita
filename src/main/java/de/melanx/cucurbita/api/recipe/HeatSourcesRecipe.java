@@ -8,7 +8,6 @@ import de.melanx.cucurbita.api.ModRecipeTypes;
 import de.melanx.cucurbita.api.util.ItemNBTHelper;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
 import net.minecraft.item.crafting.IRecipeSerializer;
 import net.minecraft.item.crafting.IRecipeType;
 import net.minecraft.nbt.CompoundNBT;
@@ -35,7 +34,7 @@ public class HeatSourcesRecipe implements IHeatSources {
     private final int heatValue;
 
     public HeatSourcesRecipe(ResourceLocation id, BlockState state, int heatValue) {
-        Preconditions.checkArgument(state != Blocks.AIR.getDefaultState());
+        Preconditions.checkArgument(!state.isAir());
         Preconditions.checkArgument(heatValue > 0);
         this.id = id;
         this.heatState = state;

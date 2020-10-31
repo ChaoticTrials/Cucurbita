@@ -132,7 +132,7 @@ public class HollowedPumpkinRecipe implements IHollowedPumpkin {
                 ingredients[i] = Ingredient.read(buffer);
             }
             int outputSize = buffer.readVarInt();
-            List<Pair<ItemStack, Double>> outputs = new ArrayList<>(buffer.readVarInt());
+            List<Pair<ItemStack, Double>> outputs = new ArrayList<>();
             for (int i = 0; i < outputSize; i++) {
                 outputs.add(Pair.of(buffer.readItemStack(), buffer.readDouble()));
             }
