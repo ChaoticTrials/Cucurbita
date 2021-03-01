@@ -2,6 +2,7 @@
   "type": "minecraft:block",
   "pools": [
     {
+      "name": "main",
       "rolls": 1,
       "entries": [
         {
@@ -12,6 +13,15 @@
       "conditions": [
         {
           "condition": "minecraft:survives_explosion"
+        }
+      ],
+      "functions": [
+        {
+          "function": "minecraft:copy_state",
+          "block": "cucurbita:hollowed_pumpkin",
+          "properties": [
+            "carving"
+          ]
         }
       ]
     }
