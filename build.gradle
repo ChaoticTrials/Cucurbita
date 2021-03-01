@@ -79,23 +79,9 @@ task sourcesJar(type: Jar, dependsOn: classes) {
     from sourceSets.main.allSource
 }
 
-task apiJar(type: Jar) {
-    from sourceSets.main.allJava
-    from sourceSets.main.output
-    include "de/melanx/" + modid + "/api/**"
-
-    classifier = "api"
-}
-
-task deobfJar(type: Jar) {
-    from sourceSets.main.output
-    classifier 'deobf'
-}
-
 artifacts {
     archives jar
     archives sourcesJar
-    archives deobfJar
 }
 
 publishing {
@@ -106,8 +92,6 @@ publishing {
             version = project.version
             artifact jar
             artifact sourcesJar
-            artifact apiJar
-            artifact deobfJar
 
             pom {
                 licenses {
@@ -210,7 +194,6 @@ curseforge {
             }
 
             addArtifact(sourcesJar)
-            addArtifact(deobfJar)
         }
     }
 }
