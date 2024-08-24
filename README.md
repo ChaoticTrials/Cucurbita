@@ -1,5 +1,8 @@
 # Cucurbita
 This is a mod to craft with a pumpkin different stuff.
 
-[![CurseForge](http://cf.way2muchnoise.eu/full_411301_downloads.svg)](https://www.curseforge.com/minecraft/mc-mods/cucurbita)
-[![Curseforge](http://cf.way2muchnoise.eu/versions/For%20MC_411301_all.svg)](https://www.curseforge.com/minecraft/mc-mods/cucurbita)
+[![Modrinth](https://badges.moddingx.org/modrinth/versions/HVstU80p)](https://modrinth.com/mod/cucurbita)
+[![Modrinth](https://badges.moddingx.org/modrinth/downloads/HVstU80p)](https://modrinth.com/mod/cucurbita)
+
+[![Curseforge](https://badges.moddingx.org/curseforge/versions/411301)](https://www.curseforge.com/minecraft/mc-mods/cucurbita)
+[![CurseForge](https://badges.moddingx.org/curseforge/downloads/411301)](https://www.curseforge.com/minecraft/mc-mods/cucurbita)
